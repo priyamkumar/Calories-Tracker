@@ -1,16 +1,12 @@
 import React from "react";
+import Title from "./Title";
+import Navbar from "./Navbar";
 
-export default function Navbar() {
+export default function Header() {
   return (
     <header className="header">
-      <h1>Calories Tracker</h1>
-      <nav className="nav">
-        <ul>
-          <li>Home</li>
-          <li>Statistics</li>
-          <li>Settings</li>
-        </ul>
-      </nav>
+      <Title/>
+      <Navbar/>
     </header>
   );
 }

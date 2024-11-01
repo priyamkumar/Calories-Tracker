@@ -1,16 +1,51 @@
 body {
-    margin: 0;
-    box-sizing: border-box;
-}
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Roboto", serif;}
 
 .header {
-    display: flex;
-    justify-content: space-between;
-    width: 90%;
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  align-items: center;
+  margin: 0 auto;
 }
 
-.nav ul{
-    display: flex;
-    gap: 20px;
-    list-style: none;
+.nav ul {
+  display: flex;
+  gap: 20px;
+  list-style: none;
 }
+
+.nav ul li {
+  cursor: pointer;
+}
+
+.nav ul li:hover {
+  border-bottom: 2px solid black;
+}
+
+.calories-consumed {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.calories-consumed h2 {
+    margin-left: 10px;
+  }
+
+  .macros-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10%;
+  }
+
+  .meal-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }

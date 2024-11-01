@@ -1,16 +1,19 @@
-import React, { useState } from 'react'
-import Stack from '@mui/material/Stack';
-import CircularProgress from '@mui/material/CircularProgress';
+import React, { useState } from "react";
+import ProgressBar from "./ProgressBar";
+import AddMeal from "./AddMeal";
+import Macros from "./Macros";
 
 export default function CaloriesToday() {
   const [calories, setCalories] = useState(0);
-  const [progress, setProgress] = useState(10);
+  const [progress, setProgress] = useState(100);
   return (
-    <>
-    <Stack spacing={2} direction="row">
-      <CircularProgress variant="determinate" value={progress}><i class="fa-solid fa-utensils"></i></CircularProgress>
+    <div className="home">
+      <div className="calories-consumed">
+      <ProgressBar progress={progress}/>
       <h2>{calories} of 3000 Cal</h2>
-    </Stack>
-    </>
-  )
+      </div>
+      <Macros/>
+      <AddMeal/>
+    </div>
+  );
 }
