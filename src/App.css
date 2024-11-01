@@ -5,7 +5,7 @@ body {
 
 .header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   width: 90%;
   align-items: center;
   margin: 0 auto;
@@ -48,4 +48,15 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+  }
+
+  .meal-card {
+    display: flex;
+    align-items: center;
+    gap: 100px;
+  }
+
+  .meal-card button {
+    border-radius: 20px;
+    cursor: pointer;
   }
