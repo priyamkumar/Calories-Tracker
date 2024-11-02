@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faMugSaucer, faBreadSlice, faBowlRice, faAppleWhole, faPlus} from '@fortawesome/free-solid-svg-icons'
+import AddMealForm from "../AddMealForm";
 
-export default function AddMeal() {  return (
+export default function AddMeal() {
+  const [showPopup, setShowPopup] = useState(false);
+  console.log(showPopup);
+  const openPopup = () => {
+    setShowPopup((prev) =>!prev)
+  }
+    return (
     <div className="meal-container">
       <div className="meal-card">
         <div>
@@ -10,7 +17,7 @@ export default function AddMeal() {  return (
           <h3><FontAwesomeIcon icon={faMugSaucer} /> Breakfast</h3>
           <p>100 / 640 Cal</p>
         </div>
-        <button>
+        <button onClick={() => openPopup()}>
         <FontAwesomeIcon icon={faPlus} />
         </button>
       </div>
@@ -37,10 +44,11 @@ export default function AddMeal() {  return (
           <h3><FontAwesomeIcon icon={faAppleWhole} /> Snacks</h3>
           <p>100 / 640 Cal</p>
         </div>
-        <button>
+        <button >
         <FontAwesomeIcon icon={faPlus} />
         </button>
       </div>
+      {showPopup && <AddMealForm/>}
     </div>
   );
 }
