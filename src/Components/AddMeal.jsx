@@ -5,7 +5,6 @@ import AddMealForm from "../AddMealForm";
 
 export default function AddMeal() {
   const [showPopup, setShowPopup] = useState(false);
-  console.log(showPopup);
   const openPopup = () => {
     setShowPopup((prev) =>!prev)
   }
