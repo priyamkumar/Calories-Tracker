@@ -150,3 +150,7 @@ body {
   background-color: #0463f3;
 }
 
+#food-name {
+  display: block;
+}
+
