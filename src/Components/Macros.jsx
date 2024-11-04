@@ -5,7 +5,7 @@ export default function Macros() {
   const [carbs, setCarbs] = useState(100);
   const [protein, setProtein] = useState(100);
   const [fats, setFats] = useState(50);
-  console.log((fats/60)*100);
+
   return (
     <div className="macros-container">
       <div className="card">

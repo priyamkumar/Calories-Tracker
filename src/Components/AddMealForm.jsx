@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function AddMealForm() {
+export default function AddMealForm({formRef}) {
   let d = new Date(); 
   let h = d.getHours(); 
   let m = d.getMinutes();
@@ -10,7 +10,7 @@ export default function AddMealForm() {
   }
   return (
     <div className="popup-overlay">
-  <form className="popup-form">
+  <form className="popup-form" ref={formRef}>
     <h2>Add Meal</h2>
     <div className="meal-info">
       <label htmlFor="meal-name">Meal Name

@@ -5,7 +5,7 @@ import Macros from "./Macros";
 
 export default function CaloriesToday() {
   const [calories, setCalories] = useState(0);
-  const [progress, setProgress] = useState(100);
+  const [progress, setProgress] = useState(50);
   
   return (
     <div className="home">
