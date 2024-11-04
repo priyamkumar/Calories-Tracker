@@ -13,7 +13,7 @@ export default function AddMeal() {
 
   useEffect(() => {
     let handler = (e) => {
-        if(!formRef.current.contains(e.target)) 
+        if(formRef.current && !formRef.current.contains(e.target)) 
           {
             setShowPopup(false);
           }
