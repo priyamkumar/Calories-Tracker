@@ -3,9 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faMugSaucer, faBreadSlice, faBowlRice, faAppleWhole, faPlus} from '@fortawesome/free-solid-svg-icons'
 import AddMealForm from "./AddMealForm";
 
-export default function AddMeal({setCarbs, setProtein, setFats}) {
+export default function AddMeal({calorieGoal, mealsArr, setCarbs, setProtein, setFats, setCalories}) {
   const [showPopup, setShowPopup] = useState(false);
-  const [meals, setMeals] = useState([]);
+
+  const [meals, setMeals] = mealsArr;
 
   const openPopup = () => {
     setShowPopup((prev) =>!prev)
@@ -22,7 +23,6 @@ export default function AddMeal({setCarbs, setProtein, setFats}) {
     }
     document.addEventListener("mousedown", handler);
   })
-  console.log(meals.map((meal) => meal[0].name));
 
     return (
     <div className="meal-container">
@@ -30,7 +30,7 @@ export default function AddMeal({setCarbs, setProtein, setFats}) {
         <div>
         
           <h3><FontAwesomeIcon icon={faMugSaucer} /> Breakfast</h3>
-          <p>100 / 640 Cal</p>
+          <p>100 / {(calorieGoal / 100) * 30} Cal</p>
         </div>
         <button onClick={openPopup}>
         <FontAwesomeIcon icon={faPlus} />
@@ -39,7 +39,7 @@ export default function AddMeal({setCarbs, setProtein, setFats}) {
       <div className="meal-card">
         <div>
           <h3><FontAwesomeIcon icon={faBreadSlice} /> Lunch</h3>
-          <p>100 / 640 Cal</p>
+          <p>100 / {(calorieGoal / 100) * 30} Cal</p>
         </div>
         <button onClick={() => openPopup()}>
         <FontAwesomeIcon icon={faPlus} />
@@ -48,7 +48,7 @@ export default function AddMeal({setCarbs, setProtein, setFats}) {
       <div className="meal-card">
         <div>       
           <h3><FontAwesomeIcon icon={faBowlRice} /> Dinner</h3>
-          <p>100 / 640 Cal</p>
+          <p>100 / {(calorieGoal / 100) * 30} Cal</p>
         </div>
         <button onClick={() => openPopup()}>
         <FontAwesomeIcon icon={faPlus} />
@@ -57,20 +57,13 @@ export default function AddMeal({setCarbs, setProtein, setFats}) {
       <div className="meal-card">
         <div>
           <h3><FontAwesomeIcon icon={faAppleWhole} /> Snacks</h3>
-          <p>100 / 640 Cal</p>
+          <p>100 / {(calorieGoal / 100) * 10} Cal</p>
         </div>
         <button onClick={() => openPopup()}>
         <FontAwesomeIcon icon={faPlus} />
         </button>
       </div>
-      {showPopup && <AddMealForm formRef={formRef} setShowPopup={setShowPopup} mealsArr={[meals, setMeals]}/>}
-      {meals.map((meal) => (
-        <ul>
-          <li>
-            {meal[0].name}
-          </li>
-          </ul>
-      ))}
+      {showPopup && <AddMealForm formRef={formRef} setShowPopup={setShowPopup} mealsArr={[meals, setMeals]} setCarbs={setCarbs} setProtein={setProtein} setFats={setFats} setCalories={setCalories}/>}
     </div>
   );
 }

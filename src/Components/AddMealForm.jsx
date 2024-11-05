@@ -2,7 +2,15 @@ import React, { useEffect, useState } from "react";
 import { searchFood } from "../Utility/openFoodFactsAPI";
 import { indianFoodData } from "../Utility/mockData";
 
-export default function AddMealForm({ formRef, setShowPopup, mealsArr }) {
+export default function AddMealForm({
+  formRef,
+  setShowPopup,
+  mealsArr,
+  setCarbs,
+  setProtein,
+  setFats,
+  setCalories,
+}) {
   const [query, setQuery] = useState("");
   const [foodData, setFoodData] = useState(null);
   const [error, setError] = useState(null);
@@ -44,6 +52,10 @@ export default function AddMealForm({ formRef, setShowPopup, mealsArr }) {
     });
     setMeals((prev) => [...prev, element]);
     setShowPopup(false);
+    setCarbs((prev) => prev + element[0].carbs);
+    setProtein((prev) => prev + element[0].protein);
+    setFats((prev) => prev + element[0].fats);
+    setCalories((prev) => prev + element[0].calories);
   };
 
   return (
