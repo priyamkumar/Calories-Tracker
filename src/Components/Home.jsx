@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import ProgressBar from "./ProgressBar";
 import AddMeal from "./AddMeal";
 import Macros from "./Macros";
+import SliderElement from "./SliderElement";
 
 export default function CaloriesToday() {
   const [calorieGoal, setCalorieGoal] = useState(2600);
@@ -16,6 +17,7 @@ export default function CaloriesToday() {
       <div className="calories-consumed">
       <ProgressBar calories={calories} calorieGoal={calorieGoal}/>
       <h2>{calories} of {calorieGoal} Cal</h2>
+      <SliderElement calorieGoalArr={[calorieGoal, setCalorieGoal]}/>
       </div>
       <Macros carbs={carbs} protein={protein} fats={fats}/>
       <AddMeal calorieGoal={calorieGoal} mealsArr={[meals, setMeals]} setCarbs={setCarbs} setProtein={setProtein} setFats={setFats} setCalories={setCalories}/>

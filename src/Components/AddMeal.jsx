@@ -30,7 +30,7 @@ export default function AddMeal({calorieGoal, mealsArr, setCarbs, setProtein, se
         <div>
         
           <h3><FontAwesomeIcon icon={faMugSaucer} /> Breakfast</h3>
-          <p>100 / {(calorieGoal / 100) * 30} Cal</p>
+          <p>100 / {Math.floor((calorieGoal / 100) * 30)} Cal</p>
         </div>
         <button onClick={openPopup}>
         <FontAwesomeIcon icon={faPlus} />
@@ -39,7 +39,7 @@ export default function AddMeal({calorieGoal, mealsArr, setCarbs, setProtein, se
       <div className="meal-card">
         <div>
           <h3><FontAwesomeIcon icon={faBreadSlice} /> Lunch</h3>
-          <p>100 / {(calorieGoal / 100) * 30} Cal</p>
+          <p>100 / {Math.floor((calorieGoal / 100) * 30)} Cal</p>
         </div>
         <button onClick={() => openPopup()}>
         <FontAwesomeIcon icon={faPlus} />
@@ -48,7 +48,7 @@ export default function AddMeal({calorieGoal, mealsArr, setCarbs, setProtein, se
       <div className="meal-card">
         <div>       
           <h3><FontAwesomeIcon icon={faBowlRice} /> Dinner</h3>
-          <p>100 / {(calorieGoal / 100) * 30} Cal</p>
+          <p>100 / {Math.floor((calorieGoal / 100) * 30)} Cal</p>
         </div>
         <button onClick={() => openPopup()}>
         <FontAwesomeIcon icon={faPlus} />
@@ -57,7 +57,7 @@ export default function AddMeal({calorieGoal, mealsArr, setCarbs, setProtein, se
       <div className="meal-card">
         <div>
           <h3><FontAwesomeIcon icon={faAppleWhole} /> Snacks</h3>
-          <p>100 / {(calorieGoal / 100) * 10} Cal</p>
+          <p>100 / {Math.floor((calorieGoal / 100) * 10)} Cal</p>
         </div>
         <button onClick={() => openPopup()}>
         <FontAwesomeIcon icon={faPlus} />
