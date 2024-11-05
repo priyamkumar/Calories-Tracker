@@ -3,8 +3,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faMugSaucer, faBreadSlice, faBowlRice, faAppleWhole, faPlus} from '@fortawesome/free-solid-svg-icons'
 import AddMealForm from "./AddMealForm";
 
-export default function AddMeal() {
+export default function AddMeal({setCarbs, setProtein, setFats}) {
   const [showPopup, setShowPopup] = useState(false);
+  const [meals, setMeals] = useState([]);
+
   const openPopup = () => {
     setShowPopup((prev) =>!prev)
   }
@@ -20,6 +22,7 @@ export default function AddMeal() {
     }
     document.addEventListener("mousedown", handler);
   })
+  console.log(meals.map((meal) => meal[0].name));
 
     return (
     <div className="meal-container">
@@ -29,7 +32,7 @@ export default function AddMeal() {
           <h3><FontAwesomeIcon icon={faMugSaucer} /> Breakfast</h3>
           <p>100 / 640 Cal</p>
         </div>
-        <button onClick={() => openPopup()}>
+        <button onClick={openPopup}>
         <FontAwesomeIcon icon={faPlus} />
         </button>
       </div>
@@ -60,7 +63,14 @@ export default function AddMeal() {
         <FontAwesomeIcon icon={faPlus} />
         </button>
       </div>
-      {showPopup && <AddMealForm formRef={formRef}/>}
+      {showPopup && <AddMealForm formRef={formRef} setShowPopup={setShowPopup} mealsArr={[meals, setMeals]}/>}
+      {meals.map((meal) => (
+        <ul>
+          <li>
+            {meal[0].name}
+          </li>
+          </ul>
+      ))}
     </div>
   );
 }

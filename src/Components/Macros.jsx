@@ -1,11 +1,7 @@
 import React, { useState } from "react";
 import LinearProgress from "@mui/material/LinearProgress";
 
-export default function Macros() {
-  const [carbs, setCarbs] = useState(100);
-  const [protein, setProtein] = useState(100);
-  const [fats, setFats] = useState(50);
-
+export default function Macros({carbs, protein, fats}) {
   return (
     <div className="macros-container">
       <div className="card">

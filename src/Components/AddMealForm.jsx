@@ -1,43 +1,54 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { searchFood } from "../Utility/openFoodFactsAPI";
 import { indianFoodData } from "../Utility/mockData";
 
-export default function AddMealForm({ formRef }) {
+export default function AddMealForm({ formRef, setShowPopup, mealsArr }) {
   const [query, setQuery] = useState("");
   const [foodData, setFoodData] = useState(null);
   const [error, setError] = useState(null);
-  const [meals, setMeals] = useState([]);
+  const [meals, setMeals] = mealsArr;
+  const [foodCalorie, setFoodCalorie] = useState(0);
 
   let d = new Date();
   let h = d.getHours();
   let m = d.getMinutes();
+  let element = "";
   if (m < 10) m = "0" + m;
   const [currentTime, setCurrentTime] = useState(`${h}:${m}`);
   const handleOnChange = (event) => {
-    if (event.name === "date") setCurrentTime(event.target.value);
-    if (event.name === "meal-name") {
+    if (event.target.name === "time") setCurrentTime(event.target.value);
+    if (event.target.name === "meal-name") {
       setQuery(event.target.value);
-      let target = indianFoodData.filter((item, i, query) => {
-        if (item.name === query) return item;
-        console.log(target);
+      element = indianFoodData.filter((item, i) => {
+        return item.name === event.target.value;
       });
+      setFoodCalorie(element[0]?.calories || 0);
     }
   };
-  const handleSearch = async () => {
-    setError(null);
-    const data = await searchFood(query);
-    if (data && data.status === 1) {
-      setFoodData(data.product);
-      setMeals((meals) => [...meals, data.product.name]);
-    } else {
-      setFoodData(null);
-      setError("Product not found.");
-    }
+  // const handleSearch = async () => {
+  //   setError(null);
+  //   const data = await searchFood(query);
+  //   if (data && data.status === 1) {
+  //     setFoodData(data.product);
+  //     setMeals((meals) => [...meals, data.product.name]);
+  //   } else {
+  //     setFoodData(null);
+  //     setError("Product not found.");
+  //   }
+  // };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    let element = indianFoodData.filter((item, i) => {
+      return item.name === query;
+    });
+    setMeals((prev) => [...prev, element]);
+    setShowPopup(false);
   };
 
   return (
     <div className="popup-overlay">
-      <form className="popup-form" ref={formRef}>
+      <form className="popup-form" ref={formRef} onSubmit={handleSubmit}>
         <h2>Add Meal</h2>
         <div className="meal-info">
           <datalist id="foodname">
@@ -55,20 +66,26 @@ export default function AddMealForm({ formRef }) {
               onChange={handleOnChange}
             />
           </label>
-          <button onClick={handleSearch} type="button">
+          {/* <button onClick={handleSearch} type="button">
             Search
-          </button>
+          </button> */}
           <label htmlFor="calories">
             Calories
-            <input type="number" id="calories" min="0" />
+            <input
+              type="number"
+              id="calories"
+              min="0"
+              value={foodCalorie}
+              readOnly
+            />
           </label>
 
-          <label htmlFor="date">
-            Date
+          <label htmlFor="time">
+            Time
             <input
               type="time"
-              id="date"
-              name="date"
+              id="time"
+              name="time"
               value={currentTime}
               onChange={handleOnChange}
             />
