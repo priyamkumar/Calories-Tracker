@@ -42,7 +42,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 10px;
+  gap: 20px;
 }
 
 .macros-container {
@@ -67,13 +67,17 @@ body {
   width: 400px;
 }
 
-.meal-card button {
+.meal-card .add-btn {
   cursor: pointer;
   width: 40px;
   height: 40px;
   border: 1px solid black;
   border-radius: 50%;
   align-self: right;
+}
+
+.meal-card li {
+  list-style: none;
 }
 
 .meal-info label{

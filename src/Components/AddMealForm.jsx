@@ -21,22 +21,23 @@ export default function AddMealForm({
   const [error, setError] = useState(null);
   const [meals, setMeals] = mealsArr;
   const [foodCalorie, setFoodCalorie] = useState(0);
+  const [quantity, setQuantity] = useState("");
+
 
   let d = new Date();
   let h = d.getHours();
   let m = d.getMinutes();
-  let element = "";
   if (m < 10) m = "0" + m;
   const [currentTime, setCurrentTime] = useState(`${h}:${m}`);
   const handleOnChange = (event) => {
-    console.log(event);
     if (event.target.name === "time") setCurrentTime(event.target.value);
     if (event.target.name === "meal-name") {
       setQuery(event.target.value);
-      element = indianFoodData.filter((item, i) => {
+      let element = indianFoodData.filter((item, i) => {
         return item.name === event.target.value;
       });
       setFoodCalorie(element[0]?.calories || 0);
+      setQuantity(element[0]?.quantity || 0);
     }
   };
   // const handleSearch = async () => {
@@ -65,8 +66,17 @@ export default function AddMealForm({
 
     switch (mealType) {
       case "Breakfast":
-        setBreakfastMeals((prev) => [...prev, element])
-        
+        setBreakfastMeals((prev) => [...prev, element]);
+        break;
+      case "Lunch":
+        setLunchMeals((prev) => [...prev, element])
+        break;
+      case "Dinner":
+        setDinnerMeals((prev) => [...prev, element])
+        break;
+      case "Snacks":
+        setSnackMeals((prev) => [...prev, element])
+        break;
     }
   };
 
@@ -93,6 +103,17 @@ export default function AddMealForm({
           {/* <button onClick={handleSearch} type="button">
             Search
           </button> */}
+          <label htmlFor="quantity">
+            Quantity
+            <input
+              type="text"
+              id="quantity"
+              min="0"
+              value={quantity}
+              readOnly
+            />
+          </label>
+
           <label htmlFor="calories">
             Calories
             <input

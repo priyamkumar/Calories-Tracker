@@ -3,6 +3,10 @@ import ProgressBar from "./ProgressBar";
 import AddMeal from "./AddMeal";
 import Macros from "./Macros";
 import SliderElement from "./SliderElement";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faArrowRight
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function CaloriesToday() {
   const [calorieGoal, setCalorieGoal] = useState(2600);
@@ -14,10 +18,8 @@ export default function CaloriesToday() {
   const [mealType, setMealType] = useState("");
   const [breakfastMeals, setBreakfastMeals] = useState([]);
   const [lunchMeals, setLunchMeals] = useState([]);
-  const [DinnerMeals, setDinnerMeals] = useState([]);
+  const [dinnerMeals, setDinnerMeals] = useState([]);
   const [snackMeals, setSnackMeals] = useState([]);
-
-  console.log(breakfastMeals);
 
   return (
     <div className="home">
@@ -30,6 +32,7 @@ export default function CaloriesToday() {
         </div>
         <div className="calories-goal-heading">
           <h3>Set Calories Goal</h3>
+          <FontAwesomeIcon icon={faArrowRight} />
           <SliderElement calorieGoalArr={[calorieGoal, setCalorieGoal]} />
         </div>
       </div>
@@ -47,10 +50,10 @@ export default function CaloriesToday() {
         setProtein={setProtein}
         setFats={setFats}
         setCalories={setCalories}
-        setBreakfastMeals={setBreakfastMeals}
-        setLunchMeals={setLunchMeals}
-        setDinnerMeals={setDinnerMeals}
-        setSnackMeals={setSnackMeals}
+        breakfastMealsArr={[breakfastMeals, setBreakfastMeals]}
+        lunchMealsArr={[lunchMeals, setLunchMeals]}
+        dinnerMealsArr={[dinnerMeals, setDinnerMeals]}
+        snackMealsArr={[snackMeals, setSnackMeals]}
       />
     </div>
   );
