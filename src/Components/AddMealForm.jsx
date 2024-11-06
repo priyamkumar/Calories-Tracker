@@ -10,6 +10,11 @@ export default function AddMealForm({
   setProtein,
   setFats,
   setCalories,
+  mealType,
+  setBreakfastMeals,
+  setLunchMeals,
+  setDinnerMeals,
+  setSnackMeals,
 }) {
   const [query, setQuery] = useState("");
   const [foodData, setFoodData] = useState(null);
@@ -24,6 +29,7 @@ export default function AddMealForm({
   if (m < 10) m = "0" + m;
   const [currentTime, setCurrentTime] = useState(`${h}:${m}`);
   const handleOnChange = (event) => {
+    console.log(event);
     if (event.target.name === "time") setCurrentTime(event.target.value);
     if (event.target.name === "meal-name") {
       setQuery(event.target.value);
@@ -56,6 +62,12 @@ export default function AddMealForm({
     setProtein((prev) => prev + element[0].protein);
     setFats((prev) => prev + element[0].fats);
     setCalories((prev) => prev + element[0].calories);
+
+    switch (mealType) {
+      case "Breakfast":
+        setBreakfastMeals((prev) => [...prev, element])
+        
+    }
   };
 
   return (
