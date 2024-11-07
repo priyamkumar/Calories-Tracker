@@ -55,7 +55,6 @@ export default function AddMealForm({
     if (element[0]) {
       element[0]["id"] = Math.floor(Math.random() * 1e9);
       element[0]["type"] = mealType;
-      console.log(element[0]);
       setMeals((prev) => [...prev, ...element]);
       setShowPopup(false);
       setCarbs((prev) => prev + element[0].carbs);
