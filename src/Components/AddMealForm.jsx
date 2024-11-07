@@ -11,10 +11,6 @@ export default function AddMealForm({
   setFats,
   setCalories,
   mealType,
-  setBreakfastMeals,
-  setLunchMeals,
-  setDinnerMeals,
-  setSnackMeals,
 }) {
   const [query, setQuery] = useState("");
   const [foodData, setFoodData] = useState(null);
@@ -22,7 +18,6 @@ export default function AddMealForm({
   const [meals, setMeals] = mealsArr;
   const [foodCalorie, setFoodCalorie] = useState(0);
   const [quantity, setQuantity] = useState("");
-
 
   let d = new Date();
   let h = d.getHours();
@@ -57,26 +52,16 @@ export default function AddMealForm({
     let element = indianFoodData.filter((item, i) => {
       return item.name === query;
     });
-    setMeals((prev) => [...prev, element]);
-    setShowPopup(false);
-    setCarbs((prev) => prev + element[0].carbs);
-    setProtein((prev) => prev + element[0].protein);
-    setFats((prev) => prev + element[0].fats);
-    setCalories((prev) => prev + element[0].calories);
-
-    switch (mealType) {
-      case "Breakfast":
-        setBreakfastMeals((prev) => [...prev, element]);
-        break;
-      case "Lunch":
-        setLunchMeals((prev) => [...prev, element])
-        break;
-      case "Dinner":
-        setDinnerMeals((prev) => [...prev, element])
-        break;
-      case "Snacks":
-        setSnackMeals((prev) => [...prev, element])
-        break;
+    if (element[0]) {
+      element[0]["id"] = Math.floor(Math.random() * 1e9);
+      element[0]["type"] = mealType;
+      console.log(element[0]);
+      setMeals((prev) => [...prev, ...element]);
+      setShowPopup(false);
+      setCarbs((prev) => prev + element[0].carbs);
+      setProtein((prev) => prev + element[0].protein);
+      setFats((prev) => prev + element[0].fats);
+      setCalories((prev) => prev + element[0].calories);
     }
   };
 

@@ -16,10 +16,6 @@ export default function CaloriesToday() {
   const [fats, setFats] = useState(0);
   const [meals, setMeals] = useState([]);
   const [mealType, setMealType] = useState("");
-  const [breakfastMeals, setBreakfastMeals] = useState([]);
-  const [lunchMeals, setLunchMeals] = useState([]);
-  const [dinnerMeals, setDinnerMeals] = useState([]);
-  const [snackMeals, setSnackMeals] = useState([]);
 
   return (
     <div className="home">
@@ -50,10 +46,6 @@ export default function CaloriesToday() {
         setProtein={setProtein}
         setFats={setFats}
         setCalories={setCalories}
-        breakfastMealsArr={[breakfastMeals, setBreakfastMeals]}
-        lunchMealsArr={[lunchMeals, setLunchMeals]}
-        dinnerMealsArr={[dinnerMeals, setDinnerMeals]}
-        snackMealsArr={[snackMeals, setSnackMeals]}
       />
     </div>
   );

@@ -1,5 +1,6 @@
 export const indianFoodData = [
     {
+        id: 1,
         name: "Dal Tadka",
         quantity: "200g",
         calories: 198,

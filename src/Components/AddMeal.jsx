@@ -18,10 +18,6 @@ export default function AddMeal({
   setProtein,
   setFats,
   setCalories,
-  breakfastMealsArr,
-  lunchMealsArr,
-  dinnerMealsArr,
-  snackMealsArr,
 }) {
   const [showPopup, setShowPopup] = useState(false);
 
@@ -29,17 +25,23 @@ export default function AddMeal({
 
   const [mealType, setMealType] = mealTypeArr;
 
-  const [breakfastMeals, setBreakfastMeals] = breakfastMealsArr;
-
-  const [lunchMeals, setLunchMeals] = lunchMealsArr;
-
-  const [dinnerMeals, setDinnerMeals] = dinnerMealsArr;
-
-  const [snackMeals, setSnackMeals] = snackMealsArr;
-
   const openPopup = (meal) => {
     setMealType(meal);
     setShowPopup((prev) => !prev);
+  };
+
+
+  let breakfastMeals = meals.filter((meal) => meal.type === "Breakfast") || [];
+
+  let lunchMeals = meals.filter((meal) => meal.type === "Lunch") || [];
+
+  let dinnerMeals = meals.filter((meal) => meal.type === "Dinner") || [];
+
+  let snackMeals = meals.filter((meal) => meal.type === "Snacks") || [];
+
+  const removeMeal = () => {
+    let updatedMeals = meals.filter((element, i) => element.id !== i)
+    console.log(updatedMeals);
   };
 
   let formRef = useRef();
@@ -61,16 +63,18 @@ export default function AddMeal({
             <FontAwesomeIcon icon={faMugSaucer} /> Breakfast
           </h3>
           <p>
-            {breakfastMeals.reduce((acc, cur) => acc + cur[0].calories, 0)} /{" "}
+            {breakfastMeals.reduce((acc, cur) => acc + cur.calories, 0)} /{" "}
             {Math.floor((calorieGoal / 100) * 30)} Cal
           </p>
           <ul>
             {breakfastMeals.map((meal, index) => (
               <li key={index}>
-                {meal[0].name} - {meal[0].calories} Cal{" "}
-                <button onClick={() => openPopup("Snacks")}>
-                <FontAwesomeIcon icon={faXmark} />
-              </button>
+                {meal.name} - {meal.calories} Cal {" "}
+                <button
+                  onClick={(e) => console.log(e)}
+                >
+                  <FontAwesomeIcon icon={faXmark} />
+                </button>
               </li>
             ))}
           </ul>
@@ -85,12 +89,12 @@ export default function AddMeal({
             <FontAwesomeIcon icon={faBreadSlice} /> Lunch
           </h3>
           <p>
-            {lunchMeals.reduce((acc, cur) => acc + cur[0].calories, 0)} /{" "}
+            {lunchMeals.reduce((acc, cur) => acc + cur.calories, 0)} /{" "}
             {Math.floor((calorieGoal / 100) * 30)} Cal
           </p>
           {lunchMeals.map((meal, index) => (
             <li key={index}>
-              {meal[0].name} - {meal[0].calories} Cal{" "}
+              {meal.name} - {meal.calories} Cal{" "}
               <button onClick={() => openPopup("Snacks")}>
                 <FontAwesomeIcon icon={faXmark} />
               </button>
@@ -107,12 +111,12 @@ export default function AddMeal({
             <FontAwesomeIcon icon={faBowlRice} /> Dinner
           </h3>
           <p>
-            {dinnerMeals.reduce((acc, cur) => acc + cur[0].calories, 0)} /{" "}
+            {dinnerMeals.reduce((acc, cur) => acc + cur.calories, 0)} /{" "}
             {Math.floor((calorieGoal / 100) * 30)} Cal
           </p>
           {dinnerMeals.map((meal, index) => (
             <li key={index}>
-              {meal[0].name} - {meal[0].calories} Cal{" "}
+              {meal.name} - {meal.calories} Cal{" "}
               <button onClick={() => openPopup("Snacks")}>
                 <FontAwesomeIcon icon={faXmark} />
               </button>
@@ -129,12 +133,12 @@ export default function AddMeal({
             <FontAwesomeIcon icon={faAppleWhole} /> Snacks
           </h3>
           <p>
-            {snackMeals.reduce((acc, cur) => acc + cur[0].calories, 0)} /{" "}
+            {snackMeals.reduce((acc, cur) => acc + cur.calories, 0)} /{" "}
             {Math.floor((calorieGoal / 100) * 10)} Cal
           </p>
           {snackMeals.map((meal, index) => (
             <li key={index}>
-              {meal[0].name} - {meal[0].calories} Cal{" "}
+              {meal.name} - {meal.calories} Cal{" "}
               <button onClick={() => openPopup("Snacks")}>
                 <FontAwesomeIcon icon={faXmark} />
               </button>
@@ -155,10 +159,6 @@ export default function AddMeal({
           setFats={setFats}
           setCalories={setCalories}
           mealType={mealType}
-          setBreakfastMeals={setBreakfastMeals}
-          setLunchMeals={setLunchMeals}
-          setDinnerMeals={setDinnerMeals}
-          setSnackMeals={setSnackMeals}
         />
       )}
     </div>
