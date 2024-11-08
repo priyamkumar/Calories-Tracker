@@ -49,18 +49,19 @@ export default function AddMealForm({
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    let element = indianFoodData.filter((item, i) => {
-      return item.name === query;
-    });
+    let element = indianFoodData.filter((item, i) => item.name === query);
+    setShowPopup(false);
     if (element[0]) {
-      element[0]["id"] = Math.floor(Math.random() * 1e9);
-      element[0]["type"] = mealType;
-      setMeals((prev) => [...prev, ...element]);
-      setShowPopup(false);
-      setCarbs((prev) => prev + element[0].carbs);
-      setProtein((prev) => prev + element[0].protein);
-      setFats((prev) => prev + element[0].fats);
-      setCalories((prev) => prev + element[0].calories);
+      let newItem = {
+        ...element[0],
+        id: Math.floor(Math.random() * 1e9),
+        type: mealType,
+      };
+      setMeals((prev) => [...prev, newItem]);
+      setCarbs((prev) => prev + Math.floor(element[0].carbs));
+      setProtein((prev) => prev + Math.floor(element[0].protein));
+      setFats((prev) => prev + Math.floor(element[0].fats));
+      setCalories((prev) => prev + Math.floor(element[0].calories));
     }
   };
 

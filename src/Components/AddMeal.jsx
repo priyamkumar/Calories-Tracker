@@ -39,15 +39,15 @@ export default function AddMeal({
   let snackMeals = meals.filter((meal) => meal.type === "Snacks") || [];
 
   const removeMeal = (index) => {
-    let deletedMeal = meals.filter((element, i) => index === i);
-    let updatedMeals = meals.filter((element, i) => index !== i);
+    let deletedMeal = meals.filter((element, i) => index === element.id);
+    let updatedMeals = meals.filter((element, i) => index !== element.id);
     setMeals(updatedMeals);
     let updatedCalories = meals.reduce((acc, cur) => acc + cur?.calories, 0);
     setCalories(updatedCalories);
-    setCarbs((prev) => prev - deletedMeal[0].carbs);
-    setProtein((prev) => prev - deletedMeal[0].protein);
-    setFats((prev) => prev - deletedMeal[0].fats);
-    setCalories((prev) => prev - deletedMeal[0].calories);
+    setCarbs((prev) => prev - Math.floor(deletedMeal[0].carbs));
+    setProtein((prev) => prev - Math.floor(deletedMeal[0].protein));
+    setFats((prev) => prev - Math.floor(deletedMeal[0].fats));
+    setCalories((prev) => prev - Math.floor(deletedMeal[0].calories));
   };
 
   let formRef = useRef();
@@ -72,16 +72,16 @@ export default function AddMeal({
             {breakfastMeals.reduce((acc, cur) => acc + cur.calories, 0)} /{" "}
             {Math.floor((calorieGoal / 100) * 30)} Cal
           </p>
-          <ul>
+          
             {breakfastMeals.map((meal, index) => (
               <li key={index}>
                 {meal.name} - {meal.calories} Cal{" "}
-                <button onClick={() => removeMeal(index)}>
+                <button onClick={() => removeMeal(meal.id)}>
                   <FontAwesomeIcon icon={faXmark} />
                 </button>
               </li>
             ))}
-          </ul>
+          
         </div>
         <button className="add-btn" onClick={(e) => openPopup("Breakfast")}>
           <FontAwesomeIcon icon={faPlus} />
@@ -99,7 +99,7 @@ export default function AddMeal({
           {lunchMeals.map((meal, index) => (
             <li key={index}>
               {meal.name} - {meal.calories} Cal{" "}
-              <button onClick={() => openPopup("Snacks")}>
+              <button onClick={() => removeMeal(meal.id)}>
                 <FontAwesomeIcon icon={faXmark} />
               </button>
             </li>
@@ -121,7 +121,7 @@ export default function AddMeal({
           {dinnerMeals.map((meal, index) => (
             <li key={index}>
               {meal.name} - {meal.calories} Cal{" "}
-              <button onClick={() => openPopup("Snacks")}>
+              <button onClick={() => removeMeal(meal.id)}>
                 <FontAwesomeIcon icon={faXmark} />
               </button>
             </li>
@@ -143,7 +143,7 @@ export default function AddMeal({
           {snackMeals.map((meal, index) => (
             <li key={index}>
               {meal.name} - {meal.calories} Cal{" "}
-              <button onClick={() => openPopup("Snacks")}>
+              <button onClick={() => removeMeal(meal.id)}>
                 <FontAwesomeIcon icon={faXmark} />
               </button>
             </li>
