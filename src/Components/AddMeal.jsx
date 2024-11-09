@@ -44,10 +44,10 @@ export default function AddMeal({
     setMeals(updatedMeals);
     let updatedCalories = meals.reduce((acc, cur) => acc + cur?.calories, 0);
     setCalories(updatedCalories);
-    setCarbs((prev) => prev - Math.floor(deletedMeal[0].carbs));
-    setProtein((prev) => prev - Math.floor(deletedMeal[0].protein));
-    setFats((prev) => prev - Math.floor(deletedMeal[0].fats));
-    setCalories((prev) => prev - Math.floor(deletedMeal[0].calories));
+    setCarbs((prev) => Math.round(prev - deletedMeal[0].carbs));
+    setProtein((prev) => Math.round(prev - deletedMeal[0].protein));
+    setFats((prev) => Math.round(prev -deletedMeal[0].fats));
+    setCalories((prev) => Math.round(prev - deletedMeal[0].calories));
   };
 
   let formRef = useRef();
@@ -78,7 +78,8 @@ export default function AddMeal({
                 {meal.name} - {meal.calories} Cal{" "}
                 <button onClick={() => removeMeal(meal.id)}>
                   <FontAwesomeIcon icon={faXmark} />
-                </button>
+                </button> {" "}
+                {meal.time} 
               </li>
             ))}
           
@@ -101,7 +102,8 @@ export default function AddMeal({
               {meal.name} - {meal.calories} Cal{" "}
               <button onClick={() => removeMeal(meal.id)}>
                 <FontAwesomeIcon icon={faXmark} />
-              </button>
+              </button> {" "}
+              {meal.time} 
             </li>
           ))}
         </div>
@@ -122,8 +124,9 @@ export default function AddMeal({
             <li key={index}>
               {meal.name} - {meal.calories} Cal{" "}
               <button onClick={() => removeMeal(meal.id)}>
-                <FontAwesomeIcon icon={faXmark} />
-              </button>
+                <FontAwesomeIcon icon={faXmark} /> 
+              </button> {" "}
+              {meal.time} 
             </li>
           ))}
         </div>
@@ -145,7 +148,8 @@ export default function AddMeal({
               {meal.name} - {meal.calories} Cal{" "}
               <button onClick={() => removeMeal(meal.id)}>
                 <FontAwesomeIcon icon={faXmark} />
-              </button>
+              </button> {" "}
+              {meal.time} 
             </li>
           ))}
         </div>

@@ -18,12 +18,13 @@ export default function AddMealForm({
   const [meals, setMeals] = mealsArr;
   const [foodCalorie, setFoodCalorie] = useState(0);
   const [quantity, setQuantity] = useState("");
-
+  
   let d = new Date();
   let h = d.getHours();
   let m = d.getMinutes();
-  if (m < 10) m = "0" + m;
   const [currentTime, setCurrentTime] = useState(`${h}:${m}`);
+  if (m < 10) m = "0" + m;
+  
   const handleOnChange = (event) => {
     if (event.target.name === "time") setCurrentTime(event.target.value);
     if (event.target.name === "meal-name") {
@@ -34,7 +35,7 @@ export default function AddMealForm({
       setFoodCalorie(element[0]?.calories || 0);
     }
     if (event.target.name === "quantity") {
-      setQuantity(event.target.value);
+      setQuantity(Number(event.target.value));
     }
 
   };
@@ -57,16 +58,19 @@ export default function AddMealForm({
     if (element[0]) {
       let newItem = {
         ...element[0],
-        calories: Math.floor((element[0].calories / 100) * quantity),
+        calories: Math.round((element[0].calories / 100) * quantity),
+        carbs: Math.round((element[0].carbs / 100) * quantity),
+        protein: Math.round((element[0].protein / 100) * quantity),
+        fats: Math.round((element[0].fats / 100) * quantity),
+        quantity: quantity,
         id: Math.floor(Math.random() * 1e9),
         type: mealType,
       };
       setMeals((prev) => [...prev, newItem]);
-      setCarbs((prev) => prev + Math.floor(element[0].carbs));
-      setProtein((prev) => prev + Math.floor(element[0].protein));
-      setFats((prev) => prev + Math.floor(element[0].fats));
-      setCalories((prev) => prev + newItem.cal);
-      console.log(newItem);
+      setCarbs((prev) => prev + newItem.carbs);
+      setProtein((prev) => prev + newItem.protein);
+      setFats((prev) => prev + newItem.fats);
+      setCalories((prev) => prev + newItem.calories);
     }
   };
 
