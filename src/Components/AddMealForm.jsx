@@ -32,8 +32,11 @@ export default function AddMealForm({
         return item.name === event.target.value;
       });
       setFoodCalorie(element[0]?.calories || 0);
-      setQuantity(element[0]?.quantity || 0);
     }
+    if (event.target.name === "quantity") {
+      setQuantity(event.target.value);
+    }
+
   };
   // const handleSearch = async () => {
   //   setError(null);
@@ -54,6 +57,7 @@ export default function AddMealForm({
     if (element[0]) {
       let newItem = {
         ...element[0],
+        calories: Math.floor((element[0].calories / 100) * quantity),
         id: Math.floor(Math.random() * 1e9),
         type: mealType,
       };
@@ -61,7 +65,8 @@ export default function AddMealForm({
       setCarbs((prev) => prev + Math.floor(element[0].carbs));
       setProtein((prev) => prev + Math.floor(element[0].protein));
       setFats((prev) => prev + Math.floor(element[0].fats));
-      setCalories((prev) => prev + Math.floor(element[0].calories));
+      setCalories((prev) => prev + newItem.cal);
+      console.log(newItem);
     }
   };
 
@@ -83,6 +88,7 @@ export default function AddMealForm({
               id="foodname"
               list="foodname"
               onChange={handleOnChange}
+              required
             />
           </label>
           {/* <button onClick={handleSearch} type="button">
@@ -91,16 +97,18 @@ export default function AddMealForm({
           <label htmlFor="quantity">
             Quantity
             <input
-              type="text"
+              type="number"
               id="quantity"
+              name="quantity"
               min="0"
               value={quantity}
-              readOnly
+              onChange={handleOnChange}
+              required
             />
           </label>
 
           <label htmlFor="calories">
-            Calories
+            Calories per 100g
             <input
               type="number"
               id="calories"
