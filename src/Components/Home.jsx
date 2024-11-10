@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRight
 } from "@fortawesome/free-solid-svg-icons";
+import { useTheme } from "./Contexts/ThemeContext";
 
 export default function CaloriesToday() {
   const [calorieGoal, setCalorieGoal] = useState(2600);
@@ -16,8 +17,10 @@ export default function CaloriesToday() {
   const [fats, setFats] = useState(0);
   const [meals, setMeals] = useState([]);
   const [mealType, setMealType] = useState("");
+  const {theme} = useTheme();
 
   return (
+    <main className={theme === "Dark" ? "dark" : ""}>
     <div className="home">
       <div className="calories">
         <div className="calories-consumed">
@@ -48,5 +51,6 @@ export default function CaloriesToday() {
         setCalories={setCalories}
       />
     </div>
+    </main>
   );
 }
