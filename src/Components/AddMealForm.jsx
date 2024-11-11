@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { searchFood } from "../Utility/openFoodFactsAPI";
 import { indianFoodData } from "../Utility/mockData";
+import { useTheme } from "./Contexts/ThemeContext";
 
 export default function AddMealForm({
   formRef,
@@ -18,12 +19,13 @@ export default function AddMealForm({
   const [meals, setMeals] = mealsArr;
   const [foodCalorie, setFoodCalorie] = useState(0);
   const [quantity, setQuantity] = useState("");
-  
+  const {theme} = useTheme();
+
   let d = new Date();
   let h = d.getHours();
   let m = d.getMinutes();
-  const [currentTime, setCurrentTime] = useState(`${h}:${m}`);
   if (m < 10) m = "0" + m;
+  const [currentTime, setCurrentTime] = useState(`${h}:${m}`);
   
   const handleOnChange = (event) => {
     if (event.target.name === "time") setCurrentTime(event.target.value);
@@ -71,12 +73,18 @@ export default function AddMealForm({
       setProtein((prev) => prev + newItem.protein);
       setFats((prev) => prev + newItem.fats);
       setCalories((prev) => prev + newItem.calories);
+      // localStorage.setItem("meals", JSON.stringify(...meals), JSON.stringify(newItem));
+      console.log(JSON.stringify(...meals) || "", JSON.stringify(newItem));
     }
   };
+  
+  useEffect(() => {
+
+  }, [meals])
 
   return (
-    <div className="popup-overlay">
-      <form className="popup-form" ref={formRef} onSubmit={handleSubmit}>
+    <div className={`popup-overlay`}>
+      <form className={`popup-form ${theme === "Dark" ? "dark" : ""}`} ref={formRef} onSubmit={handleSubmit}>
         <h2>Add Meal</h2>
         <div className="meal-info">
           <datalist id="foodname">

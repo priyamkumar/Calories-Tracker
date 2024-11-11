@@ -1,8 +1,11 @@
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import { useTheme } from "./Contexts/ThemeContext";
 
 export default function ProgressBar({ calories, calorieGoal }) {
+  const {theme} = useTheme();
+  let color = theme === "Dark" ? "white" : "black"
   return (
     <Box sx={{ position: "relative", display: "inline-flex" }}>
       <CircularProgress
@@ -28,7 +31,7 @@ export default function ProgressBar({ calories, calorieGoal }) {
         <Typography
           variant="caption"
           component="div"
-          sx={{ color: "text.secondary" }}
+          sx={{ color: {color} }}
         >
           {`${Math.floor((calories / calorieGoal) * 100)}%`}
         </Typography>

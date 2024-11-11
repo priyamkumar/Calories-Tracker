@@ -8,6 +8,6 @@ import {
 export default function Theme() {
     const {theme, toggleTheme} = useTheme();
   return (
-    <button onClick={toggleTheme}>{theme === "Light" ? "Dark" : "Light"} Mode <FontAwesomeIcon icon={theme === "Light" ? faMoon : faSun}/></button>
+    <button id="darkModeToggle" onClick={toggleTheme}>{theme === "Light" ? "Dark" : "Light"} Mode <FontAwesomeIcon icon={theme === "Light" ? faMoon : faSun}/></button>
   )
 }
