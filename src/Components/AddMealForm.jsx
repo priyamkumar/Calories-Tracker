@@ -73,15 +73,9 @@ export default function AddMealForm({
       setProtein((prev) => prev + newItem.protein);
       setFats((prev) => prev + newItem.fats);
       setCalories((prev) => prev + newItem.calories);
-      // localStorage.setItem("meals", JSON.stringify(...meals), JSON.stringify(newItem));
-      console.log(JSON.stringify(...meals) || "", JSON.stringify(newItem));
     }
   };
   
-  useEffect(() => {
-
-  }, [meals])
-
   return (
     <div className={`popup-overlay`}>
       <form className={`popup-form ${theme === "Dark" ? "dark" : ""}`} ref={formRef} onSubmit={handleSubmit}>

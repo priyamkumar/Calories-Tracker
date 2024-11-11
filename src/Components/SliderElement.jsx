@@ -8,7 +8,7 @@ export default function SliderElement({ calorieGoalArr }) {
       <Slider
         getAriaLabel={() => "Set Calories Goal"}
         min={2000}
-        max={3000}
+        max={3200}
         step={10}
         value={calorieGoal}
         onChange={(event) => setCalorieGoal(event.target.value)}

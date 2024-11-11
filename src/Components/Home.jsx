@@ -10,14 +10,24 @@ import {
 import { useTheme } from "./Contexts/ThemeContext";
 
 export default function CaloriesToday() {
-  const [calorieGoal, setCalorieGoal] = useState(2600);
-  const [calories, setCalories] = useState(0);
-  const [carbs, setCarbs] = useState(0);
-  const [protein, setProtein] = useState(0);
-  const [fats, setFats] = useState(0);
-  const [meals, setMeals] = useState([]);
+  const [calorieGoal, setCalorieGoal] = useState(JSON.parse(localStorage.getItem("calorieGoal")) || 2600);
+  const [calories, setCalories] = useState(JSON.parse(localStorage.getItem("calories")) || 0);
+  const [carbs, setCarbs] = useState(JSON.parse(localStorage.getItem("carbs")) || 0);
+  const [protein, setProtein] = useState(JSON.parse(localStorage.getItem("protein")) || 0);
+  const [fats, setFats] = useState(JSON.parse(localStorage.getItem("fats")) || 0);
+  const [meals, setMeals] = useState(JSON.parse(localStorage.getItem("meals")) || []);
   const [mealType, setMealType] = useState("");
   const {theme} = useTheme();
+
+  useEffect(() => {
+    localStorage.setItem("meals", JSON.stringify(meals));
+    localStorage.setItem("calories", JSON.stringify(calories));
+    localStorage.setItem("calorieGoal", JSON.stringify(calorieGoal));
+    localStorage.setItem("carbs", JSON.stringify(carbs));
+    localStorage.setItem("protein", JSON.stringify(protein));
+    localStorage.setItem("fats", JSON.stringify(fats));
+
+  }, [calories, calorieGoal, meals, carbs, protein, fats])
 
   return (
     <main className={theme === "Dark" ? "dark" : ""}>
