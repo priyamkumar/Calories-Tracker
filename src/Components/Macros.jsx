@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import LinearProgress from "@mui/material/LinearProgress";
 
-export default function Macros({ calorieGoal, carbs, protein, fats }) {
-  let carbsLimit = Math.floor(((calorieGoal / 100) * 50) / 4);
-  let proteinLimit = Math.floor(((calorieGoal / 100) * 20) / 4);
-  let fatsLimit = Math.floor(((calorieGoal / 100) * 30) / 9);
+export default function Macros({ data }) {
+  let carbsLimit = Math.floor(((data.calorieGoal / 100) * 50) / 4);
+  let proteinLimit = Math.floor(((data.calorieGoal / 100) * 20) / 4);
+  let fatsLimit = Math.floor(((data.calorieGoal / 100) * 30) / 9);
 
   return (
     <div className="macros-container">
@@ -13,11 +13,11 @@ export default function Macros({ calorieGoal, carbs, protein, fats }) {
         <LinearProgress
           variant="determinate"
           value={
-            (carbs / carbsLimit) * 100 < 100 ? (carbs / carbsLimit) * 100 : 100
+            (data.carbs / carbsLimit) * 100 < 100 ? (data.carbs / carbsLimit) * 100 : 100
           }
         />
         <p>
-          {carbs} / {carbsLimit} g
+          {data.carbs} / {carbsLimit} g
         </p>
       </div>
       <div className="card">
@@ -25,13 +25,13 @@ export default function Macros({ calorieGoal, carbs, protein, fats }) {
         <LinearProgress
           variant="determinate"
           value={
-            (protein / proteinLimit) * 100 < 100
-              ? (protein / proteinLimit) * 100
+            (data.protein / proteinLimit) * 100 < 100
+              ? (data.protein / proteinLimit) * 100
               : 100
           }
         />
         <p>
-          {protein} / {proteinLimit} g
+          {data.protein} / {proteinLimit} g
         </p>
       </div>
       <div className="card">
@@ -39,11 +39,11 @@ export default function Macros({ calorieGoal, carbs, protein, fats }) {
         <LinearProgress
           variant="determinate"
           value={
-            (fats / fatsLimit) * 100 < 100 ? (fats / fatsLimit) * 100 : 100
+            (data.fats / fatsLimit) * 100 < 100 ? (data.fats / fatsLimit) * 100 : 100
           }
         />
         <p>
-          {fats} / {fatsLimit} g
+          {data.fats} / {fatsLimit} g
         </p>
       </div>
     </div>

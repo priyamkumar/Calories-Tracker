@@ -6,17 +6,19 @@ import { useTheme } from "./Contexts/ThemeContext";
 export default function AddMealForm({
   formRef,
   setShowPopup,
-  mealsArr,
-  setCarbs,
-  setProtein,
-  setFats,
-  setCalories,
+  dataArr,
+  // mealsArr,
+  // setCarbs,
+  // setProtein,
+  // setFats,
+  // setCalories,
   mealType,
 }) {
   const [query, setQuery] = useState("");
   const [foodData, setFoodData] = useState(null);
   const [error, setError] = useState(null);
-  const [meals, setMeals] = mealsArr;
+  // const [meals, setMeals] = mealsArr;
+  const [data, setData] = dataArr;
   const [foodCalorie, setFoodCalorie] = useState(0);
   const [quantity, setQuantity] = useState("");
   const {theme} = useTheme();
@@ -68,11 +70,11 @@ export default function AddMealForm({
         id: Math.floor(Math.random() * 1e9),
         type: mealType,
       };
-      setMeals((prev) => [...prev, newItem]);
-      setCarbs((prev) => prev + newItem.carbs);
-      setProtein((prev) => prev + newItem.protein);
-      setFats((prev) => prev + newItem.fats);
-      setCalories((prev) => prev + newItem.calories);
+      // setCarbs((prev) => prev + newItem.carbs);
+      // setProtein((prev) => prev + newItem.protein);
+      // setFats((prev) => prev + newItem.fats);
+      // setCalories((prev) => prev + newItem.calories);
+      setData((prev) => ({...prev, calories: prev.calories + newItem.calories, meals: [...prev.meals, newItem], carbs: prev.carbs + newItem.carbs, protein: prev.protein + newItem.protein, fats: prev.fats + newItem.fats}));
     }
   };
   

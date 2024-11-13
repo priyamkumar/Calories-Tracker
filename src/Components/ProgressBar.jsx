@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useTheme } from "./Contexts/ThemeContext";
 
-export default function ProgressBar({ calories, calorieGoal }) {
+export default function ProgressBar({ data }) {
   const {theme} = useTheme();
   let color = theme === "Dark" ? "white" : "black"
   return (
@@ -11,8 +11,8 @@ export default function ProgressBar({ calories, calorieGoal }) {
       <CircularProgress
         variant="determinate"
         value={
-          (calories / calorieGoal) * 100 < 100
-            ? (calories / calorieGoal) * 100
+          (data.calories / data.calorieGoal) * 100 < 100
+            ? (data.calories / data.calorieGoal) * 100
             : 100
         }
       ></CircularProgress>
@@ -33,7 +33,7 @@ export default function ProgressBar({ calories, calorieGoal }) {
           component="div"
           sx={{ color: {color} }}
         >
-          {`${Math.floor((calories / calorieGoal) * 100)}%`}
+          {`${Math.floor((data.calories / data.calorieGoal) * 100)}%`}
         </Typography>
       </Box>
     </Box>

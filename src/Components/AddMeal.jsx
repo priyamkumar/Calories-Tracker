@@ -11,17 +11,13 @@ import {
 import AddMealForm from "./AddMealForm";
 
 export default function AddMeal({
-  calorieGoal,
-  mealsArr,
+  dataArr,
+  // mealsArr,
   mealTypeArr,
-  setCarbs,
-  setProtein,
-  setFats,
-  setCalories,
 }) {
   const [showPopup, setShowPopup] = useState(false);
-
-  const [meals, setMeals] = mealsArr;
+const [data, setData] = dataArr;
+  // const [meals, setMeals] = mealsArr;
 
   const [mealType, setMealType] = mealTypeArr;
 
@@ -30,24 +26,22 @@ export default function AddMeal({
     setShowPopup((prev) => !prev);
   };
 
-  let breakfastMeals = meals.filter((meal) => meal.type === "Breakfast") || [];
+  let breakfastMeals = data.meals.filter((meal) => meal.type === "Breakfast") || [];
 
-  let lunchMeals = meals.filter((meal) => meal.type === "Lunch") || [];
+  let lunchMeals = data.meals.filter((meal) => meal.type === "Lunch") || [];
 
-  let dinnerMeals = meals.filter((meal) => meal.type === "Dinner") || [];
+  let dinnerMeals = data.meals.filter((meal) => meal.type === "Dinner") || [];
 
-  let snackMeals = meals.filter((meal) => meal.type === "Snacks") || [];
+  let snackMeals = data.meals.filter((meal) => meal.type === "Snacks") || [];
 
   const removeMeal = (index) => {
-    let deletedMeal = meals.filter((element, i) => index === element.id);
-    let updatedMeals = meals.filter((element, i) => index !== element.id);
-    setMeals(updatedMeals);
-    let updatedCalories = meals.reduce((acc, cur) => acc + cur?.calories, 0);
-    setCalories(updatedCalories);
-    setCarbs((prev) => Math.round(prev - deletedMeal[0].carbs));
-    setProtein((prev) => Math.round(prev - deletedMeal[0].protein));
-    setFats((prev) => Math.round(prev -deletedMeal[0].fats));
-    setCalories((prev) => Math.round(prev - deletedMeal[0].calories));
+    let deletedMeal = data.meals.filter((element, i) => index === element.id);
+    let updatedMeals = data.meals.filter((element, i) => index !== element.id);
+    // setCarbs((prev) => Math.round(prev - deletedMeal[0].carbs));
+    // setProtein((prev) => Math.round(prev - deletedMeal[0].protein));
+    // setFats((prev) => Math.round(prev -deletedMeal[0].fats));
+    // setCalories((prev) => Math.round(prev - deletedMeal[0].calories));
+    setData((prev) => ({ ...prev, calories: Math.round(prev.calories - deletedMeal[0].calories), carbs: Math.round(prev.carbs - deletedMeal[0].carbs), protein: Math.round(prev.protein - deletedMeal[0].protein), fats: Math.round(prev.fats - deletedMeal[0].fats), meals: updatedMeals}));
   };
 
   let formRef = useRef();
@@ -70,7 +64,7 @@ export default function AddMeal({
           </h3>
           <p>
             {breakfastMeals.reduce((acc, cur) => acc + cur.calories, 0)} /{" "}
-            {Math.floor((calorieGoal / 100) * 30)} Cal
+            {Math.floor((data.calorieGoal / 100) * 30)} Cal
           </p>
           
             {breakfastMeals.map((meal, index) => (
@@ -95,7 +89,7 @@ export default function AddMeal({
           </h3>
           <p>
             {lunchMeals.reduce((acc, cur) => acc + cur.calories, 0)} /{" "}
-            {Math.floor((calorieGoal / 100) * 30)} Cal
+            {Math.floor((data.calorieGoal / 100) * 30)} Cal
           </p>
           {lunchMeals.map((meal, index) => (
             <li key={index}>
@@ -118,7 +112,7 @@ export default function AddMeal({
           </h3>
           <p>
             {dinnerMeals.reduce((acc, cur) => acc + cur.calories, 0)} /{" "}
-            {Math.floor((calorieGoal / 100) * 30)} Cal
+            {Math.floor((data.calorieGoal / 100) * 30)} Cal
           </p>
           {dinnerMeals.map((meal, index) => (
             <li key={index}>
@@ -141,7 +135,7 @@ export default function AddMeal({
           </h3>
           <p>
             {snackMeals.reduce((acc, cur) => acc + cur.calories, 0)} /{" "}
-            {Math.floor((calorieGoal / 100) * 10)} Cal
+            {Math.floor((data.calorieGoal / 100) * 10)} Cal
           </p>
           {snackMeals.map((meal, index) => (
             <li key={index}>
@@ -161,11 +155,11 @@ export default function AddMeal({
         <AddMealForm
           formRef={formRef}
           setShowPopup={setShowPopup}
-          mealsArr={[meals, setMeals]}
-          setCarbs={setCarbs}
-          setProtein={setProtein}
-          setFats={setFats}
-          setCalories={setCalories}
+          dataArr={[data, setData]}
+          // setCarbs={setCarbs}
+          // setProtein={setProtein}
+          // setFats={setFats}
+          // setCalories={setCalories}
           mealType={mealType}
         />
       )}
