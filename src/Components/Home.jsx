@@ -29,13 +29,10 @@ export default function CaloriesToday() {
   
   let today = new Date().toISOString().split("T")[0];
 
-  const [date, setDate] = useState(
-    JSON.parse(localStorage.getItem("date")) || today
-  );
-console.log(localStorage.getItem(date))
+  const [date, setDate] = useState(today);
 
-  const [data, setData] = useState(
-    JSON.parse(localStorage.getItem(date)) || {
+
+  const [data, setData] = useState({
     calorieGoal: 2600,
     calories: 0,
     carbs: 0,
@@ -44,34 +41,44 @@ console.log(localStorage.getItem(date))
     meals: [],
   });
 
-  const updateData = (data) => {
-    // console.log(data)
-    // setData((prev) => ({...prev, calorieGoal: data.calorieGoal}));
+  const updateData = (data) =>  {
+    setData(data);
   }
 
 
-  useEffect(() => {
-    localStorage.setItem(date, JSON.stringify(data));
-    localStorage.setItem("date", JSON.stringify(date));
+  useEffect(() => {console.log(date)
+    let dateData = JSON.parse(localStorage.getItem(date));
+    if(dateData)
+      {
+        updateData(dateData);
+      }
+    else localStorage.setItem(date, JSON.stringify(data));
+    // localStorage.setItem("date", JSON.stringify(date));
     // localStorage.setItem("meals", JSON.stringify(meals));
     // localStorage.setItem("calories", JSON.stringify(calories));
     // localStorage.setItem("calorieGoal", JSON.stringify(calorieGoal));
     // localStorage.setItem("carbs", JSON.stringify(carbs));
     // localStorage.setItem("protein", JSON.stringify(protein));
     // localStorage.setItem("fats", JSON.stringify(fats));
-  }, [date, data]);
+  }, [date]);
+
+  useEffect(() => {
+    localStorage.setItem(date, JSON.stringify(data));
+  },[data])
+
 
   const handleDate = (event) => {
     setDate(event.target.value);
-    let dateData = JSON.parse(localStorage.getItem(date));
-    // console.log(dateData);
-    if(dateData)
-    {
-      updateData(dateData);
-    }
-    else {
-      localStorage.setItem(date, JSON.stringify(data));
-    }
+    // let dateData = JSON.parse(localStorage.getItem(date));
+    // // console.log(dateData);
+    // if(dateData)
+    // {
+    //   updateData(dateData);
+      
+    // }
+    // else {
+    //   localStorage.setItem(date, JSON.stringify(data));
+    // }
   };
 
   return (
