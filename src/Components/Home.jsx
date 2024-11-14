@@ -26,33 +26,31 @@ export default function CaloriesToday() {
   // );
   const [mealType, setMealType] = useState("");
   const { theme } = useTheme();
-  
+
   let today = new Date().toISOString().split("T")[0];
 
   const [date, setDate] = useState(today);
 
+  const [data, setData] = useState(
+    JSON.parse(localStorage.getItem(date)) || {
+      calorieGoal: 2600,
+      calories: 0,
+      carbs: 0,
+      protein: 0,
+      fats: 0,
+      meals: [],
+    }
+  );
 
-  const [data, setData] = useState({
-    calorieGoal: 2600,
-    calories: 0,
-    carbs: 0,
-    protein: 0,
-    fats: 0,
-    meals: [],
-  });
-
-  const updateData = (data) =>  {
+  const updateData = (data) => {
     setData(data);
-  }
+  };
 
-
-  useEffect(() => {console.log(date)
+  useEffect(() => {
     let dateData = JSON.parse(localStorage.getItem(date));
-    if(dateData)
-      {
-        updateData(dateData);
-      }
-    else localStorage.setItem(date, JSON.stringify(data));
+    if (dateData) {
+      updateData(dateData);
+    }
     // localStorage.setItem("date", JSON.stringify(date));
     // localStorage.setItem("meals", JSON.stringify(meals));
     // localStorage.setItem("calories", JSON.stringify(calories));
@@ -64,8 +62,7 @@ export default function CaloriesToday() {
 
   useEffect(() => {
     localStorage.setItem(date, JSON.stringify(data));
-  },[data])
-
+  }, [data]);
 
   const handleDate = (event) => {
     setDate(event.target.value);
@@ -74,7 +71,7 @@ export default function CaloriesToday() {
     // if(dateData)
     // {
     //   updateData(dateData);
-      
+
     // }
     // else {
     //   localStorage.setItem(date, JSON.stringify(data));
