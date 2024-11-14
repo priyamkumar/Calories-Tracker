@@ -1,4 +1,4 @@
-import { useTheme } from "./Contexts/ThemeContext"
+import { useTheme } from "../Contexts/ThemeContext"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faMoon,

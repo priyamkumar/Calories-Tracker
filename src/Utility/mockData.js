@@ -319,5 +319,4 @@ export const indianFoodData = [
         protein: 6,
         fats: 9
     }
-    // Add more items as needed
 ];

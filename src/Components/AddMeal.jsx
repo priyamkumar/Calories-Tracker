@@ -12,12 +12,10 @@ import AddMealForm from "./AddMealForm";
 
 export default function AddMeal({
   dataArr,
-  // mealsArr,
   mealTypeArr,
 }) {
   const [showPopup, setShowPopup] = useState(false);
 const [data, setData] = dataArr;
-  // const [meals, setMeals] = mealsArr;
 
   const [mealType, setMealType] = mealTypeArr;
 
@@ -37,10 +35,6 @@ const [data, setData] = dataArr;
   const removeMeal = (index) => {
     let deletedMeal = data.meals.filter((element, i) => index === element.id);
     let updatedMeals = data.meals.filter((element, i) => index !== element.id);
-    // setCarbs((prev) => Math.round(prev - deletedMeal[0].carbs));
-    // setProtein((prev) => Math.round(prev - deletedMeal[0].protein));
-    // setFats((prev) => Math.round(prev -deletedMeal[0].fats));
-    // setCalories((prev) => Math.round(prev - deletedMeal[0].calories));
     setData((prev) => ({ ...prev, calories: Math.round(prev.calories - deletedMeal[0].calories), carbs: Math.round(prev.carbs - deletedMeal[0].carbs), protein: Math.round(prev.protein - deletedMeal[0].protein), fats: Math.round(prev.fats - deletedMeal[0].fats), meals: updatedMeals}));
   };
 
@@ -156,10 +150,6 @@ const [data, setData] = dataArr;
           formRef={formRef}
           setShowPopup={setShowPopup}
           dataArr={[data, setData]}
-          // setCarbs={setCarbs}
-          // setProtein={setProtein}
-          // setFats={setFats}
-          // setCalories={setCalories}
           mealType={mealType}
         />
       )}

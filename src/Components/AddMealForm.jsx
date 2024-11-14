@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { searchFood } from "../Utility/openFoodFactsAPI";
 import { indianFoodData } from "../Utility/mockData";
-import { useTheme } from "./Contexts/ThemeContext";
+import { useTheme } from "../Contexts/ThemeContext";
 
 export default function AddMealForm({
   formRef,

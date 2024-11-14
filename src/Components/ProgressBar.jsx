@@ -1,7 +1,7 @@
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { useTheme } from "./Contexts/ThemeContext";
+import { useTheme } from "../Contexts/ThemeContext";
 
 export default function ProgressBar({ data }) {
   const {theme} = useTheme();
