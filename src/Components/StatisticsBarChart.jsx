@@ -1,13 +1,20 @@
 import React, { useState } from "react";
 import Chart from "react-apexcharts"
 
-export default function StatisticsBarChart() {
+export default function StatisticsBarChart({dataArr}) {
+  let allDates = JSON.parse(localStorage.getItem("allDates"));
+  let date = allDates.map((el) => el.split("-")[1] + "-" + el.split("-")[2]);
+  console.log(date)
+  let data = allDates.map((el) => JSON.parse(localStorage.getItem(el)));
+  let calories = (data.map((el) => el.calories));
+
+
   {
     const [data, setData] = useState({
           
       series: [{
-        name: 'Inflation',
-        data: [2.3, 3.1, 4.0, 10.1, 4.0, 3.6, 3.2, 2.3, 1.4, 0.8, 0.5, 0.2]
+        name: 'Calories',
+        data: calories,
       }],
       options: {
         chart: {
@@ -18,14 +25,14 @@ export default function StatisticsBarChart() {
           bar: {
             borderRadius: 10,
             dataLabels: {
-              position: 'top', // top, center, bottom
+              position: 'top',
             },
           }
         },
         dataLabels: {
           enabled: true,
           formatter: function (val) {
-            return val + "%";
+            return val + " " + "Cal";
           },
           offsetY: -20,
           style: {
@@ -35,7 +42,7 @@ export default function StatisticsBarChart() {
         },
         
         xaxis: {
-          categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+          categories: date,
           position: 'top',
           axisBorder: {
             show: false
@@ -69,13 +76,13 @@ export default function StatisticsBarChart() {
           labels: {
             show: false,
             formatter: function (val) {
-              return val + "%";
+              return val + " " + "Cal";
             }
           }
         
         },
         title: {
-          text: 'Monthly Inflation in Argentina, 2002',
+          text: 'Weekly Calories',
           floating: true,
           offsetY: 330,
           align: 'center',

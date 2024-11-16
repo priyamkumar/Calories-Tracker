@@ -2,11 +2,11 @@ import React from 'react'
 import StatisticsHeading from './StatisticsHeader'
 import StatisticsBarChart from './StatisticsBarChart'
 
-export default function Statistics() {
+export default function Statistics({dataArr}) {
   return (
     <div className="stats"> 
     <StatisticsHeading/>
-    <StatisticsBarChart/>
+    <StatisticsBarChart dataArr={dataArr}/>
     </div>
   )
 }
