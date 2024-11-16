@@ -33,7 +33,7 @@ export default function ProgressBar({ data }) {
           component="div"
           sx={{ color: {color} }}
         >
-          {`${Math.floor((data.calories / data.calorieGoal) * 100)}%`}
+          {`${Math.round((data.calories / data.calorieGoal) * 100)}%`}
         </Typography>
       </Box>
     </Box>

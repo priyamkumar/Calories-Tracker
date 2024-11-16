@@ -4,7 +4,6 @@ import Chart from "react-apexcharts"
 export default function StatisticsBarChart({dataArr}) {
   let allDates = JSON.parse(localStorage.getItem("allDates"));
   let date = allDates.map((el) => el.split("-")[1] + "-" + el.split("-")[2]);
-  console.log(date)
   let data = allDates.map((el) => JSON.parse(localStorage.getItem(el)));
   let calories = (data.map((el) => el.calories));
 

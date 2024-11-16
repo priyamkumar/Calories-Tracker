@@ -10,12 +10,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import AddMealForm from "./AddMealForm";
 
-export default function AddMeal({
-  dataArr,
-  mealTypeArr,
-}) {
+export default function AddMeal({ dataArr, mealTypeArr }) {
   const [showPopup, setShowPopup] = useState(false);
-const [data, setData] = dataArr;
+  const [data, setData] = dataArr;
 
   const [mealType, setMealType] = mealTypeArr;
 
@@ -24,7 +21,8 @@ const [data, setData] = dataArr;
     setShowPopup((prev) => !prev);
   };
 
-  let breakfastMeals = data.meals.filter((meal) => meal.type === "Breakfast") || [];
+  let breakfastMeals =
+    data.meals.filter((meal) => meal.type === "Breakfast") || [];
 
   let lunchMeals = data.meals.filter((meal) => meal.type === "Lunch") || [];
 
@@ -35,7 +33,14 @@ const [data, setData] = dataArr;
   const removeMeal = (index) => {
     let deletedMeal = data.meals.filter((element, i) => index === element.id);
     let updatedMeals = data.meals.filter((element, i) => index !== element.id);
-    setData((prev) => ({ ...prev, calories: Math.round(prev.calories - deletedMeal[0].calories), carbs: Math.round(prev.carbs - deletedMeal[0].carbs), protein: Math.round(prev.protein - deletedMeal[0].protein), fats: Math.round(prev.fats - deletedMeal[0].fats), meals: updatedMeals}));
+    setData((prev) => ({
+      ...prev,
+      calories: Math.round(prev.calories - deletedMeal[0].calories),
+      carbs: Math.round(prev.carbs - deletedMeal[0].carbs),
+      protein: Math.round(prev.protein - deletedMeal[0].protein),
+      fats: Math.round(prev.fats - deletedMeal[0].fats),
+      meals: updatedMeals,
+    }));
   };
 
   let formRef = useRef();
@@ -58,19 +63,19 @@ const [data, setData] = dataArr;
           </h3>
           <p>
             {breakfastMeals.reduce((acc, cur) => acc + cur.calories, 0)} /{" "}
-            {Math.floor((data.calorieGoal / 100) * 30)} Cal
+            {(data.calorieGoal / 100) * 30} Cal
           </p>
-          
-            {breakfastMeals.map((meal, index) => (
-              <li key={index}>
+          {breakfastMeals.map((meal, index) => (
+            <li key={index}>
+              <div className="meal-items">
                 {meal.name} - {meal.calories} Cal{" "}
-                <button onClick={() => removeMeal(meal.id)}>
+                <button className="remove-btn" onClick={() => removeMeal(meal.id)}>
                   <FontAwesomeIcon icon={faXmark} />
-                </button> {" "}
-                {meal.time} 
-              </li>
-            ))}
-          
+                </button>{" "}
+                {meal.time}
+              </div>
+            </li>
+          ))}
         </div>
         <button className="add-btn" onClick={(e) => openPopup("Breakfast")}>
           <FontAwesomeIcon icon={faPlus} />
@@ -83,15 +88,18 @@ const [data, setData] = dataArr;
           </h3>
           <p>
             {lunchMeals.reduce((acc, cur) => acc + cur.calories, 0)} /{" "}
-            {Math.floor((data.calorieGoal / 100) * 30)} Cal
+            {(data.calorieGoal / 100) * 30} Cal
           </p>
+
           {lunchMeals.map((meal, index) => (
             <li key={index}>
-              {meal.name} - {meal.calories} Cal{" "}
-              <button onClick={() => removeMeal(meal.id)}>
-                <FontAwesomeIcon icon={faXmark} />
-              </button> {" "}
-              {meal.time} 
+              <div className="meal-items">
+                {meal.name} - {meal.calories} Cal{" "}
+                <button className="remove-btn" onClick={() => removeMeal(meal.id)}>
+                  <FontAwesomeIcon icon={faXmark} />
+                </button>{" "}
+                {meal.time}
+              </div>
             </li>
           ))}
         </div>
@@ -106,15 +114,17 @@ const [data, setData] = dataArr;
           </h3>
           <p>
             {dinnerMeals.reduce((acc, cur) => acc + cur.calories, 0)} /{" "}
-            {Math.floor((data.calorieGoal / 100) * 30)} Cal
+            {(data.calorieGoal / 100) * 30} Cal
           </p>
           {dinnerMeals.map((meal, index) => (
             <li key={index}>
-              {meal.name} - {meal.calories} Cal{" "}
-              <button onClick={() => removeMeal(meal.id)}>
-                <FontAwesomeIcon icon={faXmark} /> 
-              </button> {" "}
-              {meal.time} 
+              <div className="meal-items">
+                {meal.name} - {meal.calories} Cal{" "}
+                <button className="remove-btn" onClick={() => removeMeal(meal.id)}>
+                  <FontAwesomeIcon icon={faXmark} />
+                </button>{" "}
+                {meal.time}
+              </div>
             </li>
           ))}
         </div>
@@ -129,15 +139,17 @@ const [data, setData] = dataArr;
           </h3>
           <p>
             {snackMeals.reduce((acc, cur) => acc + cur.calories, 0)} /{" "}
-            {Math.floor((data.calorieGoal / 100) * 10)} Cal
+            {(data.calorieGoal / 100) * 10} Cal
           </p>
           {snackMeals.map((meal, index) => (
             <li key={index}>
-              {meal.name} - {meal.calories} Cal{" "}
-              <button onClick={() => removeMeal(meal.id)}>
-                <FontAwesomeIcon icon={faXmark} />
-              </button> {" "}
-              {meal.time} 
+              <div className="meal-items">
+                {meal.name} - {meal.calories} Cal{" "}
+                <button className="remove-btn" onClick={() => removeMeal(meal.id)}>
+                  <FontAwesomeIcon icon={faXmark} />
+                </button>{" "}
+                {meal.time}
+              </div>
             </li>
           ))}
         </div>
