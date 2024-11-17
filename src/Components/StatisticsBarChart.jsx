@@ -7,7 +7,6 @@ export default function StatisticsBarChart({dataArr}) {
   let data = allDates.map((el) => JSON.parse(localStorage.getItem(el)));
   let calories = (data.map((el) => el.calories));
 
-
   {
     const [data, setData] = useState({
           
@@ -23,8 +22,9 @@ export default function StatisticsBarChart({dataArr}) {
         plotOptions: {
           bar: {
             borderRadius: 10,
+            columnWidth: '25%',
             dataLabels: {
-              position: 'top',
+            position: 'top',
             },
           }
         },

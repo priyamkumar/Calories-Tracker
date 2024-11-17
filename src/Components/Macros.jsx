@@ -12,6 +12,7 @@ export default function Macros({ data }) {
         <h3>Carbs</h3>
         <LinearProgress
           variant="determinate"
+          color={(data.carbs / carbsLimit) * 100 < 100 ? "primary" : "error"}
           value={
             (data.carbs / carbsLimit) * 100 < 100 ? (data.carbs / carbsLimit) * 100 : 100
           }
@@ -24,6 +25,7 @@ export default function Macros({ data }) {
         <h3>Protein</h3>
         <LinearProgress
           variant="determinate"
+          color={(data.protein / proteinLimit) * 100 < 100 ? "primary" : "error"}
           value={
             (data.protein / proteinLimit) * 100 < 100
               ? (data.protein / proteinLimit) * 100
@@ -38,6 +40,7 @@ export default function Macros({ data }) {
         <h3>Fats</h3>
         <LinearProgress
           variant="determinate"
+          color={(data.fats / fatsLimit) * 100 < 100 ? "primary" : "error"}
           value={
             (data.fats / fatsLimit) * 100 < 100 ? (data.fats / fatsLimit) * 100 : 100
           }

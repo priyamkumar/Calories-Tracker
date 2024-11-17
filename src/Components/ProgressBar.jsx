@@ -10,6 +10,7 @@ export default function ProgressBar({ data }) {
     <Box sx={{ position: "relative", display: "inline-flex" }}>
       <CircularProgress
         variant="determinate"
+        color={(data.calories / data.calorieGoal) * 100 < 100 ? "primary" : "error"}
         value={
           (data.calories / data.calorieGoal) * 100 < 100
             ? (data.calories / data.calorieGoal) * 100
