@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Chart from "react-apexcharts";
 
 export default function StatisticsBarChart() {
-  let allDates = JSON.parse(localStorage.getItem("allDates"));
-  let barDates = allDates.sort((a, b) => b.split("-")[0] - a.split("-")[0]);
-  barDates = allDates.sort((a, b) => b.split("-")[1] - a.split("-")[1]);
-  barDates = allDates.sort((a, b) => b.split("-")[2] - a.split("-")[2]);
-  barDates = barDates.slice(0, 7);
-  barDates = barDates.reverse();
-  let date = barDates.map((el) => el.split("-")[1] + "-" + el.split("-")[2]);
-  let barData = barDates.map((el) => JSON.parse(localStorage.getItem(el)));
-  let calories = barData.map((el) => el.calories);
+    let allDates = JSON.parse(localStorage.getItem("allDates"));
+    let barDates = allDates.sort((a, b) => b.split("-")[0] - a.split("-")[0]);
+    barDates = allDates.sort((a, b) => b.split("-")[1] - a.split("-")[1]);
+    barDates = allDates.sort((a, b) => b.split("-")[2] - a.split("-")[2]);
+    barDates = barDates.slice(0, 7).reverse();
+    let date = barDates.map((el) => el.split("-")[1] + "-" + el.split("-")[2]);
+    let barData = barDates.map((el) => JSON.parse(localStorage.getItem(el)));
+    let calories = barData.map((el) => el.calories);
 
   const [data, setData] = useState({
     series: [
@@ -95,22 +94,6 @@ export default function StatisticsBarChart() {
       },
     },
   });
-
-  useEffect(() => {
-    setData((prev) => ({
-      ...prev,
-      series: [
-        {
-          name: "Calories",
-          data: calories,
-        },
-      ],
-      options: {
-        ...prev.options,
-        xaxis: { ...prev.options.xaxis, categories: date },
-      },
-    }));
-  }, []);
 
   return (
     <div>

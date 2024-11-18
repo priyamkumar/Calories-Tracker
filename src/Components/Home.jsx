@@ -6,9 +6,9 @@ import SliderElement from "./SliderElement";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { useTheme } from "../Contexts/ThemeContext";
-import Statistics from "./Statistics";
 
 export default function CaloriesToday() {
+
   const [mealType, setMealType] = useState("");
   const { theme } = useTheme();
 
@@ -90,7 +90,6 @@ export default function CaloriesToday() {
           dataArr={[data, setData]}
           mealTypeArr={[mealType, setMealType]}
         />
-        <Statistics />
       </div>
     </main>
   );
