@@ -1,12 +1,12 @@
-import React from 'react'
-import StatisticsHeading from './StatisticsHeader'
-import StatisticsBarChart from './StatisticsBarChart'
+import React from "react";
+import StatisticsHeading from "./StatisticsHeader";
+import StatisticsBarChart from "./StatisticsBarChart";
 
-export default function Statistics({dataArr}) {
+export default function Statistics() {
   return (
-    <div className="stats"> 
-    <StatisticsHeading/>
-    <StatisticsBarChart dataArr={dataArr}/>
+    <div className="stats">
+      <StatisticsHeading />
+      <StatisticsBarChart />
     </div>
-  )
+  );
 }

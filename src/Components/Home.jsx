@@ -15,8 +15,9 @@ export default function CaloriesToday() {
   let today = new Date().toISOString().split("T")[0];
 
   const [date, setDate] = useState(today);
-  const [allDate, setAllDate] = useState(JSON.parse(localStorage.getItem("allDates")) || []);
-
+  const [allDate, setAllDate] = useState(
+    JSON.parse(localStorage.getItem("allDates")) || []
+  );
 
   const [data, setData] = useState(
     JSON.parse(localStorage.getItem(date)) || {
@@ -53,9 +54,8 @@ export default function CaloriesToday() {
 
   useEffect(() => {
     localStorage.setItem(date, JSON.stringify(data));
-    setAllDate(!allDate.includes(date) ? [...allDate, date] : [...allDate])
+    setAllDate(!allDate.includes(date) ? [...allDate, date] : [...allDate]);
     localStorage.setItem("allDates", JSON.stringify(allDate));
-
   }, [data, date]);
 
   const handleDate = (event) => {
@@ -90,7 +90,7 @@ export default function CaloriesToday() {
           dataArr={[data, setData]}
           mealTypeArr={[mealType, setMealType]}
         />
-        <Statistics dataArr={[data, setData]}/>
+        <Statistics />
       </div>
     </main>
   );

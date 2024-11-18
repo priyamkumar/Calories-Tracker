@@ -1,110 +1,128 @@
-import React, { useState } from "react";
-import Chart from "react-apexcharts"
+import React, { useEffect, useState } from "react";
+import Chart from "react-apexcharts";
 
-export default function StatisticsBarChart({dataArr}) {
+export default function StatisticsBarChart() {
   let allDates = JSON.parse(localStorage.getItem("allDates"));
-  let date = allDates.map((el) => el.split("-")[1] + "-" + el.split("-")[2]);
-  let data = allDates.map((el) => JSON.parse(localStorage.getItem(el)));
-  let calories = (data.map((el) => el.calories));
+  let barDates = allDates.sort((a, b) => b.split("-")[0] - a.split("-")[0]);
+  barDates = allDates.sort((a, b) => b.split("-")[1] - a.split("-")[1]);
+  barDates = allDates.sort((a, b) => b.split("-")[2] - a.split("-")[2]);
+  barDates = barDates.slice(0, 7);
+  barDates = barDates.reverse();
+  let date = barDates.map((el) => el.split("-")[1] + "-" + el.split("-")[2]);
+  let barData = barDates.map((el) => JSON.parse(localStorage.getItem(el)));
+  let calories = barData.map((el) => el.calories);
 
-  {
-    const [data, setData] = useState({
-          
-      series: [{
-        name: 'Calories',
+  const [data, setData] = useState({
+    series: [
+      {
+        name: "Calories",
         data: calories,
-      }],
-      options: {
-        chart: {
-          height: 350,
-          type: 'bar',
+      },
+    ],
+    options: {
+      chart: {
+        height: 350,
+        type: "bar",
+      },
+      plotOptions: {
+        bar: {
+          borderRadius: 10,
+          columnWidth: "25%",
+          dataLabels: {
+            position: "top",
+          },
         },
-        plotOptions: {
-          bar: {
-            borderRadius: 10,
-            columnWidth: '25%',
-            dataLabels: {
-            position: 'top',
+      },
+      dataLabels: {
+        enabled: true,
+        formatter: function (val) {
+          return val;
+        },
+        offsetY: -20,
+        style: {
+          fontSize: "12px",
+          colors: ["#304758"],
+        },
+      },
+
+      xaxis: {
+        categories: date,
+        position: "top",
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+        crosshairs: {
+          fill: {
+            type: "gradient",
+            gradient: {
+              colorFrom: "#D8E3F0",
+              colorTo: "#BED1E6",
+              stops: [0, 100],
+              opacityFrom: 0.4,
+              opacityTo: 0.5,
             },
-          }
+          },
         },
-        dataLabels: {
+        tooltip: {
           enabled: true,
+        },
+      },
+      yaxis: {
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+        labels: {
+          show: false,
           formatter: function (val) {
             return val + " " + "Cal";
           },
-          offsetY: -20,
-          style: {
-            fontSize: '12px',
-            colors: ["#304758"]
-          }
         },
-        
-        xaxis: {
-          categories: date,
-          position: 'top',
-          axisBorder: {
-            show: false
-          },
-          axisTicks: {
-            show: false
-          },
-          crosshairs: {
-            fill: {
-              type: 'gradient',
-              gradient: {
-                colorFrom: '#D8E3F0',
-                colorTo: '#BED1E6',
-                stops: [0, 100],
-                opacityFrom: 0.4,
-                opacityTo: 0.5,
-              }
-            }
-          },
-          tooltip: {
-            enabled: true,
-          }
-        },
-        yaxis: {
-          axisBorder: {
-            show: false
-          },
-          axisTicks: {
-            show: false,
-          },
-          labels: {
-            show: false,
-            formatter: function (val) {
-              return val + " " + "Cal";
-            }
-          }
-        
-        },
-        title: {
-          text: 'Weekly Calories',
-          floating: true,
-          offsetY: 330,
-          align: 'center',
-          style: {
-            color: '#444'
-          }
-        }
       },
-    
-    
-    });
-    return (
-      <div>
-        <div id="chart">
-          <Chart
-            options={data.options}
-            series={data.series}
-            type="bar"
-            height={350}
-          />
-        </div>
-        <div id="html-dist"></div>
+      title: {
+        text: "Weekly Calories",
+        floating: true,
+        offsetY: 330,
+        align: "center",
+        style: {
+          color: "#444",
+        },
+      },
+    },
+  });
+
+  useEffect(() => {
+    setData((prev) => ({
+      ...prev,
+      series: [
+        {
+          name: "Calories",
+          data: calories,
+        },
+      ],
+      options: {
+        ...prev.options,
+        xaxis: { ...prev.options.xaxis, categories: date },
+      },
+    }));
+  }, []);
+
+  return (
+    <div>
+      <div id="chart">
+        <Chart
+          options={data.options}
+          series={data.series}
+          type="bar"
+          height={350}
+        />
       </div>
-    );
-  }
+      <div id="html-dist"></div>
+    </div>
+  );
 }
