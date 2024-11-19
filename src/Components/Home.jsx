@@ -67,13 +67,13 @@ export default function CaloriesToday() {
       <div className="home">
         <div className="calories">
           <div className="calories-consumed">
-            <input
+            <label htmlFor="caloriesDate">Date : <input
               type="date"
               max={today}
               name="caloriesDate"
               value={date}
               onChange={handleDate}
-            />
+            /></label>
             <ProgressBar data={data} />
             <h2>
               {data.calories} of {data.calorieGoal} Cal

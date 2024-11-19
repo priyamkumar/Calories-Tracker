@@ -25,7 +25,6 @@ export default function StatisticsBarChart() {
       },
       plotOptions: {
         bar: {
-          borderRadius: 10,
           columnWidth: "25%",
           dataLabels: {
             position: "top",
@@ -96,7 +95,7 @@ export default function StatisticsBarChart() {
   });
 
   return (
-    <div>
+    <div id="chart-container">
       <div id="chart">
         <Chart
           options={data.options}

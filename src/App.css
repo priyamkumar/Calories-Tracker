@@ -214,6 +214,19 @@ main {
 }
 
 .statisticsHeading {
-  margin-top: 40px;
+  text-align: center;
+}
+
+#chart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#chart {
+  width: 70%;
+}
+
+.average-cal {
   text-align: center;
 }

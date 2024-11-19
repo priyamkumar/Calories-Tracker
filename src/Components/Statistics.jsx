@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import StatisticsHeading from "./StatisticsHeader";
 import StatisticsBarChart from "./StatisticsBarChart";
+import StatisticsAverages from "./StatisticsAverages";
 
 export default function Statistics() {
  
@@ -8,6 +9,7 @@ export default function Statistics() {
     <div className="stats">
       <StatisticsHeading />
       <StatisticsBarChart />
+      <StatisticsAverages />
     </div>
   );
 }
