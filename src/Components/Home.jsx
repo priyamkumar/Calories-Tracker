@@ -6,9 +6,11 @@ import SliderElement from "./SliderElement";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { useTheme } from "../Contexts/ThemeContext";
+import { foodData } from "../Utility/Anuvaad_INDB_2024.11";
+
 
 export default function CaloriesToday() {
-
+  console.log(foodData);
   const [mealType, setMealType] = useState("");
   const { theme } = useTheme();
 

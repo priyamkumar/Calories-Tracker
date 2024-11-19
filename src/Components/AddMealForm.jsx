@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { searchFood } from "../Utility/openFoodFactsAPI";
 import { indianFoodData } from "../Utility/mockData";
 import { useTheme } from "../Contexts/ThemeContext";
 
@@ -10,8 +9,6 @@ export default function AddMealForm({
   mealType,
 }) {
   const [query, setQuery] = useState("");
-  const [foodData, setFoodData] = useState(null);
-  const [error, setError] = useState(null);
   const [data, setData] = dataArr;
   const [foodCalorie, setFoodCalorie] = useState(0);
   const [quantity, setQuantity] = useState("");
