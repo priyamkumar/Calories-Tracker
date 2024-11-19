@@ -68,7 +68,7 @@ export default function AddMeal({ dataArr, mealTypeArr }) {
           {breakfastMeals.map((meal, index) => (
             <li key={index}>
               <div className="meal-items">
-                {meal.name} - {meal.calories} Cal{" "}
+                {meal[0]["food_name"]} - {meal.calories} Cal{" "}
                 <button className="remove-btn" onClick={() => removeMeal(meal.id)}>
                   <FontAwesomeIcon icon={faXmark} />
                 </button>{" "}
@@ -94,7 +94,7 @@ export default function AddMeal({ dataArr, mealTypeArr }) {
           {lunchMeals.map((meal, index) => (
             <li key={index}>
               <div className="meal-items">
-                {meal.name} - {meal.calories} Cal{" "}
+                {meal[0]["food_name"]} - {meal.calories} Cal{" "}
                 <button className="remove-btn" onClick={() => removeMeal(meal.id)}>
                   <FontAwesomeIcon icon={faXmark} />
                 </button>{" "}
@@ -119,7 +119,7 @@ export default function AddMeal({ dataArr, mealTypeArr }) {
           {dinnerMeals.map((meal, index) => (
             <li key={index}>
               <div className="meal-items">
-                {meal.name} - {meal.calories} Cal{" "}
+                {meal[0]["food_name"]} - {meal.calories} Cal{" "}
                 <button className="remove-btn" onClick={() => removeMeal(meal.id)}>
                   <FontAwesomeIcon icon={faXmark} />
                 </button>{" "}
@@ -144,7 +144,7 @@ export default function AddMeal({ dataArr, mealTypeArr }) {
           {snackMeals.map((meal, index) => (
             <li key={index}>
               <div className="meal-items">
-                {meal.name} - {meal.calories} Cal{" "}
+                {meal[0]["food_name"]} - {meal.calories} Cal{" "}
                 <button className="remove-btn" onClick={() => removeMeal(meal.id)}>
                   <FontAwesomeIcon icon={faXmark} />
                 </button>{" "}
