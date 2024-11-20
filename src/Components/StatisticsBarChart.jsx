@@ -13,7 +13,6 @@ export default function StatisticsBarChart() {
   let calories = barData.map((el) => el.calories);
 
   const { theme } = useTheme();
-  const [color, setColor] = useState(theme === "Dark" ? "white" : "black");
 
   const [data, setData] = useState({
     series: [
@@ -26,11 +25,11 @@ export default function StatisticsBarChart() {
       chart: {
         height: 350,
         type: "bar",
-        background: theme === "Dark" ? "black" : "white", // Dark background
+        background: theme === "Dark" ? "black" : "white",
         foreColor: theme === "Dark" ? "white" : "black",
       },
       theme: {
-        mode: theme === "Dark" ? "dark" : "light", // Enables dark mode
+        mode: theme === "Dark" ? "dark" : "light", 
       },
       plotOptions: {
         bar: {
@@ -84,7 +83,7 @@ export default function StatisticsBarChart() {
           show: false,
         },
         labels: {
-          show: false,
+          show: true,
           formatter: function (val) {
             return val + " " + "Cal";
           },

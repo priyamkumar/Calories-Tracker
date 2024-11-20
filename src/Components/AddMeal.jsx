@@ -9,12 +9,15 @@ import {
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
 import AddMealForm from "./AddMealForm";
+import { useTheme } from "../Contexts/ThemeContext";
 
 export default function AddMeal({ dataArr, mealTypeArr }) {
   const [showPopup, setShowPopup] = useState(false);
   const [data, setData] = dataArr;
 
   const [mealType, setMealType] = mealTypeArr;
+
+  const {theme} = useTheme();
 
   const openPopup = (meal) => {
     setMealType(meal);
@@ -70,7 +73,8 @@ export default function AddMeal({ dataArr, mealTypeArr }) {
               <div className="meal-items">
                 {meal[0]["food_name"]} - {meal.calories} Cal{" "}
                 <button className="remove-btn" onClick={() => removeMeal(meal.id)}>
-                  <FontAwesomeIcon icon={faXmark} />
+                  <FontAwesomeIcon icon={faXmark} 
+                  style={{color: theme === "Dark" ? "white" : "black"}}/>
                 </button>{" "}
                 {meal.time}
               </div>
