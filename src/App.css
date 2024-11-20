@@ -8,18 +8,21 @@ body {
 }
 
 main,
-header {
-  background-color: var(--background-color);
-  color: var(--text-color);
+header,
+.stats {
+  background-color: var(--background-color) !important;
+  color: var(--text-color) !important;
 }
 
 main.dark,
 header.dark,
-.popup-form.dark {
+.popup-form.dark, 
+.stats.dark {
   --background-color: black;
   --text-color: white;
   --element-color: rgb(50, 50, 50);
 }
+
 main {
   padding: 24px;
   min-height: calc(100vh - 40px);
@@ -217,16 +220,25 @@ main {
   text-align: center;
 }
 
-#chart-container {
+.chart-container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-#chart {
+.chart {
   width: 70%;
 }
 
 .average-cal {
   text-align: center;
+}
+
+.stats {
+  min-height: calc(100vh - 40px);
+}
+
+.statisticsHeading {
+  margin: 0;
+  padding-top: 20px;
 }
