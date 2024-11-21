@@ -86,11 +86,11 @@ export default function CaloriesToday() {
             <SliderElement dataArr={[data, setData]} />
           </div>
         </div>
-        <Macros data={data} />
         <AddMeal
           dataArr={[data, setData]}
           mealTypeArr={[mealType, setMealType]}
         />
+        <Macros data={data} />
       </div>
     </main>
   );
