@@ -3,6 +3,7 @@ import Home from './Components/Home'
 import Header from './Components/Header'
 import { useState } from 'react';
 import Statistics from './Components/Statistics';
+import Settings from './Components/Settings';
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
       <Header setView={setView}/>
       {view === "Tracker" && <Home />}
       {view === "Statistics" && <Statistics />}
+      {view === "Settings" && <Settings />}
     </>
   )
 }

@@ -27,6 +27,9 @@ export default function StatisticsBarChart() {
         type: "bar",
         background: theme === "Dark" ? "black" : "white",
         foreColor: theme === "Dark" ? "white" : "black",
+        toolbar: {
+          show: false,
+        },
       },
       theme: {
         mode: theme === "Dark" ? "dark" : "light", 
@@ -94,9 +97,6 @@ export default function StatisticsBarChart() {
         floating: true,
         offsetY: 330,
         align: "center",
-        style: {
-          // color: "darkgrey",
-        },
       },
     },
   });
