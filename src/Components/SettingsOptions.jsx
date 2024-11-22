@@ -2,29 +2,31 @@ import React from "react";
 
 export default function SettingsOptions({ userDataArr }) {
   const [userData, setUserData] = userDataArr;
-  console.log(userData)
   function handleChange(event) {
     switch (event.target.name) {
       case "age":
         setUserData((data) => ({...data, age: event.target.value}))
-        console.log("1");
         break;
       case "gender":
-        console.log("2");
+        setUserData((data) => ({...data, gender: event.target.value}))
+        break;
+      case "height":
+        setUserData((data) => ({...data, height: event.target.value}))
         break;
       case "weight":
-        console.log("3");
+        setUserData((data) => ({...data, weight: event.target.value}))
         break;
       case "level":
-        console.log("4");
+        setUserData((data) => ({...data, level: event.target.value}))
         break;
       case "goal":
-        console.log("5");
+        setUserData((data) => ({...data, goal: event.target.id}))
         break;
       default:
         break;
     }
   }
+
   return (
     <div className="options">
       <label htmlFor="age">
@@ -32,7 +34,7 @@ export default function SettingsOptions({ userDataArr }) {
       </label>
       <label htmlFor="gender">
         Gender{" "}
-        <select name="gender" id="gender">
+        <select name="gender" id="gender" onChange={handleChange} value={userData.gender}>
           <option value="" hidden>
             Select
           </option>
@@ -41,11 +43,14 @@ export default function SettingsOptions({ userDataArr }) {
         </select>
       </label>
       <label>
-        Weight <input name="weight" id="weight" type="number" min="0" />
+        Height (cm) <input name="height" id="height" type="number" min="0" onChange={handleChange} value={userData.height}/>
+      </label>
+      <label>
+        Weight (kg) <input name="weight" id="weight" type="number" min="0" onChange={handleChange} value={userData.weight}/>
       </label>
       <label htmlFor="level">
         Activity Level{" "}
-        <select name="level" id="level">
+        <select name="level" id="level" onChange={handleChange} value={userData.level}>
           <option value="sedentary">Sedentary</option>
           <option value="lightly_active">Lightly Active</option>
           <option value="moderately_active">Moderately Active</option>
@@ -54,16 +59,16 @@ export default function SettingsOptions({ userDataArr }) {
       </label>
       <p className="goal-radio-group">
         Goal :
-        <label htmlFor="gain">
-          <input type="radio" name="goal" id="gain" defaultChecked /> Weight
+        <label htmlFor="loss">
+          <input type="radio" name="goal" id="loss" onChange={handleChange} checked = {userData.goal === "loss"}/> Weight
           Loss
         </label>
         <label htmlFor="maintain">
-          <input type="radio" name="goal" id="maintain" /> Weight Maintenance
+          <input type="radio" name="goal" id="maintain" onChange={handleChange} checked = {userData.goal === "maintain"}/> Weight Maintenance
         </label>
-        <label htmlFor="loss">
+        <label htmlFor="gain">
           {" "}
-          <input type="radio" name="goal" id="loss" /> Weight Gain
+          <input type="radio" name="goal" id="gain" onChange={handleChange} checked = {userData.goal === "gain"}/> Weight Gain
         </label>
       </p>
     </div>
