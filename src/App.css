@@ -233,10 +233,6 @@ main {
   width: 70%;
 }
 
-.average-cal {
-  text-align: center;
-}
-
 .stats {
   min-height: calc(100vh - 40px);
 }
@@ -258,4 +254,29 @@ main {
   justify-content: center;
   flex-direction: column;
   gap: 30px;
+}
+
+.average-cal {
+  background-color: #f9f9f9; 
+  border: 1px solid #ddd; 
+  border-radius: 8px; 
+  padding: 10px; 
+  max-width: 250px; 
+  margin: 20px auto; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.average-cal h3 {
+  font-size: 1rem; 
+  color: #333; 
+  margin-bottom: 10px; 
+  font-weight: 500; 
+}
+
+.average-cal h3:last-child {
+  margin-bottom: 0;
+}
+
+.average-cal sup {
+  font-size: 0.7rem;
 }
