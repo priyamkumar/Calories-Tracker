@@ -6,8 +6,6 @@ import SliderElement from "./SliderElement";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { useTheme } from "../Contexts/ThemeContext";
-import { foodData } from "../Utility/Anuvaad_INDB_2024.11";
-
 
 export default function CaloriesToday() {
   const [mealType, setMealType] = useState("");
@@ -68,13 +66,16 @@ export default function CaloriesToday() {
       <div className="home">
         <div className="calories">
           <div className="calories-consumed">
-            <label htmlFor="caloriesDate">Date : <input
-              type="date"
-              max={today}
-              name="caloriesDate"
-              value={date}
-              onChange={handleDate}
-            /></label>
+            <label htmlFor="caloriesDate">
+              Date :{" "}
+              <input
+                type="date"
+                max={today}
+                name="caloriesDate"
+                value={date}
+                onChange={handleDate}
+              />
+            </label>
             <ProgressBar data={data} />
             <h2>
               {data.calories} of {data.calorieGoal} Cal
@@ -86,11 +87,11 @@ export default function CaloriesToday() {
             <SliderElement dataArr={[data, setData]} />
           </div>
         </div>
+        <Macros data={data} />
         <AddMeal
           dataArr={[data, setData]}
           mealTypeArr={[mealType, setMealType]}
         />
-        <Macros data={data} />
       </div>
     </main>
   );

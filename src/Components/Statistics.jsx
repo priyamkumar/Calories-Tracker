@@ -3,6 +3,7 @@ import Heading from "./Heading";
 import StatisticsBarChart from "./StatisticsBarChart";
 import StatisticsAverages from "./StatisticsAverages";
 import { useTheme } from "../Contexts/ThemeContext";
+import Macros from "./Macros";
 
 
 export default function Statistics() {
