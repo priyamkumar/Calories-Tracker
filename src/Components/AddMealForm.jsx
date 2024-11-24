@@ -100,7 +100,7 @@ export default function AddMealForm({
           </label>
 
           <label htmlFor="calories">
-            Calories per 100g
+            Calories per 100 g/ml
             <input
               type="number"
               id="calories"
