@@ -1,18 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const defaultData = {
+  calorieGoal: 2600,
+  calories: 0,
+  carbs: 0,
+  protein: 0,
+  fats: 0,
+  meals: [],
+};
+
 const initialState = {
   currentDate: new Date().toISOString().split("T")[0],
   allDates: JSON.parse(localStorage.getItem("allDates")) || [],
   data: JSON.parse(
     localStorage.getItem(new Date().toISOString().split("T")[0])
-  ) || {
-    calorieGoal: 2600,
-    calories: 0,
-    carbs: 0,
-    protein: 0,
-    fats: 0,
-    meals: [],
-  },
+  ) || defaultData,
+  dateData: JSON.parse(localStorage.getItem(new Date().toISOString().split("T")[0]) || defaultData)
 };
 
 const dataSlice = createSlice({
@@ -21,15 +24,7 @@ const dataSlice = createSlice({
   reducers: {
     setDate(state, action) {
       state.currentDate = action.payload;
-      const dateData = JSON.parse(localStorage.getItem(action.payload));
-      state.data = dateData || {
-        calorieGoal: 2600,
-        calories: 0,
-        carbs: 0,
-        protein: 0,
-        fats: 0,
-        meals: [],
-      };
+      state.data = state.dateData || defaultData;
     },
     updateData(state, action) {
       state.data = action.payload,

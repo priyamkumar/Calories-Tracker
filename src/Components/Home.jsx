@@ -29,9 +29,9 @@ export default function CaloriesToday() {
 
 
   const [date, setDate] = useState(today);
-  const [allDate, setAllDate] = useState(
-    JSON.parse(localStorage.getItem("allDates")) || []
-  );
+  // const [allDate, setAllDate] = useState(
+  //   JSON.parse(localStorage.getItem("allDates")) || []
+  // );
 
   // const [data, setData] = useState(
   //   JSON.parse(localStorage.getItem(date)) || {

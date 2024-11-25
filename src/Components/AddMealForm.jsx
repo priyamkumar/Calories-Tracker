@@ -10,7 +10,7 @@ export default function AddMealForm({
   mealType,
 }) {
   const [query, setQuery] = useState("");
-  const [data, setData] = dataArr;
+  const [data, handleDataUpdate] = dataArr;
   const [foodCalorie, setFoodCalorie] = useState(0);
   const [quantity, setQuantity] = useState("");
   const { theme } = useTheme();
@@ -50,14 +50,14 @@ export default function AddMealForm({
         id: Math.floor(Math.random() * 1e9),
         type: mealType,
       };
-      setData((prev) => ({
-        ...prev,
-        calories: prev.calories + newItem.calories,
-        meals: [...prev.meals, newItem],
-        carbs: prev.carbs + newItem.carbs,
-        protein: prev.protein + newItem.protein,
-        fats: prev.fats + newItem.fats,
-      }));
+      handleDataUpdate({
+        ...data,
+        calories: data.calories + newItem.calories,
+        meals: [...data.meals, newItem],
+        carbs: data.carbs + newItem.carbs,
+        protein: data.protein + newItem.protein,
+        fats: data.fats + newItem.fats,
+      });
     }
   };
 

@@ -38,10 +38,10 @@ export default function AddMeal({ dataArr, mealTypeArr }) {
     let updatedMeals = data.meals.filter((element, i) => index !== element.id);
     handleDataUpdate({
       ...data,
-      calories: Math.round(prev.calories - deletedMeal[0].calories),
-      carbs: Math.round(prev.carbs - deletedMeal[0].carbs),
-      protein: Math.round(prev.protein - deletedMeal[0].protein),
-      fats: Math.round(prev.fats - deletedMeal[0].fats),
+      calories: Math.round(data.calories - deletedMeal[0].calories),
+      carbs: Math.round(data.carbs - deletedMeal[0].carbs),
+      protein: Math.round(data.protein - deletedMeal[0].protein),
+      fats: Math.round(data.fats - deletedMeal[0].fats),
       meals: updatedMeals,
     });
   };
