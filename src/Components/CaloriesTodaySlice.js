@@ -32,8 +32,8 @@ const dataSlice = createSlice({
       };
     },
     updateData(state, action) {
-      (state.date = action.payload),
-        localStorage.setItem(state.currentDate, JSON.stringify(state.data));
+      state.data = action.payload,
+      localStorage.setItem(state.currentDate, JSON.stringify(state.data));
       if (!state.allDates.includes(state.currentDate)) {
         state.allDates.push(state.currentDate);
         localStorage.setItem("allDates", JSON.stringify(state.allDates));

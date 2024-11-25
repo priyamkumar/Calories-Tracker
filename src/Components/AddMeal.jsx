@@ -13,11 +13,11 @@ import { useTheme } from "../Contexts/ThemeContext";
 
 export default function AddMeal({ dataArr, mealTypeArr }) {
   const [showPopup, setShowPopup] = useState(false);
-  const [data, setData] = dataArr;
+  const [data, handleDataUpdate] = dataArr;
 
   const [mealType, setMealType] = mealTypeArr;
 
-  const {theme} = useTheme();
+  const { theme } = useTheme();
 
   const openPopup = (meal) => {
     setMealType(meal);
@@ -36,14 +36,14 @@ export default function AddMeal({ dataArr, mealTypeArr }) {
   const removeMeal = (index) => {
     let deletedMeal = data.meals.filter((element, i) => index === element.id);
     let updatedMeals = data.meals.filter((element, i) => index !== element.id);
-    setData((prev) => ({
-      ...prev,
+    handleDataUpdate({
+      ...data,
       calories: Math.round(prev.calories - deletedMeal[0].calories),
       carbs: Math.round(prev.carbs - deletedMeal[0].carbs),
       protein: Math.round(prev.protein - deletedMeal[0].protein),
       fats: Math.round(prev.fats - deletedMeal[0].fats),
       meals: updatedMeals,
-    }));
+    });
   };
 
   let formRef = useRef();
@@ -72,9 +72,14 @@ export default function AddMeal({ dataArr, mealTypeArr }) {
             <li key={index}>
               <div className="meal-items">
                 {meal[0]["food_name"]} - {meal.calories} Cal{" "}
-                <button className="remove-btn" onClick={() => removeMeal(meal.id)}>
-                  <FontAwesomeIcon icon={faXmark} 
-                  style={{color: theme === "Dark" ? "white" : "black"}}/>
+                <button
+                  className="remove-btn"
+                  onClick={() => removeMeal(meal.id)}
+                >
+                  <FontAwesomeIcon
+                    icon={faXmark}
+                    style={{ color: theme === "Dark" ? "white" : "black" }}
+                  />
                 </button>{" "}
                 {meal.time}
               </div>
@@ -99,7 +104,10 @@ export default function AddMeal({ dataArr, mealTypeArr }) {
             <li key={index}>
               <div className="meal-items">
                 {meal[0]["food_name"]} - {meal.calories} Cal{" "}
-                <button className="remove-btn" onClick={() => removeMeal(meal.id)}>
+                <button
+                  className="remove-btn"
+                  onClick={() => removeMeal(meal.id)}
+                >
                   <FontAwesomeIcon icon={faXmark} />
                 </button>{" "}
                 {meal.time}
@@ -124,7 +132,10 @@ export default function AddMeal({ dataArr, mealTypeArr }) {
             <li key={index}>
               <div className="meal-items">
                 {meal[0]["food_name"]} - {meal.calories} Cal{" "}
-                <button className="remove-btn" onClick={() => removeMeal(meal.id)}>
+                <button
+                  className="remove-btn"
+                  onClick={() => removeMeal(meal.id)}
+                >
                   <FontAwesomeIcon icon={faXmark} />
                 </button>{" "}
                 {meal.time}
@@ -149,7 +160,10 @@ export default function AddMeal({ dataArr, mealTypeArr }) {
             <li key={index}>
               <div className="meal-items">
                 {meal[0]["food_name"]} - {meal.calories} Cal{" "}
-                <button className="remove-btn" onClick={() => removeMeal(meal.id)}>
+                <button
+                  className="remove-btn"
+                  onClick={() => removeMeal(meal.id)}
+                >
                   <FontAwesomeIcon icon={faXmark} />
                 </button>{" "}
                 {meal.time}
@@ -165,7 +179,7 @@ export default function AddMeal({ dataArr, mealTypeArr }) {
         <AddMealForm
           formRef={formRef}
           setShowPopup={setShowPopup}
-          dataArr={[data, setData]}
+          dataArr={[data, handleDataUpdate]}
           mealType={mealType}
         />
       )}

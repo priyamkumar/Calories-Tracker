@@ -1,8 +1,14 @@
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
+import { useEffect } from "react";
 
 export default function SliderElement({ dataArr }) {
-  const [data, setData] = dataArr;
+  const [data, handleDataUpdate] = dataArr;
+const handleChange = (event) => {
+  const newData = {...data, calorieGoal: event.target.value};
+  handleDataUpdate(newData);
+}
+
   return (
     <Box sx={{ width: 300 }}>
       <Slider
@@ -11,7 +17,7 @@ export default function SliderElement({ dataArr }) {
         max={3200}
         step={10}
         value={data.calorieGoal}
-        onChange={(event) => setData((prev) => ({...prev, calorieGoal: event.target.value}))}
+        onChange={handleChange}
       />
     </Box>
   );
