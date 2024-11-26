@@ -28,7 +28,7 @@ export default function CaloriesToday() {
   }
 
 
-  const [date, setDate] = useState(today);
+  // const [date, setDate] = useState(today);
   // const [allDate, setAllDate] = useState(
   //   JSON.parse(localStorage.getItem("allDates")) || []
   // );
@@ -60,9 +60,16 @@ export default function CaloriesToday() {
   // useEffect(() => {
   //   let dateData = JSON.parse(localStorage.getItem(date));
   //   if (dateData) {
-  //     updateData(dateData);
+  //     handleDataUpdate(dateData);
   //   } else {
-  //     setData(defaultData);
+  //     handleDataUpdate({
+  //       calorieGoal: 2600,
+  //       calories: 0,
+  //       carbs: 0,
+  //       protein: 0,
+  //       fats: 0,
+  //       meals: [],
+  //     });
   //   }
   // }, [date]);
 
@@ -87,7 +94,7 @@ export default function CaloriesToday() {
                 type="date"
                 max={today}
                 name="caloriesDate"
-                value={date}
+                value={currentDate}
                 onChange={handleDateChange}
               />
             </label>
