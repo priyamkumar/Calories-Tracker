@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import ProgressBar from "./ProgressBar";
 import AddMeal from "./AddMeal";
-import Macros from "./Macros";
 import SliderElement from "./SliderElement";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { useTheme } from "../Contexts/ThemeContext";
 import { useDispatch, useSelector } from "react-redux"
-import { setDate, updateData } from "./CaloriesTodaySlice.js"
+import { setDate } from "./CaloriesTodaySlice.js"
 
 export default function CaloriesToday() {
 
@@ -18,70 +17,6 @@ export default function CaloriesToday() {
   const { currentDate, data } = useSelector((state) => state.calories);
 
   let today = new Date().toISOString().split("T")[0];
-
-  const handleDateChange = (event) => {
-    dispatch(setDate(event.target.value));
-  }
-
-  const handleDataUpdate = (newData) => {
-    dispatch(updateData(newData));
-  }
-
-
-  // const [date, setDate] = useState(today);
-  // const [allDate, setAllDate] = useState(
-  //   JSON.parse(localStorage.getItem("allDates")) || []
-  // );
-
-  // const [data, setData] = useState(
-  //   JSON.parse(localStorage.getItem(date)) || {
-  //     calorieGoal: 2600,
-  //     calories: 0,
-  //     carbs: 0,
-  //     protein: 0,
-  //     fats: 0,
-  //     meals: [],
-  //   }
-  // );
-
-  // const defaultData = {
-  //   calorieGoal: 2600,
-  //   calories: 0,
-  //   carbs: 0,
-  //   protein: 0,
-  //   fats: 0,
-  //   meals: [],
-  // };
-
-  // const updateData = (data) => {
-  //   setData(data);
-  // };
-
-  // useEffect(() => {
-  //   let dateData = JSON.parse(localStorage.getItem(date));
-  //   if (dateData) {
-  //     handleDataUpdate(dateData);
-  //   } else {
-  //     handleDataUpdate({
-  //       calorieGoal: 2600,
-  //       calories: 0,
-  //       carbs: 0,
-  //       protein: 0,
-  //       fats: 0,
-  //       meals: [],
-  //     });
-  //   }
-  // }, [date]);
-
-  // useEffect(() => {
-  //   localStorage.setItem(date, JSON.stringify(data));
-  //   setAllDate(!allDate.includes(date) ? [...allDate, date] : [...allDate]);
-  //   localStorage.setItem("allDates", JSON.stringify(allDate));
-  // }, [data, date]);
-
-  // const handleDate = (event) => {
-  //   setDate(event.target.value);
-  // };
 
   return (
     <main className={theme === "Dark" ? "dark" : ""}>
@@ -95,10 +30,10 @@ export default function CaloriesToday() {
                 max={today}
                 name="caloriesDate"
                 value={currentDate}
-                onChange={handleDateChange}
+                onChange={(event) => dispatch(setDate(event.target.value))}
               />
             </label>
-            <ProgressBar data={data} />
+            <ProgressBar/>
             <h2>
               {data.calories} of {data.calorieGoal} Cal
             </h2>
@@ -106,12 +41,11 @@ export default function CaloriesToday() {
           <div className="calories-goal-heading">
             <h3>Set Calories Goal</h3>
             <FontAwesomeIcon icon={faArrowRight} />
-            <SliderElement dataArr={[data, handleDataUpdate]} />
+            <SliderElement />
           </div>
         </div>
-        <Macros data={data} />
+        
         <AddMeal
-          dataArr={[data, handleDataUpdate]}
           mealTypeArr={[mealType, setMealType]}
         />
       </div>

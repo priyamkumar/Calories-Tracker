@@ -10,10 +10,15 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import AddMealForm from "./AddMealForm";
 import { useTheme } from "../Contexts/ThemeContext";
+import { useDispatch, useSelector } from "react-redux";
+import { updateData } from "./CaloriesTodaySlice.js";
 
-export default function AddMeal({ dataArr, mealTypeArr }) {
+export default function AddMeal({ mealTypeArr }) {
+  const dispatch = useDispatch();
+
+  const { data } = useSelector((state) => state.calories);
+
   const [showPopup, setShowPopup] = useState(false);
-  const [data, handleDataUpdate] = dataArr;
 
   const [mealType, setMealType] = mealTypeArr;
 
@@ -36,14 +41,16 @@ export default function AddMeal({ dataArr, mealTypeArr }) {
   const removeMeal = (index) => {
     let deletedMeal = data.meals.filter((element, i) => index === element.id);
     let updatedMeals = data.meals.filter((element, i) => index !== element.id);
-    handleDataUpdate({
-      ...data,
-      calories: Math.round(data.calories - deletedMeal[0].calories),
-      carbs: Math.round(data.carbs - deletedMeal[0].carbs),
-      protein: Math.round(data.protein - deletedMeal[0].protein),
-      fats: Math.round(data.fats - deletedMeal[0].fats),
-      meals: updatedMeals,
-    });
+    dispatch(
+      updateData({
+        ...data,
+        calories: Math.round(data.calories - deletedMeal[0].calories),
+        carbs: Math.round(data.carbs - deletedMeal[0].carbs),
+        protein: Math.round(data.protein - deletedMeal[0].protein),
+        fats: Math.round(data.fats - deletedMeal[0].fats),
+        meals: updatedMeals,
+      })
+    );
   };
 
   let formRef = useRef();
@@ -66,7 +73,7 @@ export default function AddMeal({ dataArr, mealTypeArr }) {
           </h3>
           <p>
             {breakfastMeals.reduce((acc, cur) => acc + cur.calories, 0)} /{" "}
-            {(data.calorieGoal / 100) * 30} Cal
+            {Math.floor((data.calorieGoal / 100) * 30)} Cal
           </p>
           {breakfastMeals.map((meal, index) => (
             <li key={index}>
@@ -97,7 +104,7 @@ export default function AddMeal({ dataArr, mealTypeArr }) {
           </h3>
           <p>
             {lunchMeals.reduce((acc, cur) => acc + cur.calories, 0)} /{" "}
-            {(data.calorieGoal / 100) * 30} Cal
+            {Math.floor((data.calorieGoal / 100) * 30)} Cal
           </p>
 
           {lunchMeals.map((meal, index) => (
@@ -126,7 +133,7 @@ export default function AddMeal({ dataArr, mealTypeArr }) {
           </h3>
           <p>
             {dinnerMeals.reduce((acc, cur) => acc + cur.calories, 0)} /{" "}
-            {(data.calorieGoal / 100) * 30} Cal
+            {Math.floor((data.calorieGoal / 100) * 30)} Cal
           </p>
           {dinnerMeals.map((meal, index) => (
             <li key={index}>
@@ -154,7 +161,7 @@ export default function AddMeal({ dataArr, mealTypeArr }) {
           </h3>
           <p>
             {snackMeals.reduce((acc, cur) => acc + cur.calories, 0)} /{" "}
-            {(data.calorieGoal / 100) * 10} Cal
+            {Math.floor((data.calorieGoal / 100) * 10)} Cal
           </p>
           {snackMeals.map((meal, index) => (
             <li key={index}>
@@ -179,7 +186,6 @@ export default function AddMeal({ dataArr, mealTypeArr }) {
         <AddMealForm
           formRef={formRef}
           setShowPopup={setShowPopup}
-          dataArr={[data, handleDataUpdate]}
           mealType={mealType}
         />
       )}

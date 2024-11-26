@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { indianFoodData } from "../Utility/mockData";
+import React, { useState } from "react";
 import { foodData } from "../Utility/Anuvaad_INDB_2024.11";
 import { useTheme } from "../Contexts/ThemeContext";
+import { useDispatch, useSelector } from "react-redux"
+import { updateData } from "./CaloriesTodaySlice.js"
 
 export default function AddMealForm({
   formRef,
   setShowPopup,
-  dataArr,
   mealType,
 }) {
+
+  const dispatch = useDispatch();
+  const { data } = useSelector((state) => state.calories);
   const [query, setQuery] = useState("");
-  const [data, handleDataUpdate] = dataArr;
   const [foodCalorie, setFoodCalorie] = useState(0);
   const [quantity, setQuantity] = useState("");
   const { theme } = useTheme();
@@ -50,14 +52,14 @@ export default function AddMealForm({
         id: Math.floor(Math.random() * 1e9),
         type: mealType,
       };
-      handleDataUpdate({
+      dispatch(updateData({
         ...data,
         calories: data.calories + newItem.calories,
         meals: [...data.meals, newItem],
         carbs: data.carbs + newItem.carbs,
         protein: data.protein + newItem.protein,
         fats: data.fats + newItem.fats,
-      });
+      }));
     }
   };
 

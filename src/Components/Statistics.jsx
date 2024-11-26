@@ -11,6 +11,7 @@ export default function Statistics() {
   return (
     <div className={`stats ${theme === "Dark" ? "dark" : ""}`}>
       <Heading text={"Statistics"} className={"statistics"}/>
+      <Macros />
       <StatisticsBarChart />
       <StatisticsAverages />
     </div>

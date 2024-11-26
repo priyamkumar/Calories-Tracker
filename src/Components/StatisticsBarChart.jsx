@@ -91,7 +91,7 @@ export default function StatisticsBarChart() {
         },
       },
       title: {
-        text: "Weekly Calories",
+        text: "Last 7 days Calories",
         floating: true,
         offsetY: 330,
         align: "center",

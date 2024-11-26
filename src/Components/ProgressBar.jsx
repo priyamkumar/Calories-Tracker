@@ -2,9 +2,13 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import { useTheme } from "../Contexts/ThemeContext";
+import { useSelector } from "react-redux"
 
-export default function ProgressBar({ data }) {
+export default function ProgressBar() {
+
   const {theme} = useTheme();
+
+  const { data } = useSelector((state) => state.calories)
   let color = theme === "Dark" ? "white" : "black"
   return (
     <Box sx={{ position: "relative", display: "inline-flex" }}>

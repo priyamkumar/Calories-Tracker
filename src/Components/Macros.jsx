@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import LinearProgress from "@mui/material/LinearProgress";
+import { useSelector } from "react-redux";
 
-export default function Macros({ data }) {
+export default function Macros() {
+
+  const { data } = useSelector((state) => state.calories);
+  
   let carbsLimit = Math.floor(((data.calorieGoal / 100) * 50) / 4);
   let proteinLimit = Math.floor(((data.calorieGoal / 100) * 20) / 4);
   let fatsLimit = Math.floor(((data.calorieGoal / 100) * 30) / 9);
