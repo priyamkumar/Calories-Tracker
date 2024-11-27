@@ -68,9 +68,14 @@ export default function AddMeal({ mealTypeArr }) {
     <div className="meal-container">
       <div className="meal-card">
         <div>
-          <h3>
-            <FontAwesomeIcon icon={faMugSaucer} /> Breakfast
-          </h3>
+          <div className="meal-header">
+            <h3>
+              <FontAwesomeIcon icon={faMugSaucer} /> Breakfast
+            </h3>
+            <button className="add-btn" onClick={(e) => openPopup("Breakfast")}>
+              <FontAwesomeIcon icon={faPlus} />
+            </button>
+          </div>
           <p>
             {breakfastMeals.reduce((acc, cur) => acc + cur.calories, 0)} /{" "}
             {Math.floor((data.calorieGoal / 100) * 30)} Cal
@@ -93,15 +98,17 @@ export default function AddMeal({ mealTypeArr }) {
             </li>
           ))}
         </div>
-        <button className="add-btn" onClick={(e) => openPopup("Breakfast")}>
-          <FontAwesomeIcon icon={faPlus} />
-        </button>
       </div>
       <div className="meal-card">
         <div>
-          <h3>
-            <FontAwesomeIcon icon={faBreadSlice} /> Lunch
-          </h3>
+          <div className="meal-header">
+            <h3>
+              <FontAwesomeIcon icon={faBreadSlice} /> Lunch
+            </h3>
+            <button className="add-btn" onClick={() => openPopup("Lunch")}>
+              <FontAwesomeIcon icon={faPlus} />
+            </button>
+          </div>
           <p>
             {lunchMeals.reduce((acc, cur) => acc + cur.calories, 0)} /{" "}
             {Math.floor((data.calorieGoal / 100) * 30)} Cal
@@ -115,22 +122,27 @@ export default function AddMeal({ mealTypeArr }) {
                   className="remove-btn"
                   onClick={() => removeMeal(meal.id)}
                 >
-                  <FontAwesomeIcon icon={faXmark} />
+                  <FontAwesomeIcon
+                    icon={faXmark}
+                    style={{ color: theme === "Dark" ? "white" : "black" }}
+                  />
                 </button>{" "}
                 {meal.time}
               </div>
             </li>
           ))}
         </div>
-        <button className="add-btn" onClick={() => openPopup("Lunch")}>
-          <FontAwesomeIcon icon={faPlus} />
-        </button>
       </div>
       <div className="meal-card">
         <div>
-          <h3>
-            <FontAwesomeIcon icon={faBowlRice} /> Dinner
-          </h3>
+          <div className="meal-header">
+            <h3>
+              <FontAwesomeIcon icon={faBowlRice} /> Dinner
+            </h3>
+            <button className="add-btn" onClick={() => openPopup("Dinner")}>
+              <FontAwesomeIcon icon={faPlus} />
+            </button>
+          </div>
           <p>
             {dinnerMeals.reduce((acc, cur) => acc + cur.calories, 0)} /{" "}
             {Math.floor((data.calorieGoal / 100) * 30)} Cal
@@ -143,22 +155,27 @@ export default function AddMeal({ mealTypeArr }) {
                   className="remove-btn"
                   onClick={() => removeMeal(meal.id)}
                 >
-                  <FontAwesomeIcon icon={faXmark} />
+                  <FontAwesomeIcon
+                    icon={faXmark}
+                    style={{ color: theme === "Dark" ? "white" : "black" }}
+                  />
                 </button>{" "}
                 {meal.time}
               </div>
             </li>
           ))}
         </div>
-        <button className="add-btn" onClick={() => openPopup("Dinner")}>
-          <FontAwesomeIcon icon={faPlus} />
-        </button>
       </div>
       <div className="meal-card">
         <div>
-          <h3>
-            <FontAwesomeIcon icon={faAppleWhole} /> Snacks
-          </h3>
+          <div className="meal-header">
+            <h3>
+              <FontAwesomeIcon icon={faAppleWhole} /> Snacks
+            </h3>
+            <button className="add-btn" onClick={() => openPopup("Snacks")}>
+              <FontAwesomeIcon icon={faPlus} />
+            </button>
+          </div>
           <p>
             {snackMeals.reduce((acc, cur) => acc + cur.calories, 0)} /{" "}
             {Math.floor((data.calorieGoal / 100) * 10)} Cal
@@ -171,16 +188,16 @@ export default function AddMeal({ mealTypeArr }) {
                   className="remove-btn"
                   onClick={() => removeMeal(meal.id)}
                 >
-                  <FontAwesomeIcon icon={faXmark} />
+                  <FontAwesomeIcon
+                    icon={faXmark}
+                    style={{ color: theme === "Dark" ? "white" : "black" }}
+                  />
                 </button>{" "}
                 {meal.time}
               </div>
             </li>
           ))}
         </div>
-        <button className="add-btn" onClick={() => openPopup("Snacks")}>
-          <FontAwesomeIcon icon={faPlus} />
-        </button>
       </div>
       {showPopup && (
         <AddMealForm

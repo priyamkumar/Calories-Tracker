@@ -11,12 +11,17 @@ const defaultData = {
   meals: [],
 };
 
+let todayData = localStorage.getItem(today);
+if(!todayData) {
+  localStorage.setItem(today, JSON.stringify(defaultData));
+}
+
 const initialState = {
   currentDate: today,
   allDates: JSON.parse(localStorage.getItem("allDates")) || [],
   data: JSON.parse(
     localStorage.getItem(today)
-  ) || defaultData,
+  )
 };
 
 const dataSlice = createSlice({
