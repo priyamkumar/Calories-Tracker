@@ -220,7 +220,7 @@ main {
   color: var(--text-color);
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 10px;
   font-weight: bold;
 }
 
@@ -229,10 +229,11 @@ main {
 .meal-info input[type="time"] {
   padding: 8px;
   font-size: 14px;
-  border: 1px solid #cccccc;
+  border: 1px solid var(--text-color);
   border-radius: 5px;
   width: 100%;
   box-sizing: border-box;
+  margin-bottom: 10px;
 }
 
 .meal-info input:focus {
@@ -307,7 +308,7 @@ main {
   gap: 1.5rem;
   padding: 1.5rem;
   max-width: 500px;
-  margin: 0 auto;
+  margin: 30px auto;
   background-color: var(--background-color);
   color: var(--text-color);
   border: 1px solid var(--text-color);
@@ -341,7 +342,13 @@ main {
   font-size: 1rem;
   color: var(--text-color);
   display: flex;
-  align-items: center;;
+  align-items: center;
+  gap: 10px
+}
+
+.goal-radio-group label {
+  margin-right: 1rem;
+  margin-left: 1rem;
 }
 
 .goal-radio-group label {

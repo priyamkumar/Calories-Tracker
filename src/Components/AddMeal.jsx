@@ -83,17 +83,16 @@ export default function AddMeal({ mealTypeArr }) {
           {breakfastMeals.map((meal, index) => (
             <li key={index}>
               <div className="meal-items">
-                {meal[0]["food_name"]} - {meal.calories} Cal{" "}
+                <p>{meal[0]["food_name"]} - {meal.calories} Cal{" "} ({meal.quantity} g/ml)</p>
                 <button
                   className="remove-btn"
                   onClick={() => removeMeal(meal.id)}
-                >
+                  >
                   <FontAwesomeIcon
                     icon={faXmark}
                     style={{ color: theme === "Dark" ? "white" : "black" }}
-                  />
+                    />
                 </button>{" "}
-                {meal.time}
               </div>
             </li>
           ))}
@@ -117,7 +116,7 @@ export default function AddMeal({ mealTypeArr }) {
           {lunchMeals.map((meal, index) => (
             <li key={index}>
               <div className="meal-items">
-                {meal[0]["food_name"]} - {meal.calories} Cal{" "}
+                <p>{meal[0]["food_name"]} - {meal.calories} Cal{" "} ({meal.quantity} g/ml)</p>
                 <button
                   className="remove-btn"
                   onClick={() => removeMeal(meal.id)}
@@ -127,7 +126,6 @@ export default function AddMeal({ mealTypeArr }) {
                     style={{ color: theme === "Dark" ? "white" : "black" }}
                   />
                 </button>{" "}
-                {meal.time}
               </div>
             </li>
           ))}
@@ -150,7 +148,7 @@ export default function AddMeal({ mealTypeArr }) {
           {dinnerMeals.map((meal, index) => (
             <li key={index}>
               <div className="meal-items">
-                {meal[0]["food_name"]} - {meal.calories} Cal{" "}
+                <p>{meal[0]["food_name"]} - {meal.calories} Cal{" "} ({meal.quantity} g/ml)</p>
                 <button
                   className="remove-btn"
                   onClick={() => removeMeal(meal.id)}
@@ -160,7 +158,6 @@ export default function AddMeal({ mealTypeArr }) {
                     style={{ color: theme === "Dark" ? "white" : "black" }}
                   />
                 </button>{" "}
-                {meal.time}
               </div>
             </li>
           ))}
@@ -183,7 +180,7 @@ export default function AddMeal({ mealTypeArr }) {
           {snackMeals.map((meal, index) => (
             <li key={index}>
               <div className="meal-items">
-                {meal[0]["food_name"]} - {meal.calories} Cal{" "}
+                <p>{meal[0]["food_name"]} - {meal.calories} Cal{" "} ({meal.quantity} g/ml)</p>
                 <button
                   className="remove-btn"
                   onClick={() => removeMeal(meal.id)}
@@ -193,7 +190,6 @@ export default function AddMeal({ mealTypeArr }) {
                     style={{ color: theme === "Dark" ? "white" : "black" }}
                   />
                 </button>{" "}
-                {meal.time}
               </div>
             </li>
           ))}

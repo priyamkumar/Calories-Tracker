@@ -1,4 +1,5 @@
 import React from "react";
+import SetCalorieGoal from "./SetCalorieGoal";
 
 export default function SettingsOptions({ userDataArr }) {
   const [userData, setUserData] = userDataArr;
@@ -71,6 +72,7 @@ export default function SettingsOptions({ userDataArr }) {
           <input type="radio" name="goal" id="gain" onChange={handleChange} checked = {userData.goal === "gain"}/> Weight Gain
         </label>
       </p>
+      <SetCalorieGoal />
     </div>
   );
 }

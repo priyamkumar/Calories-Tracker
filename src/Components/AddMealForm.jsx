@@ -3,6 +3,7 @@ import { foodData } from "../Utility/Anuvaad_INDB_2024.11";
 import { useTheme } from "../Contexts/ThemeContext";
 import { useDispatch, useSelector } from "react-redux"
 import { updateData } from "./CaloriesTodaySlice.js"
+import { current } from "@reduxjs/toolkit";
 
 export default function AddMealForm({
   formRef,
@@ -51,6 +52,7 @@ export default function AddMealForm({
         quantity: quantity,
         id: Math.floor(Math.random() * 1e9),
         type: mealType,
+        time: currentTime
       };
       dispatch(updateData({
         ...data,
@@ -119,7 +121,7 @@ export default function AddMealForm({
               id="time"
               name="time"
               value={currentTime}
-              onChange={handleOnChange}
+              readOnly
             />
           </label>
         </div>
