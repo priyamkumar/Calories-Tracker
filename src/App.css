@@ -163,11 +163,17 @@ main {
 .meal-items {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 5px 0;
 }
 
 .meal-items:last-child {
   border-bottom: none;
+}
+
+.meal-items .buttons {
+  display: flex;
+  gap: 5px;
 }
 
 .meal-items .remove-btn {
@@ -179,6 +185,19 @@ main {
 }
 
 .meal-items .remove-btn:hover {
+  transform: scale(1.5);
+  background-color: var(--background-color);
+}
+
+.meal-items .edit-btn {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-size: 1rem;
+  transition: 0.3s ease;
+}
+
+.meal-items .edit-btn:hover {
   transform: scale(1.5);
   background-color: var(--background-color);
 }
@@ -285,7 +304,7 @@ main {
 }
 
 .chart {
-  width: 70%;
+  width: 50%;
 }
 
 .stats {
@@ -366,16 +385,15 @@ main {
 }
 
 .average-cal {
-  max-width: 600px;
-  margin: 20px auto;
+  max-width: 400px;
+  margin: auto;
   padding: 20px;
   background-color: var(--background-color);
-  border-radius: 10px;
   color: var(--text-color);
 }
 
 .average-cal h3 {
-  font-size: 18px;
+  font-size: 16px;
   margin: 10px 0;
   line-height: 1.5;
   color: var(--text-color);

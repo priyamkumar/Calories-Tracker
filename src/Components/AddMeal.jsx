@@ -7,6 +7,7 @@ import {
   faAppleWhole,
   faPlus,
   faXmark,
+  faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
 import AddMealForm from "./AddMealForm";
 import { useTheme } from "../Contexts/ThemeContext";
@@ -20,13 +21,25 @@ export default function AddMeal({ mealTypeArr }) {
 
   const [showPopup, setShowPopup] = useState(false);
 
+  const [popupType, setPopupType] = useState("");
+
   const [mealType, setMealType] = mealTypeArr;
+
+  const [editData, setEditData] = useState({});
 
   const { theme } = useTheme();
 
   const openPopup = (meal) => {
     setMealType(meal);
     setShowPopup((prev) => !prev);
+    setPopupType("add");
+  };
+
+  const editPopup = (mealId) => {
+    let mealToEdit = data.meals.filter((meal) => meal.id === mealId);
+    setShowPopup((prev) => !prev);
+    setPopupType("edit");
+    setEditData(mealToEdit[0])
   };
 
   let breakfastMeals =
@@ -72,7 +85,7 @@ export default function AddMeal({ mealTypeArr }) {
             <h3>
               <FontAwesomeIcon icon={faMugSaucer} /> Breakfast
             </h3>
-            <button className="add-btn" onClick={(e) => openPopup("Breakfast")}>
+            <button className="add-btn" onClick={() => openPopup("Breakfast")}>
               <FontAwesomeIcon icon={faPlus} />
             </button>
           </div>
@@ -83,16 +96,30 @@ export default function AddMeal({ mealTypeArr }) {
           {breakfastMeals.map((meal, index) => (
             <li key={index}>
               <div className="meal-items">
-                <p>{meal[0]["food_name"]} - {meal.calories} Cal{" "} ({meal.quantity} g/ml)</p>
-                <button
-                  className="remove-btn"
-                  onClick={() => removeMeal(meal.id)}
+                <p>
+                  {meal[0]["food_name"]} - {meal.calories} Cal ({meal.quantity}{" "}
+                  g/ml)
+                </p>
+                <div className="buttons">
+                  <button
+                    className="edit-btn"
+                    onClick={() => editPopup(meal.id)}
                   >
-                  <FontAwesomeIcon
-                    icon={faXmark}
-                    style={{ color: theme === "Dark" ? "white" : "black" }}
+                    <FontAwesomeIcon
+                      icon={faPenToSquare}
+                      style={{ color: theme === "Dark" ? "white" : "black" }}
                     />
-                </button>{" "}
+                  </button>
+                  <button
+                    className="remove-btn"
+                    onClick={() => removeMeal(meal.id)}
+                  >
+                    <FontAwesomeIcon
+                      icon={faXmark}
+                      style={{ color: theme === "Dark" ? "white" : "black" }}
+                    />
+                  </button>{" "}
+                </div>
               </div>
             </li>
           ))}
@@ -116,16 +143,27 @@ export default function AddMeal({ mealTypeArr }) {
           {lunchMeals.map((meal, index) => (
             <li key={index}>
               <div className="meal-items">
-                <p>{meal[0]["food_name"]} - {meal.calories} Cal{" "} ({meal.quantity} g/ml)</p>
-                <button
-                  className="remove-btn"
-                  onClick={() => removeMeal(meal.id)}
-                >
-                  <FontAwesomeIcon
-                    icon={faXmark}
-                    style={{ color: theme === "Dark" ? "white" : "black" }}
-                  />
-                </button>{" "}
+                <p>
+                  {meal[0]["food_name"]} - {meal.calories} Cal ({meal.quantity}{" "}
+                  g/ml)
+                </p>
+                <div className="buttons">
+                  <button className="edit-btn">
+                    <FontAwesomeIcon
+                      icon={faPenToSquare}
+                      style={{ color: theme === "Dark" ? "white" : "black" }}
+                    />
+                  </button>
+                  <button
+                    className="remove-btn"
+                    onClick={() => removeMeal(meal.id)}
+                  >
+                    <FontAwesomeIcon
+                      icon={faXmark}
+                      style={{ color: theme === "Dark" ? "white" : "black" }}
+                    />
+                  </button>{" "}
+                </div>
               </div>
             </li>
           ))}
@@ -148,16 +186,27 @@ export default function AddMeal({ mealTypeArr }) {
           {dinnerMeals.map((meal, index) => (
             <li key={index}>
               <div className="meal-items">
-                <p>{meal[0]["food_name"]} - {meal.calories} Cal{" "} ({meal.quantity} g/ml)</p>
-                <button
-                  className="remove-btn"
-                  onClick={() => removeMeal(meal.id)}
-                >
-                  <FontAwesomeIcon
-                    icon={faXmark}
-                    style={{ color: theme === "Dark" ? "white" : "black" }}
-                  />
-                </button>{" "}
+                <p>
+                  {meal[0]["food_name"]} - {meal.calories} Cal ({meal.quantity}{" "}
+                  g/ml)
+                </p>
+                <div className="buttons">
+                  <button className="edit-btn">
+                    <FontAwesomeIcon
+                      icon={faPenToSquare}
+                      style={{ color: theme === "Dark" ? "white" : "black" }}
+                    />
+                  </button>
+                  <button
+                    className="remove-btn"
+                    onClick={() => removeMeal(meal.id)}
+                  >
+                    <FontAwesomeIcon
+                      icon={faXmark}
+                      style={{ color: theme === "Dark" ? "white" : "black" }}
+                    />
+                  </button>{" "}
+                </div>
               </div>
             </li>
           ))}
@@ -180,16 +229,27 @@ export default function AddMeal({ mealTypeArr }) {
           {snackMeals.map((meal, index) => (
             <li key={index}>
               <div className="meal-items">
-                <p>{meal[0]["food_name"]} - {meal.calories} Cal{" "} ({meal.quantity} g/ml)</p>
-                <button
-                  className="remove-btn"
-                  onClick={() => removeMeal(meal.id)}
-                >
-                  <FontAwesomeIcon
-                    icon={faXmark}
-                    style={{ color: theme === "Dark" ? "white" : "black" }}
-                  />
-                </button>{" "}
+                <p>
+                  {meal[0]["food_name"]} - {meal.calories} Cal ({meal.quantity}{" "}
+                  g/ml)
+                </p>
+                <div className="buttons">
+                  <button className="edit-btn">
+                    <FontAwesomeIcon
+                      icon={faPenToSquare}
+                      style={{ color: theme === "Dark" ? "white" : "black" }}
+                    />
+                  </button>
+                  <button
+                    className="remove-btn"
+                    onClick={() => removeMeal(meal.id)}
+                  >
+                    <FontAwesomeIcon
+                      icon={faXmark}
+                      style={{ color: theme === "Dark" ? "white" : "black" }}
+                    />
+                  </button>{" "}
+                </div>
               </div>
             </li>
           ))}
@@ -200,6 +260,8 @@ export default function AddMeal({ mealTypeArr }) {
           formRef={formRef}
           setShowPopup={setShowPopup}
           mealType={mealType}
+          popupType={popupType}
+          editDataArr={[editData, setEditData]}
         />
       )}
     </div>
