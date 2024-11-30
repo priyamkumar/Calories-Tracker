@@ -21,10 +21,6 @@ export default function StatisticsAverages() {
     .slice(-7)
     .reverse();
   let barData = barDates.map((el) => parseLocalStorage(el));
-  let calories = barData.map((el) => el.calories);
-  let carbs = barData.map((el) => el.carbs);
-  let protein = barData.map((el) => el.protein);
-  let fats = barData.map((el) => el.fats);
   const getWeeklyAverage = (key) => (
     Math.round(barData.reduce((acc, cur) => acc + (cur[key] || 0), 0) / 7)
   );

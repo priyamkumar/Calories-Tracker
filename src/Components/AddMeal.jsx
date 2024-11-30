@@ -36,10 +36,10 @@ export default function AddMeal({ mealTypeArr }) {
   };
 
   const editPopup = (mealId) => {
-    let mealToEdit = data.meals.filter((meal) => meal.id === mealId);
+    let mealToEdit = data.meals.find((meal) => meal.id === mealId);
     setShowPopup((prev) => !prev);
     setPopupType("edit");
-    setEditData(mealToEdit[0])
+    setEditData(mealToEdit);
   };
 
   let breakfastMeals =
@@ -52,15 +52,15 @@ export default function AddMeal({ mealTypeArr }) {
   let snackMeals = data.meals.filter((meal) => meal.type === "Snacks") || [];
 
   const removeMeal = (index) => {
-    let deletedMeal = data.meals.filter((element, i) => index === element.id);
+    let deletedMeal = data.meals.find((element, i) => index === element.id);
     let updatedMeals = data.meals.filter((element, i) => index !== element.id);
     dispatch(
       updateData({
         ...data,
-        calories: Math.round(data.calories - deletedMeal[0].calories),
-        carbs: Math.round(data.carbs - deletedMeal[0].carbs),
-        protein: Math.round(data.protein - deletedMeal[0].protein),
-        fats: Math.round(data.fats - deletedMeal[0].fats),
+        calories: Math.round(data.calories - deletedMeal.calories),
+        carbs: Math.round(data.carbs - deletedMeal.carbs),
+        protein: Math.round(data.protein - deletedMeal.protein),
+        fats: Math.round(data.fats - deletedMeal.fats),
         meals: updatedMeals,
       })
     );
@@ -97,7 +97,7 @@ export default function AddMeal({ mealTypeArr }) {
             <li key={index}>
               <div className="meal-items">
                 <p>
-                  {meal[0]["food_name"]} - {meal.calories} Cal ({meal.quantity}{" "}
+                  {meal["food_name"]} - {meal.calories} Cal ({meal.quantity}{" "}
                   g/ml)
                 </p>
                 <div className="buttons">
@@ -144,11 +144,14 @@ export default function AddMeal({ mealTypeArr }) {
             <li key={index}>
               <div className="meal-items">
                 <p>
-                  {meal[0]["food_name"]} - {meal.calories} Cal ({meal.quantity}{" "}
+                  {meal["food_name"]} - {meal.calories} Cal ({meal.quantity}{" "}
                   g/ml)
                 </p>
                 <div className="buttons">
-                  <button className="edit-btn">
+                  <button
+                    className="edit-btn"
+                    onClick={() => editPopup(meal.id)}
+                  >
                     <FontAwesomeIcon
                       icon={faPenToSquare}
                       style={{ color: theme === "Dark" ? "white" : "black" }}
@@ -187,11 +190,14 @@ export default function AddMeal({ mealTypeArr }) {
             <li key={index}>
               <div className="meal-items">
                 <p>
-                  {meal[0]["food_name"]} - {meal.calories} Cal ({meal.quantity}{" "}
+                  {meal["food_name"]} - {meal.calories} Cal ({meal.quantity}{" "}
                   g/ml)
                 </p>
                 <div className="buttons">
-                  <button className="edit-btn">
+                  <button
+                    className="edit-btn"
+                    onClick={() => editPopup(meal.id)}
+                  >
                     <FontAwesomeIcon
                       icon={faPenToSquare}
                       style={{ color: theme === "Dark" ? "white" : "black" }}
@@ -230,11 +236,14 @@ export default function AddMeal({ mealTypeArr }) {
             <li key={index}>
               <div className="meal-items">
                 <p>
-                  {meal[0]["food_name"]} - {meal.calories} Cal ({meal.quantity}{" "}
+                  {meal["food_name"]} - {meal.calories} Cal ({meal.quantity}{" "}
                   g/ml)
                 </p>
                 <div className="buttons">
-                  <button className="edit-btn">
+                  <button
+                    className="edit-btn"
+                    onClick={() => editPopup(meal.id)}
+                  >
                     <FontAwesomeIcon
                       icon={faPenToSquare}
                       style={{ color: theme === "Dark" ? "white" : "black" }}
