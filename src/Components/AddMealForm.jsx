@@ -23,6 +23,8 @@ export default function AddMealForm({
   );
   const { theme } = useTheme();
 
+  popupType === "edit" ? (mealType = editData.type) : mealType;
+
   let d = new Date();
   let h = d.getHours();
   let m = d.getMinutes();
@@ -30,31 +32,61 @@ export default function AddMealForm({
   const [currentTime, setCurrentTime] = useState(`${h}:${m}`);
 
   const handleOnChange = (event) => {
-    if (popupType === "add") {
-      if (event.target.name === "time") setCurrentTime(event.target.value);
-      if (event.target.name === "meal-name") {
-        setQuery(event.target.value);
-        let element = foodData.filter(
-          (item) => item["food_name"] === event.target.value
-        );
-        setFoodCalorie(Math.round(element[0]?.["energy_kcal"]) || 0);
-      }
-      if (event.target.name === "quantity") {
-        setQuantity(Number(event.target.value));
-      }
-    } else {
-      if (event.target.name === "quantity") {
-        setQuantity(Number(event.target.value));
-      }
+    if (event.target.name === "time") setCurrentTime(event.target.value);
+    else if (event.target.name === "meal-name") {
+      setQuery(event.target.value);
+      let element = foodData.filter(
+        (item) => item["food_name"] === event.target.value
+      );
+      setFoodCalorie(Math.round(element[0]?.["energy_kcal"]) || 0);
+    } else if (event.target.name === "quantity") {
+      setQuantity(Number(event.target.value));
     }
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    if (popupType === "add") {
-      let element = foodData.filter(
-        (item, index) => item["food_name"] === query
+
+    const matchedItem = foodData.find((item) => item.food_name === query);
+    if (!matchedItem) {
+      alert("Selected food item not found in the database.");
+      return;
+    }
+
+    if (popupType === "edit") {
+      let deletedMeal = data.meals.filter(
+        (element) => editData.id === element.id
       );
+      let updatedMeals = data.meals.filter(
+        (element) => deletedMeal[0].id !== element.id
+      );
+      let element = foodData.filter((item) => item["food_name"] === query);
+      setShowPopup(false);
+      if (element) {
+        let newItem = {
+          ...element,
+          calories: Math.round((element[0]["energy_kcal"] / 100) * quantity),
+          carbs: Math.round((element[0]["carb_g"] / 100) * quantity),
+          protein: Math.round((element[0]["protein_g"] / 100) * quantity),
+          fats: Math.round((element[0]["fat_g"] / 100) * quantity),
+          quantity: quantity,
+          id: Math.floor(Math.random() * 1e9),
+          type: mealType,
+          time: currentTime,
+        };
+        dispatch(
+          updateData({
+            ...data,
+            calories: Math.round(data.calories + newItem.calories - deletedMeal[0].calories),
+            meals: [updatedMeals, newItem],
+            carbs: Math.round(data.carbs + newItem.carbs - deletedMeal[0].carbs),
+            protein: Math.round(data.protein + newItem.protein - deletedMeal[0].protein),
+            fats: Math.round(data.fats + newItem.fats - deletedMeal[0].fats),
+          })
+        );
+      }
+    } else {
+      let element = foodData.filter((item) => item["food_name"] === query);
       setShowPopup(false);
       if (element) {
         let newItem = {
@@ -79,21 +111,6 @@ export default function AddMealForm({
           })
         );
       }
-    } else {
-      let deletedMeal = data.meals.filter((element, i) => index === element.id);
-      let updatedMeals = data.meals.filter(
-        (element, i) => index !== element.id
-      );
-      dispatch(
-        updateData({
-          ...data,
-          calories: Math.round(data.calories - deletedMeal[0].calories),
-          carbs: Math.round(data.carbs - deletedMeal[0].carbs),
-          protein: Math.round(data.protein - deletedMeal[0].protein),
-          fats: Math.round(data.fats - deletedMeal[0].fats),
-          meals: updatedMeals,
-        })
-      );
     }
   };
 

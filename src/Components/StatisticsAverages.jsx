@@ -1,48 +1,62 @@
-import React from "react";
 import { useSelector } from "react-redux";
 
 export default function StatisticsAverages() {
   const { currentDate } = useSelector((state) => state.calories);
 
-  let today = new Date().toISOString().split("T")[0];
-  let todayData = JSON.parse(localStorage.getItem(today));
-  let remainingCal = todayData.calorieGoal - todayData.calories;
+  const parseLocalStorage = (key, fallback = null) => {
+    try {
+      return JSON.parse(localStorage.getItem(key)) || fallback;
+    } catch {
+      return fallback;
+    }
+  };
 
-  let allDates = JSON.parse(localStorage.getItem("allDates"));
-  let barDates = allDates.sort((a, b) => b.split("-")[0] - a.split("-")[0]);
-  barDates = allDates.sort((a, b) => b.split("-")[1] - a.split("-")[1]);
-  barDates = allDates.sort((a, b) => b.split("-")[2] - a.split("-")[2]);
-  barDates = barDates.slice(0, 7).reverse();
-  let barData = barDates.map((el) => JSON.parse(localStorage.getItem(el)));
+  let today = new Date().toISOString().split("T")[0];
+  let todayData = parseLocalStorage(today, { calorieGoal: 0, calories: 0 });
+  let remainingCal = Math.max(todayData.calorieGoal - todayData.calories, 0);
+
+  let allDates = parseLocalStorage("allDates", []);
+  let barDates = allDates
+    .sort((a, b) => new Date(a) - new Date(b))
+    .slice(-7)
+    .reverse();
+  let barData = barDates.map((el) => parseLocalStorage(el));
   let calories = barData.map((el) => el.calories);
   let carbs = barData.map((el) => el.carbs);
   let protein = barData.map((el) => el.protein);
   let fats = barData.map((el) => el.fats);
-  let averageWeekCal = Math.round(
-    calories.reduce((acc, cur) => acc + cur, 0) / 7
+  const getWeeklyAverage = (key) => (
+    Math.round(barData.reduce((acc, cur) => acc + (cur[key] || 0), 0) / 7)
   );
-  let averageWeekCarbs = Math.round(
-    carbs.reduce((acc, cur) => acc + cur, 0) / 7
-  );
-  let averageWeekProtein = Math.round(
-    protein.reduce((acc, cur) => acc + cur, 0) / 7
-  );
-  let averageWeekFats = Math.round(fats.reduce((acc, cur) => acc + cur, 0) / 7);
 
-  let userData = JSON.parse(localStorage.getItem("userData"));
+  let averageWeekCal = getWeeklyAverage("calories");
+  let averageWeekCarbs = getWeeklyAverage("carbs");
+  let averageWeekProtein = getWeeklyAverage("protein");
+  let averageWeekFats = getWeeklyAverage("fats");
+
+  let userData = parseLocalStorage("userData", {
+    weight: 0,
+    height: 0,
+    age: 0,
+    gender: "",
+    level: "",
+    goal: "",
+  });
   userData.weight = Number(userData.weight);
   userData.height = Number(userData.height);
-  let bmi = 0;
-  if (userData.height && userData.weight)
-    bmi = (
-      (userData.weight / (userData.height * userData.height)) *
-      10000
-    ).toFixed(1);
+  let bmi =
+    userData.height && userData.weight
+      ? (
+          (userData.weight / (userData.height * userData.height)) *
+          10000
+        ).toFixed(1)
+      : 0;
   let bmr =
     userData.gender === "Male"
       ? 10 * userData.weight + 6.25 * userData.height - 5 * userData.age + 5
       : 10 * userData.weight + 6.25 * userData.height - 5 * userData.age - 161;
-  bmr = bmr > 0 ? bmr : 0;
+  bmr = Math.max(bmr, 0);
+
   function multiplierCalculator() {
     switch (userData.level) {
       case "sedentary":
@@ -67,34 +81,39 @@ export default function StatisticsAverages() {
       case "gain":
         return calorieNeed + 300;
       default:
-        return 0;
+        return calorieNeed;
     }
   }
   let requireCalories = goalCalculator();
 
   return (
     <div className="average-cal">
-      <h3>
-        BMI (Body Mass Index) : {bmi} kg/m<sup>2</sup>
-      </h3>
-      <h3>BMR (Basal Metabolic Rate) : {bmr} Calories/day</h3>
-      <h3>
-        Daily calorie needs based on activity level : {calorieNeed} Calories
-      </h3>
-      <h3>
-        Daily calorie needs based on your fitness goal : {requireCalories}{" "}
-        Calories
-      </h3>
-      {today === currentDate && (
+      {userData && (
         <>
           <h3>
-            Today's Remaining Calories : {remainingCal > 0 ? remainingCal : 0}
+            BMI (Body Mass Index) : {bmi} kg/m<sup>2</sup>
           </h3>
-          <h3>Last 7 days :-</h3>
-          <h3>Average Calories : {averageWeekCal} Cal</h3>
-          <h3>Average Carbs : {averageWeekCarbs} g</h3>
-          <h3>Average Protein : {averageWeekProtein} g</h3>
-          <h3>Average Fats : {averageWeekFats} g</h3>
+          <h3>BMR (Basal Metabolic Rate) : {bmr} Calories/day</h3>
+          <h3>
+            Daily calorie needs based on activity level : {calorieNeed} Calories
+          </h3>
+          <h3>
+            Daily calorie needs based on your fitness goal : {requireCalories}{" "}
+            Calories
+          </h3>
+          {today === currentDate && (
+            <>
+              <h3>
+                Today's Remaining Calories :{" "}
+                {remainingCal > 0 ? remainingCal : 0}
+              </h3>
+              <h3>Last 7 days :-</h3>
+              <h3>Average Calories : {averageWeekCal} Cal</h3>
+              <h3>Average Carbs : {averageWeekCarbs} g</h3>
+              <h3>Average Protein : {averageWeekProtein} g</h3>
+              <h3>Average Fats : {averageWeekFats} g</h3>
+            </>
+          )}
         </>
       )}
     </div>
