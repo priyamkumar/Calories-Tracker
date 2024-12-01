@@ -12,16 +12,14 @@ const defaultData = {
 };
 
 let todayData = localStorage.getItem(today);
-if(!todayData) {
+if (!todayData) {
   localStorage.setItem(today, JSON.stringify(defaultData));
 }
 
 const initialState = {
   currentDate: today,
   allDates: JSON.parse(localStorage.getItem("allDates")) || [],
-  data: JSON.parse(
-    localStorage.getItem(today)
-  )
+  data: JSON.parse(localStorage.getItem(today)),
 };
 
 const dataSlice = createSlice({
@@ -30,11 +28,22 @@ const dataSlice = createSlice({
   reducers: {
     setDate(state, action) {
       state.currentDate = action.payload;
-      state.data = JSON.parse(localStorage.getItem(action.payload)) || defaultData;
+      console.log(state.currentDate);
+      console.log(!state.allDates.includes(state.currentDate))
+      state.data =
+        JSON.parse(localStorage.getItem(action.payload)) || defaultData;
+      if (!state.allDates.includes(state.currentDate)) {
+        state.allDates.push(state.currentDate);
+        localStorage.setItem("allDates", JSON.stringify(state.allDates));
+      }
+      let dateData = localStorage.getItem(state.currentDate);
+      if (!dateData) {
+        localStorage.setItem(state.currentDate, JSON.stringify(defaultData));
+      }
     },
     updateData(state, action) {
-      state.data = action.payload,
-      localStorage.setItem(state.currentDate, JSON.stringify(state.data));
+      (state.data = action.payload),
+        localStorage.setItem(state.currentDate, JSON.stringify(state.data));
       if (!state.allDates.includes(state.currentDate)) {
         state.allDates.push(state.currentDate);
         localStorage.setItem("allDates", JSON.stringify(state.allDates));
@@ -43,5 +52,5 @@ const dataSlice = createSlice({
   },
 });
 
-export const { setDate, updateData} = dataSlice.actions;
+export const { setDate, updateData } = dataSlice.actions;
 export default dataSlice.reducer;

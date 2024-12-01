@@ -1,15 +1,8 @@
 import { useSelector } from "react-redux";
+import { parseLocalStorage } from "../Utility/utils";
 
 export default function StatisticsAverages() {
   const { currentDate } = useSelector((state) => state.calories);
-
-  const parseLocalStorage = (key, fallback = null) => {
-    try {
-      return JSON.parse(localStorage.getItem(key)) || fallback;
-    } catch {
-      return fallback;
-    }
-  };
 
   let today = new Date().toISOString().split("T")[0];
   let todayData = parseLocalStorage(today, { calorieGoal: 0, calories: 0 });

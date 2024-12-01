@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { foodData } from "../Utility/Anuvaad_INDB_2024.11";
 import { useTheme } from "../Contexts/ThemeContext";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,11 +11,12 @@ export default function AddMealForm({
   popupType,
   editDataArr,
 }) {
-  const [editData, setEditData] = editDataArr;
+  const [editData] = editDataArr;
   const dispatch = useDispatch();
   const { data } = useSelector((state) => state.calories);
-  const [query, setQuery] = useState("");
-  const [mealName, setMealName] = useState(popupType === "edit" ? editData?.["food_name"] : "");
+  const [mealName, setMealName] = useState(
+    popupType === "edit" ? editData?.["food_name"] : ""
+  );
   const [foodCalorie, setFoodCalorie] = useState(
     popupType === "edit" ? Math.round(editData?.["energy_kcal"]) : 0
   );
@@ -33,23 +34,28 @@ export default function AddMealForm({
   const [currentTime, setCurrentTime] = useState(`${h}:${m}`);
 
   const handleOnChange = (event) => {
-    if (event.target.name === "time") setCurrentTime(event.target.value);
-    else if (event.target.name === "meal-name") {
-      setMealName(event.target.value);
-      setQuery(event.target.value);
-      let element = foodData.find(
-        (item) => item["food_name"] === event.target.value
-      );
-      setFoodCalorie(Math.round(element?.["energy_kcal"]) || 0);
-    } else if (event.target.name === "quantity") {
-      setQuantity(Number(event.target.value));
+    switch (event.target.name) {
+      case "time":
+        setCurrentTime(event.target.value);
+        break;
+      case "meal-name":
+        setMealName(event.target.value);
+        let element = foodData.find(
+          (item) => item["food_name"] === event.target.value
+        );
+        setFoodCalorie(Math.round(element?.["energy_kcal"]) || 0);
+        break;
+      case "quantity":
+        setQuantity(Number(event.target.value));
+      default:
+        break;
     }
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    const matchedItem = foodData.find((item) => item.food_name === mealName);
+    const matchedItem = foodData.find((item) => item["food_name"] === mealName);
     if (!matchedItem) {
       alert("Selected food item not found in the database.");
       return;
@@ -62,41 +68,41 @@ export default function AddMealForm({
       let updatedMeals = data.meals.filter(
         (element) => deletedMeal.id !== element.id
       );
-      let element = foodData.find((item) => item["food_name"] === mealName);
       setShowPopup(false);
-      if (element) {
         let newItem = {
-          ...element,
-          calories: Math.round((element["energy_kcal"] / 100) * quantity),
-          carbs: Math.round((element["carb_g"] / 100) * quantity),
-          protein: Math.round((element["protein_g"] / 100) * quantity),
-          fats: Math.round((element["fat_g"] / 100) * quantity),
+          ...matchedItem,
+          calories: Math.round((matchedItem["energy_kcal"] / 100) * quantity),
+          carbs: Math.round((matchedItem["carb_g"] / 100) * quantity),
+          protein: Math.round((matchedItem["protein_g"] / 100) * quantity),
+          fats: Math.round((matchedItem["fat_g"] / 100) * quantity),
           quantity: quantity,
           id: deletedMeal.id,
-          type: mealType,
+          type: deletedMeal.type,
           time: currentTime,
         };
         dispatch(
           updateData({
             ...data,
-            calories: Math.round(data.calories + newItem.calories - deletedMeal.calories),
+            calories: Math.round(
+              data.calories + newItem.calories - deletedMeal.calories
+            ),
             meals: [...updatedMeals, newItem],
             carbs: Math.round(data.carbs + newItem.carbs - deletedMeal.carbs),
-            protein: Math.round(data.protein + newItem.protein - deletedMeal.protein),
+            protein: Math.round(
+              data.protein + newItem.protein - deletedMeal.protein
+            ),
             fats: Math.round(data.fats + newItem.fats - deletedMeal.fats),
           })
         );
-      }
+      
     } else {
-      let element = foodData.find((item) => item["food_name"] === query);
       setShowPopup(false);
-      if (element) {
         let newItem = {
-          ...element,
-          calories: Math.round((element["energy_kcal"] / 100) * quantity),
-          carbs: Math.round((element["carb_g"] / 100) * quantity),
-          protein: Math.round((element["protein_g"] / 100) * quantity),
-          fats: Math.round((element["fat_g"] / 100) * quantity),
+          ...matchedItem,
+          calories: Math.round((matchedItem["energy_kcal"] / 100) * quantity),
+          carbs: Math.round((matchedItem["carb_g"] / 100) * quantity),
+          protein: Math.round((matchedItem["protein_g"] / 100) * quantity),
+          fats: Math.round((matchedItem["fat_g"] / 100) * quantity),
           quantity: quantity,
           id: Math.floor(Math.random() * 1e9),
           type: mealType,
@@ -112,7 +118,7 @@ export default function AddMealForm({
             fats: data.fats + newItem.fats,
           })
         );
-      }
+      
     }
   };
 
