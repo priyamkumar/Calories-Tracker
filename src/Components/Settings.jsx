@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Heading from "./Heading";
 import SettingsOptions from "./SettingsOptions";
 import { useTheme } from "../Contexts/ThemeContext";
-import SettingsMicronutrients from "./SettingsMicronutrients";
 
 export default function Settings() {
     const {theme} = useTheme();
@@ -22,7 +21,6 @@ export default function Settings() {
     <div className={`settings ${theme === "Dark" ? "dark" : ""}`}>
         <Heading text={"User Settings"} className={"settings"}/>
         <SettingsOptions userDataArr={[userData, setUserData]}/>
-        <SettingsMicronutrients/>
     </div>
   );
 }
