@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { updateAllDates } from "../Utility/utils";
+import { updateAllDates, parseLocalStorage, setLocalStorage } from "../Utility/utils";
 
 let today = new Date().toISOString().split("T")[0];
 
@@ -12,14 +12,14 @@ const defaultData = {
   meals: [],
 };
 
-if (!localStorage.getItem(today)) {
-  localStorage.setItem(today, JSON.stringify(defaultData));
+if (!parseLocalStorage(today)) {
+  setLocalStorage(today, defaultData);
 }
 
 const initialState = {
   currentDate: today,
-  allDates: JSON.parse(localStorage.getItem("allDates")) || [],
-  data: JSON.parse(localStorage.getItem(today)),
+  allDates: parseLocalStorage("allDates", []),
+  data: parseLocalStorage(today),
 };
 
 const dataSlice = createSlice({
@@ -28,16 +28,16 @@ const dataSlice = createSlice({
   reducers: {
     setDate(state, action) {
       const newDate = action.payload;
-      const cachedDateData = localStorage.getItem(newDate);
+      const cachedDateData = parseLocalStorage(newDate);
       if (!cachedDateData) {
-        localStorage.setItem(newDate, JSON.stringify(defaultData));
+        setLocalStorage(newDate, defaultData);
       }
       state.currentDate = newDate;
-      state.data = cachedDateData ? JSON.parse(cachedDateData) : defaultData;
+      state.data = cachedDateData ? cachedDateData : defaultData;
     },
     updateData(state, action) {
       state.data = action.payload,
-      localStorage.setItem(state.currentDate, JSON.stringify(state.data));
+      setLocalStorage(state.currentDate, state.data);
       updateAllDates(state, state.currentDate);
     },
   },

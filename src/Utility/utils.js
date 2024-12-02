@@ -6,9 +6,13 @@ export const parseLocalStorage = (key, fallback = null) => {
     }
   };
 
+  export const setLocalStorage = (key, data) => {
+    localStorage.setItem(key, JSON.stringify(data));
+  }
+
   export const updateAllDates = (state, date) => {
     if (!state.allDates.includes(date)) {
       state.allDates = [...state.allDates, date] ;
-      localStorage.setItem("allDates", JSON.stringify(state.allDates));
+      setLocalStorage("allDates", state.allDates);
     }
   };

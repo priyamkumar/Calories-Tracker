@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 import { useTheme } from "../Contexts/ThemeContext";
+import { parseLocalStorage } from "../Utility/utils";
 
 export default function StatisticsBarChart() {
-  let allDates = JSON.parse(localStorage.getItem("allDates")) || [];
+  let allDates = parseLocalStorage("allDates", []);
   let barDates = allDates.sort((a, b) => new Date(b) - new Date(a));
   barDates = barDates.slice(0, 7).reverse();
   let date = barDates.map((el) => el.split("-")[1] + "-" + el.split("-")[2]);
-  let barData = barDates.map((el) => JSON.parse(localStorage.getItem(el)));
+  let barData = barDates.map((el) => parseLocalStorage(el));
   let calories = barData.map((el) => el.calories);
 
   const { theme } = useTheme();

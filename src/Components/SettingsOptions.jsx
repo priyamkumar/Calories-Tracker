@@ -6,15 +6,18 @@ export default function SettingsOptions({ userDataArr }) {
   function handleChange(event) {
     switch (event.target.name) {
       case "age":
+        if(event.target.value < 0 || event.target.value > 100) event.target.value = 0;
         setUserData((data) => ({...data, age: event.target.value}))
         break;
       case "gender":
         setUserData((data) => ({...data, gender: event.target.value}))
         break;
       case "height":
+        if(event.target.value < 0 ) event.target.value = 0;
         setUserData((data) => ({...data, height: event.target.value}))
         break;
       case "weight":
+        if(event.target.value < 0 ) event.target.value = 0;
         setUserData((data) => ({...data, weight: event.target.value}))
         break;
       case "level":
@@ -31,7 +34,7 @@ export default function SettingsOptions({ userDataArr }) {
   return (
     <div className="options">
       <label htmlFor="age">
-        Age <input name="age" id="age" type="number" min="0" onChange={handleChange} value={userData.age}/>
+        Age <input name="age" id="age" type="number" min="0" max="100" onChange={handleChange} value={userData.age}/>
       </label>
       <label htmlFor="gender">
         Gender{" "}

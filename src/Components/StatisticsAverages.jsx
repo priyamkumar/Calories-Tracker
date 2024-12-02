@@ -13,10 +13,11 @@ export default function StatisticsAverages() {
     .sort((a, b) => new Date(a) - new Date(b))
     .slice(-7)
     .reverse();
+
   let barData = barDates.map((el) => parseLocalStorage(el));
-  const getWeeklyAverage = (key) => (
-    Math.round(barData.reduce((acc, cur) => acc + (cur[key] || 0), 0) / 7)
-  );
+
+  const getWeeklyAverage = (key) =>
+    Math.round(barData.reduce((acc, cur) => acc + (cur[key] || 0), 0) / 7);
 
   let averageWeekCal = getWeeklyAverage("calories");
   let averageWeekCarbs = getWeeklyAverage("carbs");
@@ -31,8 +32,10 @@ export default function StatisticsAverages() {
     level: "",
     goal: "",
   });
+
   userData.weight = Number(userData.weight);
   userData.height = Number(userData.height);
+
   let bmi =
     userData.height && userData.weight
       ? (
@@ -40,6 +43,7 @@ export default function StatisticsAverages() {
           10000
         ).toFixed(1)
       : 0;
+
   let bmr =
     userData.gender === "Male"
       ? 10 * userData.weight + 6.25 * userData.height - 5 * userData.age + 5
@@ -77,7 +81,7 @@ export default function StatisticsAverages() {
 
   return (
     <div className="average-cal">
-      {userData && (
+      {userData.height && userData.weight && userData.gender && userData.age? (
         <>
           <h3>
             BMI (Body Mass Index) : {bmi} kg/m<sup>2</sup>
@@ -90,19 +94,20 @@ export default function StatisticsAverages() {
             Daily calorie needs based on your fitness goal : {requireCalories}{" "}
             Calories
           </h3>
-          {today === currentDate && (
-            <>
-              <h3>
-                Today's Remaining Calories :{" "}
-                {remainingCal > 0 ? remainingCal : 0}
-              </h3>
-              <h3>Last 7 days :-</h3>
-              <h3>Average Calories : {averageWeekCal} Cal</h3>
-              <h3>Average Carbs : {averageWeekCarbs} g</h3>
-              <h3>Average Protein : {averageWeekProtein} g</h3>
-              <h3>Average Fats : {averageWeekFats} g</h3>
-            </>
-          )}
+        </>
+      ) : (
+        <h3>Please enter all your details in settings.</h3>
+      )}
+      {today === currentDate && (
+        <>
+          <h3>
+            Today's Remaining Calories : {remainingCal > 0 ? remainingCal : 0}
+          </h3>
+          <h3>Last 7 days :-</h3>
+          <h3>Average Calories : {averageWeekCal} Cal</h3>
+          <h3>Average Carbs : {averageWeekCarbs} g</h3>
+          <h3>Average Protein : {averageWeekProtein} g</h3>
+          <h3>Average Fats : {averageWeekFats} g</h3>
         </>
       )}
     </div>
