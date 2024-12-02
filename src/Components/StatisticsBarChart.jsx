@@ -1,9 +1,9 @@
-import React, { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 import { useTheme } from "../Contexts/ThemeContext";
 
 export default function StatisticsBarChart() {
-  let allDates = JSON.parse(localStorage.getItem("allDates"));
+  let allDates = JSON.parse(localStorage.getItem("allDates")) || [];
   let barDates = allDates.sort((a, b) => new Date(b) - new Date(a));
   barDates = barDates.slice(0, 7).reverse();
   let date = barDates.map((el) => el.split("-")[1] + "-" + el.split("-")[2]);

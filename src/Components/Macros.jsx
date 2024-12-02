@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import LinearProgress from "@mui/material/LinearProgress";
 import { useSelector } from "react-redux";
 

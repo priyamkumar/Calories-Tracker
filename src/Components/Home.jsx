@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ProgressBar from "./ProgressBar";
 import AddMeal from "./AddMeal";
 import { useTheme } from "../Contexts/ThemeContext";
@@ -15,13 +15,6 @@ export default function CaloriesToday() {
   const { theme } = useTheme();
   const { currentDate, data } = useSelector((state) => state.calories);
 
-  useEffect(() => {
-    let all = JSON.parse(localStorage.getItem("allDates")) || [];
-    if(!all.includes(today)) {
-      all.push(today);
-        localStorage.setItem("allDates", JSON.stringify(all));
-      }
-  },[]);
 
   return (
     <main className={theme === "Dark" ? "dark" : ""}>

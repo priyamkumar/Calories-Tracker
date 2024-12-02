@@ -5,3 +5,10 @@ export const parseLocalStorage = (key, fallback = null) => {
       return fallback;
     }
   };
+
+  export const updateAllDates = (state, date) => {
+    if (!state.allDates.includes(date)) {
+      state.allDates = [...state.allDates, date] ;
+      localStorage.setItem("allDates", JSON.stringify(state.allDates));
+    }
+  };
