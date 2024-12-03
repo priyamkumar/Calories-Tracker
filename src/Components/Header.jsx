@@ -9,7 +9,6 @@ export default function Header({setView}) {
     <header className={`header ${theme === "Dark" ? "dark" : ""}`}>
       <Title />
       <Navbar setView={setView}/>
-      <Theme/>
     </header>
   );
 }

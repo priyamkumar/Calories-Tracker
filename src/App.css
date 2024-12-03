@@ -45,6 +45,11 @@ main {
   list-style: none;
 }
 
+.hamburger-menu {
+  display: none;
+  cursor: pointer;
+}
+
 .nav ul li {
   cursor: pointer;
 }
@@ -277,10 +282,11 @@ main {
 }
 
 #darkModeToggle {
+  display: inline-block;
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
-  border: none;
+  border: 1px solid var(--text-color);
   border-radius: 5px;
   background-color: var(--background-color);
   color: var(--text-color);
@@ -362,7 +368,7 @@ main {
   color: var(--text-color);
   display: flex;
   align-items: center;
-  gap: 10px
+  gap: 10px;
 }
 
 .goal-radio-group label {
@@ -403,7 +409,55 @@ main {
   font-size: 12px;
 }
 
+.add-data-message {
+  color: red !important;
+}
+
+.theme-heading {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.theme-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 @media (max-width: 768px) {
+  header h1 {
+    font-size: 30px;
+  }
+
+  .bars {
+    font-size: 24px;
+  }
+
+  .nav {
+    display: none;
+  }
+
+  .nav ul {
+    position: fixed;
+    right: 10px;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .nav.show {
+    display: flex;
+  }
+
+  .hamburger-menu {
+    display: block;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+  }
+
   .home {
     gap: 10px;
   }

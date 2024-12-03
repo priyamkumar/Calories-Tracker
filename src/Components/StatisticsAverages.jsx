@@ -96,7 +96,7 @@ export default function StatisticsAverages() {
           </h3>
         </>
       ) : (
-        <h3>Please enter all your details in settings.</h3>
+        <h3 className="add-data-message">Please enter all your details in settings.</h3>
       )}
       {today === currentDate && (
         <>
