@@ -1,7 +1,7 @@
 body {
   --background-color: white;
   --text-color: black;
-  --element-color: white;
+  --element-color: rgb(219, 219, 219);
   margin: 0;
   box-sizing: border-box;
   font-family: "Roboto", serif;
@@ -27,7 +27,7 @@ header.dark,
 
 main {
   padding: 24px;
-  min-height: calc(100vh - 40px);
+  min-height: calc(100vh - 125px);
 }
 
 .header {
@@ -37,6 +37,9 @@ main {
   width: 100%;
   align-items: center;
   margin: 0 auto;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
 
 .nav ul {
@@ -55,7 +58,8 @@ main {
 }
 
 .nav ul li:hover {
-  transform: scale(1.05);
+  transform: scale(1.1);
+  transition: all 0.3s ease;
 }
 
 .home {
@@ -67,10 +71,10 @@ main {
 }
 
 .calories {
-  border: 1px solid #ddd;
+  border: 1px solid var(--text-color);
   border-radius: 8px;
   padding: 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px var(--text-color);
   width: 100%;
   max-width: 600px;
 }
@@ -218,7 +222,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
+  z-index: 1;
 }
 
 .popup-form {
@@ -227,7 +231,7 @@ main {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0px 4px 15px var(--text-color);
-  z-index: 1001;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   gap: 15px;
@@ -314,11 +318,11 @@ main {
 }
 
 .stats {
-  min-height: calc(100vh + 40px);
+  min-height: calc(100vh - 65px);
 }
 
 .settings {
-  min-height: calc(100vh - 40px);
+  min-height: calc(100vh - 77px);
 }
 
 .settings-heading {
@@ -439,12 +443,17 @@ main {
 
   .nav ul {
     position: fixed;
+    font-size: 15px;
+    padding: 10px;
     right: 10px;
-    background-color: var(--background-color);
+    top: 38px;
     color: var(--text-color);
+    border-radius: 5px;;
+    background-color: var(--element-color);
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    z-index: 1;
   }
 
   .nav.show {
@@ -453,9 +462,14 @@ main {
 
   .hamburger-menu {
     display: block;
-    position: absolute;
-    top: 15px;
-    right: 15px;
+    position: fixed;
+    top: 25px;
+    right: 20px;
+  }
+
+  .hamburger-menu:hover {
+    transform: scale(1.1);
+    transition: all 0.3s ease;
   }
 
   .home {
@@ -484,5 +498,11 @@ main {
   .options {
     padding: 1rem;
     gap: 1rem;
+  }
+}
+
+@media (max-width: 450px) {
+  .meal-card {
+    min-width: 300px;
   }
 }

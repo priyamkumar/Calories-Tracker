@@ -1,18 +1,21 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Navbar({ setView }) {
   const handleView = (event) => {
     switch (event.target.innerText) {
       case "Home":
         setView("Tracker");
+        setToggle(false);
         break;
       case "Statistics":
         setView("Statistics");
+        setToggle(false);
         break;
       case "Settings":
         setView("Settings");
+        setToggle(false);
         break;
       default:
         break;
