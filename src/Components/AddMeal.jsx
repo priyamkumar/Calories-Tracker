@@ -13,11 +13,17 @@ import AddMealForm from "./AddMealForm";
 import { useTheme } from "../Contexts/ThemeContext";
 import { useDispatch, useSelector } from "react-redux";
 import { updateData } from "./CaloriesTodaySlice.js";
+import axios from "axios";
+import toast from "react-hot-toast";
+import { server } from "../main.jsx";
+import { useOutletContext } from "react-router-dom";
 
 export default function AddMeal({ mealTypeArr }) {
   const dispatch = useDispatch();
 
-  const { data } = useSelector((state) => state.calories);
+  const { setState } = useOutletContext();
+
+  const { currentDate, data } = useSelector((state) => state.calories);
 
   const [showPopup, setShowPopup] = useState(false);
 
@@ -36,34 +42,52 @@ export default function AddMeal({ mealTypeArr }) {
   };
 
   const editPopup = (mealId) => {
-    let mealToEdit = data.meals.find((meal) => meal.id === mealId);
+    let mealToEdit = data.meals.find((meal) => meal._id === mealId);
     setShowPopup((prev) => !prev);
     setPopupType("edit");
     setEditData(mealToEdit);
   };
 
   let breakfastMeals =
-    data.meals.filter((meal) => meal.type === "Breakfast") || [];
+    data.meals.filter((meal) => meal.mealType === "Breakfast") || [];
 
-  let lunchMeals = data.meals.filter((meal) => meal.type === "Lunch") || [];
+  let lunchMeals = data.meals.filter((meal) => meal.mealType === "Lunch") || [];
 
-  let dinnerMeals = data.meals.filter((meal) => meal.type === "Dinner") || [];
+  let dinnerMeals =
+    data.meals.filter((meal) => meal.mealType === "Dinner") || [];
 
-  let snackMeals = data.meals.filter((meal) => meal.type === "Snacks") || [];
+  let snackMeals =
+    data.meals.filter((meal) => meal.mealType === "Snacks") || [];
 
-  const removeMeal = (index) => {
-    let deletedMeal = data.meals.find((element, i) => index === element.id);
-    let updatedMeals = data.meals.filter((element, i) => index !== element.id);
-    dispatch(
-      updateData({
-        ...data,
-        calories: Math.round(data.calories - deletedMeal.calories),
-        carbs: Math.round(data.carbs - deletedMeal.carbs),
-        protein: Math.round(data.protein - deletedMeal.protein),
-        fats: Math.round(data.fats - deletedMeal.fats),
-        meals: updatedMeals,
-      })
-    );
+  const removeMeal = async (index) => {
+    let deletedMeal = data.meals.find((element, i) => index === element._id);
+    let updatedMeals = data.meals.filter((element, i) => index !== element._id);
+    let newData = {
+      ...data,
+      calories: Math.round(data.calories - deletedMeal.calories),
+      carbs: Math.round(data.carbs - deletedMeal.carbs),
+      protein: Math.round(data.protein - deletedMeal.protein),
+      fats: Math.round(data.fats - deletedMeal.fats),
+      meals: updatedMeals,
+    };
+
+    try {
+      const res = await axios.delete(`${server}/track/delete`, {
+        data: {
+          mealId: deletedMeal._id,
+        },
+        headers: {
+          "Content-Type": "application/json",
+        },
+        withCredentials: true,
+      });
+      toast.success("Meal Deleted");
+      dispatch(updateData(newData));
+      setState((state) => ({ ...state, [currentDate]: newData }));
+    } catch (err) {
+      toast.error(err.response.data.message);
+      console.log(err);
+    }
   };
 
   let formRef = useRef();
@@ -97,13 +121,12 @@ export default function AddMeal({ mealTypeArr }) {
             <li key={index}>
               <div className="meal-items">
                 <p>
-                  {meal["food_name"]} - {meal.calories} Cal ({meal.quantity}{" "}
-                  g/ml)
+                  {meal.mealName} - {meal.calories} Cal ({meal.quantity} g/ml)
                 </p>
                 <div className="buttons">
                   <button
                     className="edit-btn"
-                    onClick={() => editPopup(meal.id)}
+                    onClick={() => editPopup(meal._id)}
                   >
                     <FontAwesomeIcon
                       icon={faPenToSquare}
@@ -112,7 +135,7 @@ export default function AddMeal({ mealTypeArr }) {
                   </button>
                   <button
                     className="remove-btn"
-                    onClick={() => removeMeal(meal.id)}
+                    onClick={() => removeMeal(meal._id)}
                   >
                     <FontAwesomeIcon
                       icon={faXmark}
@@ -144,13 +167,12 @@ export default function AddMeal({ mealTypeArr }) {
             <li key={index}>
               <div className="meal-items">
                 <p>
-                  {meal["food_name"]} - {meal.calories} Cal ({meal.quantity}{" "}
-                  g/ml)
+                  {meal.mealName} - {meal.calories} Cal ({meal.quantity} g/ml)
                 </p>
                 <div className="buttons">
                   <button
                     className="edit-btn"
-                    onClick={() => editPopup(meal.id)}
+                    onClick={() => editPopup(meal._id)}
                   >
                     <FontAwesomeIcon
                       icon={faPenToSquare}
@@ -159,7 +181,7 @@ export default function AddMeal({ mealTypeArr }) {
                   </button>
                   <button
                     className="remove-btn"
-                    onClick={() => removeMeal(meal.id)}
+                    onClick={() => removeMeal(meal._id)}
                   >
                     <FontAwesomeIcon
                       icon={faXmark}
@@ -190,13 +212,12 @@ export default function AddMeal({ mealTypeArr }) {
             <li key={index}>
               <div className="meal-items">
                 <p>
-                  {meal["food_name"]} - {meal.calories} Cal ({meal.quantity}{" "}
-                  g/ml)
+                  {meal.mealName} - {meal.calories} Cal ({meal.quantity} g/ml)
                 </p>
                 <div className="buttons">
                   <button
                     className="edit-btn"
-                    onClick={() => editPopup(meal.id)}
+                    onClick={() => editPopup(meal._id)}
                   >
                     <FontAwesomeIcon
                       icon={faPenToSquare}
@@ -205,7 +226,7 @@ export default function AddMeal({ mealTypeArr }) {
                   </button>
                   <button
                     className="remove-btn"
-                    onClick={() => removeMeal(meal.id)}
+                    onClick={() => removeMeal(meal._id)}
                   >
                     <FontAwesomeIcon
                       icon={faXmark}
@@ -236,13 +257,12 @@ export default function AddMeal({ mealTypeArr }) {
             <li key={index}>
               <div className="meal-items">
                 <p>
-                  {meal["food_name"]} - {meal.calories} Cal ({meal.quantity}{" "}
-                  g/ml)
+                  {meal.mealName} - {meal.calories} Cal ({meal.quantity} g/ml)
                 </p>
                 <div className="buttons">
                   <button
                     className="edit-btn"
-                    onClick={() => editPopup(meal.id)}
+                    onClick={() => editPopup(meal._id)}
                   >
                     <FontAwesomeIcon
                       icon={faPenToSquare}
@@ -251,7 +271,7 @@ export default function AddMeal({ mealTypeArr }) {
                   </button>
                   <button
                     className="remove-btn"
-                    onClick={() => removeMeal(meal.id)}
+                    onClick={() => removeMeal(meal._id)}
                   >
                     <FontAwesomeIcon
                       icon={faXmark}

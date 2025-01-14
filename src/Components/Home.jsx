@@ -15,7 +15,6 @@ export default function CaloriesToday() {
   const { theme } = useTheme();
   const { currentDate, data } = useSelector((state) => state.calories);
 
-
   return (
     <main className={theme === "Dark" ? "dark" : ""}>
       <div className="home">

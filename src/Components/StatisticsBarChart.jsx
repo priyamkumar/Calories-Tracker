@@ -1,28 +1,25 @@
 import { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 import { useTheme } from "../Contexts/ThemeContext";
-import { parseLocalStorage } from "../Utility/utils";
+import { useSelector } from "react-redux";
+import axios from "axios";
+import { server } from "../main";
+import { useOutletContext } from "react-router-dom";
 
 export default function StatisticsBarChart() {
-  let allDates = parseLocalStorage("allDates", []);
-  let barDates = allDates.sort((a, b) => new Date(b) - new Date(a));
-  barDates = barDates.slice(0, 7).reverse();
-  let date = barDates.map((el) => el.split("-")[1] + "-" + el.split("-")[2]);
-  let barData = barDates.map((el) => parseLocalStorage(el));
-  let calories = barData.map((el) => el.calories);
-
+  const { sevenDaysData, setSevenDaysData } = useOutletContext();
+  const { isAuthenticated } = useSelector((state) => state.authentication);
   const { theme } = useTheme();
-
-  const [data, setData] = useState({
+  const [barData, setBarData] = useState({
     series: [
       {
         name: "Calories",
-        data: calories,
+        data: [],
       },
     ],
     options: {
       chart: {
-        height: 350,
+        height: 30,
         type: "bar",
         background: theme === "Dark" ? "black" : "white",
         foreColor: theme === "Dark" ? "white" : "black",
@@ -31,7 +28,7 @@ export default function StatisticsBarChart() {
         },
       },
       theme: {
-        mode: theme === "Dark" ? "dark" : "light", 
+        mode: theme === "Dark" ? "dark" : "light",
       },
       plotOptions: {
         bar: {
@@ -53,7 +50,11 @@ export default function StatisticsBarChart() {
       },
 
       xaxis: {
-        categories: date,
+        labels: {
+          rotate: -45,
+          rotateAlways: true,
+        },
+        categories: [],
         position: "top",
         axisBorder: {
           show: false,
@@ -101,7 +102,50 @@ export default function StatisticsBarChart() {
   });
 
   useEffect(() => {
-    setData((prevData) => ({
+    axios
+      .get(`${server}/track/getCaloriesData`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setSevenDaysData(res.data);
+        setBarData((prevData) => ({
+          ...prevData,
+          series: [
+            {
+              ...prevData.series,
+              data: res.data.map((el) => el.totalCalories),
+            },
+          ],
+          options: {
+            ...prevData.options,
+            xaxis: {
+              ...prevData.options.xaxis,
+              categories: res.data.map((el) => el._id),
+            },
+          },
+        }));
+      })
+      .catch((err) => console.log(err));
+    setBarData((prevData) => ({
+      ...prevData,
+      series: [
+        {
+          ...prevData.series,
+          data: [],
+        },
+      ],
+      options: {
+        ...prevData.options,
+        xaxis: {
+          ...prevData.options.xaxis,
+          categories: [],
+        },
+      },
+    }));
+  }, [isAuthenticated]);
+
+  useEffect(() => {
+    setBarData((prevData) => ({
       ...prevData,
       options: {
         ...prevData.options,
@@ -143,12 +187,11 @@ export default function StatisticsBarChart() {
     <div className="chart-container">
       <Chart
         className="chart"
-        options={data.options}
-        series={data.series}
+        options={barData.options}
+        series={barData.series}
         type="bar"
         height={350}
       />
-      <div id="html-dist"></div>
     </div>
   );
 }

@@ -12,14 +12,10 @@ const defaultData = {
   meals: [],
 };
 
-if (!parseLocalStorage(today)) {
-  setLocalStorage(today, defaultData);
-}
-
 const initialState = {
   currentDate: today,
   allDates: parseLocalStorage("allDates", []),
-  data: parseLocalStorage(today),
+  data: defaultData,
 };
 
 const dataSlice = createSlice({
@@ -28,16 +24,10 @@ const dataSlice = createSlice({
   reducers: {
     setDate(state, action) {
       const newDate = action.payload;
-      const cachedDateData = parseLocalStorage(newDate);
-      if (!cachedDateData) {
-        setLocalStorage(newDate, defaultData);
-      }
       state.currentDate = newDate;
-      state.data = cachedDateData ? cachedDateData : defaultData;
     },
     updateData(state, action) {
       state.data = action.payload,
-      setLocalStorage(state.currentDate, state.data);
       updateAllDates(state, state.currentDate);
     },
   },

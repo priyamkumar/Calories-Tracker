@@ -1,37 +1,20 @@
 import { useSelector } from "react-redux";
 import { parseLocalStorage } from "../Utility/utils";
+import { useOutletContext } from "react-router-dom";
 
 export default function StatisticsAverages() {
-  const { currentDate } = useSelector((state) => state.calories);
-
+  const { currentDate, data } = useSelector((state) => state.calories);
+  const {userData, sevenDaysData} = useOutletContext();
   let today = new Date().toISOString().split("T")[0];
-  let todayData = parseLocalStorage(today, { calorieGoal: 0, calories: 0 });
-  let remainingCal = Math.max(todayData.calorieGoal - todayData.calories, 0);
-
-  let allDates = parseLocalStorage("allDates", []);
-  let barDates = allDates
-    .sort((a, b) => new Date(a) - new Date(b))
-    .slice(-7)
-    .reverse();
-
-  let barData = barDates.map((el) => parseLocalStorage(el));
+  let remainingCal = Math.max(data.calorieGoal - data.calories, 0);
 
   const getWeeklyAverage = (key) =>
-    Math.round(barData.reduce((acc, cur) => acc + (cur[key] || 0), 0) / 7);
+    Math.round(sevenDaysData.reduce((acc, cur) => acc + (cur?.[key] || 0), 0) / sevenDaysData.length);
 
-  let averageWeekCal = getWeeklyAverage("calories");
-  let averageWeekCarbs = getWeeklyAverage("carbs");
-  let averageWeekProtein = getWeeklyAverage("protein");
-  let averageWeekFats = getWeeklyAverage("fats");
-
-  let userData = parseLocalStorage("userData", {
-    weight: 0,
-    height: 0,
-    age: 0,
-    gender: "",
-    level: "",
-    goal: "",
-  });
+  let averageWeekCal = getWeeklyAverage("totalCalories") || 0;
+  let averageWeekCarbs = getWeeklyAverage("totalCarbs") || 0;
+  let averageWeekProtein = getWeeklyAverage("totalProtein") || 0;
+  let averageWeekFats = getWeeklyAverage("totalFats") || 0;
 
   userData.weight = Number(userData.weight);
   userData.height = Number(userData.height);
@@ -96,7 +79,7 @@ export default function StatisticsAverages() {
           </h3>
         </>
       ) : (
-        <h3 className="add-data-message">Please enter all your details in settings.</h3>
+        <h3 className="add-data-message">Please enter your details in settings.</h3>
       )}
       {today === currentDate && (
         <>

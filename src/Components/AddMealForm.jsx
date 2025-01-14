@@ -1,8 +1,11 @@
 import { useState } from "react";
-import { foodData } from "../Utility/Anuvaad_INDB_2024.11";
 import { useTheme } from "../Contexts/ThemeContext";
 import { useDispatch, useSelector } from "react-redux";
 import { updateData } from "./CaloriesTodaySlice.js";
+import axios from "axios";
+import { server } from "../main.jsx";
+import toast from "react-hot-toast";
+import { useOutletContext } from "react-router-dom";
 
 export default function AddMealForm({
   formRef,
@@ -12,20 +15,21 @@ export default function AddMealForm({
   editDataArr,
 }) {
   const [editData] = editDataArr;
+  const {setState, foodData} = useOutletContext();
   const dispatch = useDispatch();
-  const { data } = useSelector((state) => state.calories);
+  const { currentDate, data } = useSelector((state) => state.calories);
   const [mealName, setMealName] = useState(
-    popupType === "edit" ? editData?.["food_name"] : ""
+    popupType === "edit" ? editData?.mealName : ""
   );
   const [foodCalorie, setFoodCalorie] = useState(
-    popupType === "edit" ? Math.round(editData?.["energy_kcal"]) : 0
+    popupType === "edit" ? Math.round(editData?.calories) : 0
   );
   const [quantity, setQuantity] = useState(
     popupType === "edit" ? editData?.quantity : ""
   );
   const { theme } = useTheme();
 
-  popupType === "edit" ? (mealType = editData.type) : mealType;
+  popupType === "edit" ? (mealType = editData.mealType) : mealType;
 
   let d = new Date();
   let h = d.getHours();
@@ -52,7 +56,7 @@ export default function AddMealForm({
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const matchedItem = foodData.find((item) => item["food_name"] === mealName);
@@ -63,62 +67,136 @@ export default function AddMealForm({
 
     if (popupType === "edit") {
       let deletedMeal = data.meals.find(
-        (element) => editData.id === element.id
+        (element) => editData._id === element._id
       );
       let updatedMeals = data.meals.filter(
-        (element) => deletedMeal.id !== element.id
+        (element) => deletedMeal._id !== element._id
       );
       setShowPopup(false);
-        let newItem = {
-          ...matchedItem,
-          calories: Math.round((matchedItem["energy_kcal"] / 100) * quantity),
-          carbs: Math.round((matchedItem["carb_g"] / 100) * quantity),
-          protein: Math.round((matchedItem["protein_g"] / 100) * quantity),
-          fats: Math.round((matchedItem["fat_g"] / 100) * quantity),
-          quantity: quantity,
-          id: deletedMeal.id,
-          type: deletedMeal.type,
-          time: currentTime,
-        };
-        dispatch(
-          updateData({
-            ...data,
-            calories: Math.round(
-              data.calories + newItem.calories - deletedMeal.calories
-            ),
-            meals: [...updatedMeals, newItem],
-            carbs: Math.round(data.carbs + newItem.carbs - deletedMeal.carbs),
-            protein: Math.round(
-              data.protein + newItem.protein - deletedMeal.protein
-            ),
-            fats: Math.round(data.fats + newItem.fats - deletedMeal.fats),
-          })
+      let newItem = {
+        ...matchedItem,
+        calories: Math.round((matchedItem["energy_kcal"] / 100) * quantity),
+        carbs: Math.round((matchedItem["carb_g"] / 100) * quantity),
+        protein: Math.round((matchedItem["protein_g"] / 100) * quantity),
+        fats: Math.round((matchedItem["fat_g"] / 100) * quantity),
+        quantity: quantity,
+        id: deletedMeal._id,
+        type: mealType,
+        time: currentTime,
+      };
+      let itemToAdd = {
+        _id: newItem.id,
+        mealName: newItem["food_name"],
+        mealType,
+        quantity,
+        calories: newItem.calories,
+        carbs: newItem.carbs,
+        protein: newItem.protein,
+        fats: newItem.fats
+      };
+
+      let newData = {
+        ...data,
+        calories: Math.round(
+          data.calories + newItem.calories - deletedMeal.calories
+        ),
+        meals: [...updatedMeals, itemToAdd],
+        carbs: Math.round(data.carbs + newItem.carbs - deletedMeal.carbs),
+        protein: Math.round(
+          data.protein + newItem.protein - deletedMeal.protein
+        ),
+        fats: Math.round(data.fats + newItem.fats - deletedMeal.fats),
+      }
+
+      try {
+        const res = await axios.put(
+          `${server}/track/update`,
+          {
+            mealId: newItem.id,
+            mealName: newItem["food_name"],
+            mealType,
+            quantity,
+            calories: newItem.calories,
+            carbs: newItem.carbs,
+            protein: newItem.protein,
+            fats: newItem.fats
+          },
+          {
+            withCredentials: true,
+          }
         );
+        toast.success("Meal Updated");
+        dispatch(
+          updateData(newData)
+        );
+
+        setState((state) => ({...state, [currentDate]: newData}));
+      } catch (err) {
+        console.log(err);
+        toast.error(err.response.data.message);
+      }
       
     } else {
       setShowPopup(false);
-        let newItem = {
-          ...matchedItem,
-          calories: Math.round((matchedItem["energy_kcal"] / 100) * quantity),
-          carbs: Math.round((matchedItem["carb_g"] / 100) * quantity),
-          protein: Math.round((matchedItem["protein_g"] / 100) * quantity),
-          fats: Math.round((matchedItem["fat_g"] / 100) * quantity),
-          quantity: quantity,
-          id: Math.floor(Math.random() * 1e9),
-          type: mealType,
-          time: currentTime,
-        };
-        dispatch(
-          updateData({
-            ...data,
-            calories: data.calories + newItem.calories,
-            meals: [...data.meals, newItem],
-            carbs: data.carbs + newItem.carbs,
-            protein: data.protein + newItem.protein,
-            fats: data.fats + newItem.fats,
-          })
+      let newItem = {
+        ...matchedItem,
+        calories: Math.round((matchedItem["energy_kcal"] / 100) * quantity),
+        carbs: Math.round((matchedItem["carb_g"] / 100) * quantity),
+        protein: Math.round((matchedItem["protein_g"] / 100) * quantity),
+        fats: Math.round((matchedItem["fat_g"] / 100) * quantity),
+        quantity: quantity,
+        type: mealType,
+        time: currentTime,
+      };
+
+      try {
+        const res = await axios.post(
+          `${server}/track/new`,
+          {
+            mealDate: currentDate,
+            mealName: newItem["food_name"],
+            mealType,
+            quantity,
+            calories: newItem.calories,
+            carbs: newItem.carbs,
+            protein: newItem.protein,
+            fats: newItem.fats
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+            withCredentials: true,
+          }
         );
-      
+        let tempId = res.data.id;
+        let itemToAdd = {
+          _id: tempId,
+          mealName: newItem["food_name"],
+          mealType,
+          quantity,
+          calories: newItem.calories,
+          carbs: newItem.carbs,
+          protein: newItem.protein,
+          fats: newItem.fats
+        }
+        let newData = {
+          ...data,
+          calories: data.calories + newItem.calories,
+          meals: [...data.meals, itemToAdd],
+          carbs: data.carbs + newItem.carbs,
+          protein: data.protein + newItem.protein,
+          fats: data.fats + newItem.fats,
+        }
+        toast.success("Meal Added");
+        dispatch(
+          updateData(newData)
+        );
+        setState((state) => ({...state, [currentDate]: newData}));
+      } catch (err) {
+        console.log(err);
+        toast.error(err.response.data.message);
+      }
     }
   };
 
@@ -162,7 +240,7 @@ export default function AddMealForm({
           </label>
 
           <label htmlFor="calories">
-            Calories per 100 g/ml
+            Calories {popupType === "add" ? "per 100 g/ml" : ""}
             <input
               type="number"
               id="calories"
