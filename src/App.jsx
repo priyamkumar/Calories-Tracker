@@ -43,7 +43,7 @@ function App() {
         })
         .catch((err) => console.log(err));
     }
-    if (state[currentDate]) {
+    if (isAuthenticated && state[currentDate]) {
       dispatch(updateData(state[currentDate]));
       return;
     }

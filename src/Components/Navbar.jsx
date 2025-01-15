@@ -14,7 +14,6 @@ export default function Navbar({ stateArr }) {
 
   const [state, setState] = stateArr;
   const dispatch = useDispatch();
-
   const [toggle, setToggle] = useState(false);
 
   const handleToggle = () => {
