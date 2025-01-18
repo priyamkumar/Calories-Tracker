@@ -1,5 +1,4 @@
 import { useSelector } from "react-redux";
-import { parseLocalStorage } from "../Utility/utils";
 import { useOutletContext } from "react-router-dom";
 
 export default function StatisticsAverages() {

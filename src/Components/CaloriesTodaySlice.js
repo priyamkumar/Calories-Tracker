@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { updateAllDates, parseLocalStorage, setLocalStorage } from "../Utility/utils";
 
 let today = new Date().toISOString().split("T")[0];
 
@@ -14,7 +13,6 @@ const defaultData = {
 
 const initialState = {
   currentDate: today,
-  allDates: parseLocalStorage("allDates", []),
   data: defaultData,
 };
 
@@ -27,8 +25,7 @@ const dataSlice = createSlice({
       state.currentDate = newDate;
     },
     updateData(state, action) {
-      state.data = action.payload,
-      updateAllDates(state, state.currentDate);
+      state.data = action.payload;
     },
   },
 });

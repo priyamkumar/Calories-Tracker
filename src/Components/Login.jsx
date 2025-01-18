@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useTheme } from "../Contexts/ThemeContext";
-import { Link, Navigate } from "react-router-dom";
+import { Link, Navigate, useOutletContext } from "react-router-dom";
 import axios from "axios";
 import { server } from "../main";
 import toast from "react-hot-toast";
@@ -25,7 +25,6 @@ export default function Login() {
 
   const { isAuthenticated } = useSelector((state) => state.authentication);
   const { isLoading } = useSelector((state) => state.authentication);
-
   const submitHandler = async (e) => {
     e.preventDefault();
     dispatch(setIsLoading(true));

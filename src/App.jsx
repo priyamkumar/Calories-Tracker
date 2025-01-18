@@ -2,7 +2,7 @@ import "./App.css";
 import Header from "./Components/Header";
 import { Outlet } from "react-router-dom";
 import { ThemeProvider } from "./Contexts/ThemeContext.jsx";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { server } from "./main.jsx";
@@ -15,6 +15,7 @@ import {
 import React from "react";
 import { updateData } from "./Components/CaloriesTodaySlice.js";
 import Loader from "./Components/Loader.jsx";
+import { jwtDecode } from "jwt-decode";
 
 function App() {
   const [userData, setUserData] = useState({
@@ -26,13 +27,32 @@ function App() {
     goal: "",
   });
 
+  const handleLogout = async () => {
+    dispatch(setIsLoading(true));
+    try {
+      const { data } = await axios.get(`${server}/user/logout`, {
+        withCredentials: true,
+      });
+      dispatch(setIsAuthenticated(false));
+      dispatch(setIsLoading(false));
+      setState({});
+    } catch (err) {
+      toast.error("Session expired");
+      console.log(err);
+      dispatch(setIsAuthenticated(false));
+      dispatch(setIsLoading(false));
+    }
+  };
+
   const [sevenDaysData, setSevenDaysData] = useState([]);
   const [state, setState] = useState({});
   const [foodData, setFoodData] = useState(null);
 
   const dispatch = useDispatch();
   const { currentDate, data } = useSelector((state) => state.calories);
-  const { isAuthenticated, isLoading } = useSelector((state) => state.authentication);
+  const { isAuthenticated, isLoading } = useSelector(
+    (state) => state.authentication
+  );
 
   useEffect(() => {
     if (!foodData) {
@@ -59,6 +79,17 @@ function App() {
         }
       )
       .then((res) => {
+        const token = jwtDecode(res.data.token);
+        const exp = token.iat * 1000 + 1000 * 60 * 15;
+        const currentTime = Date.now();
+        const timeLeft = exp - currentTime;
+        if (timeLeft > 0)
+          setTimeout(() => {
+            handleLogout();
+          }, timeLeft);
+        else {
+          handleLogout();
+        }
         dispatch(setUser(res.data.user));
         dispatch(setIsAuthenticated(true));
         dispatch(setIsLoading(false));
@@ -127,27 +158,31 @@ function App() {
           weight: 0,
           level: "",
           goal: "",
-        })
+        });
         setSevenDaysData([]);
       });
   }, [isAuthenticated, currentDate]);
 
   return (
     <ThemeProvider>
-      <Header stateArr={[state, setState]} />
-      {isLoading ? <Loader/> :
-      <Outlet
-        context={{
-          userData,
-          setUserData,
-          state,
-          setState,
-          foodData,
-          setFoodData,
-          sevenDaysData,
-          setSevenDaysData,
-        }}
-      />}
+      <Header handleLogout={handleLogout} />
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <Outlet
+          context={{
+            userData,
+            setUserData,
+            state,
+            setState,
+            foodData,
+            setFoodData,
+            sevenDaysData,
+            setSevenDaysData,
+            handleLogout,
+          }}
+        />
+      )}
       <Toaster />
     </ThemeProvider>
   );
