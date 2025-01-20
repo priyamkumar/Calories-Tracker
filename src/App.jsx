@@ -57,7 +57,7 @@ function App() {
   useEffect(() => {
     if (!foodData) {
       axios
-        .get(`${server}/track/foodData`)
+        .get(`${server}/foodData`)
         .then((res) => {
           setFoodData(res.data);
         })
