@@ -12,7 +12,7 @@ import Register from "./Components/Register.jsx";
 import Error from "./Components/Error.jsx";
 
 export const server =
-  "https://calories-tracker-backend-sage.vercel.app";
+  "https://calories-tracker-backend-sage.vercel.app/api/v1";
 
 const router = createBrowserRouter([
   {
